@@ -15,3 +15,4 @@ Components:
 Questions: 
 * Is the naive vector embedding the best approach? e.g. every movie is a column
 * How can we incorporate more complex reviews? e.g. all text, no number rating
+* Is there any chance of duplicate reviews for the same movie/author?

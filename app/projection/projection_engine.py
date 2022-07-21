@@ -12,8 +12,8 @@ class ProjectionEngine:
     
     def create_projection(self):
         popular_movies = self.compute_popular_movies()
-        author_vectors = self.build_vectors(popular_movies)
-        self.store_projection(author_vectors)
+        author_vectors, movie_indices = self.build_vectors(popular_movies)
+        self.store_projection(author_vectors, movie_indices)
 
     def compute_popular_movies(self):
         popular_movies = set()
@@ -48,11 +48,7 @@ class ProjectionEngine:
                     author_vector[movie_indices[movie]] = float(review)
             author_vectors[author] = author_vector
 
-        return author_vectors
+        return (author_vectors, movie_indices)
 
-    def store_projection(self, author_vectors):
-        self.projection_datastore_proxy.upload(author_vectors)
-
-        
-
-
+    def store_projection(self, author_vectors, movie_indices):
+        self.projection_datastore_proxy.upload(author_vectors, movie_indices)

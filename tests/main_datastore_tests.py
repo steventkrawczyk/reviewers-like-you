@@ -26,5 +26,6 @@ class MainDatastoreTests(unittest.TestCase):
                          'wrong list size of stored data')
             # TODO Check for correct authors/movies
 
+
 if __name__ == '__main__':
     unittest.main()

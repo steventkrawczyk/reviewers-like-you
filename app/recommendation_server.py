@@ -25,12 +25,13 @@ projection_engine = ProjectionEngine(database, projection_databse)
 projection_engine.create_projection()
 # End test setup
 
+movies = projection_databse.get_movie_indices().keys()
 match_generator = MatchGenerator(database, projection_databse)
 app = Flask(__name__)
 
 @app.route('/')
 def default():
-    return "<p>Please submit movie preferences:</p>"
+    return render_template('movie_list.html', movies=movies)
     
 @app.route('/match', methods=['GET'])
 def match():

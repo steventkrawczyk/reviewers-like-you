@@ -1,0 +1,17 @@
+<h1>Author Match: {{ author }}</h1>
+<table>
+    <thead>
+      <tr>
+        <th>Movie</th>
+        <th>Review</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for movie, review in reviews %}
+     <tr>
+         <td> {{ movie }} </td>
+         <td> {{ review }} </td>
+     </tr>
+    {% endfor %}
+    </tbody>
+  </table>

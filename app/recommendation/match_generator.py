@@ -33,4 +33,3 @@ class MatchGenerator:
         author_match = self.author_by_index[index_of_match]
         author_reviews = self.main_datastore.get(author_match)
         return (author_match, author_reviews)
-        

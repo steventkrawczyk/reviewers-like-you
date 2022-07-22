@@ -36,7 +36,6 @@ CORS(app) #comment this on deployment
 # Frontend idea: use a for loop to create a list of forms based on movies
 @app.route('/movies', methods=['GET'])
 def movies():
-    print(movies_to_rate)
     return jsonify({"message": "",
             "category": "success",
             "data": movies_to_rate,

@@ -1,6 +1,8 @@
 from flask import Flask
+from flask import jsonify
 from flask import render_template
 from flask import request
+from flask_cors import CORS #comment this on deployment
 import pandas as pd
 from pathlib import Path
 
@@ -25,14 +27,22 @@ projection_engine = ProjectionEngine(database, projection_databse)
 projection_engine.create_projection()
 # End test setup
 
-movies = projection_databse.get_movie_indices().keys()
+movies_to_rate = list(projection_databse.get_movie_indices().keys())
 match_generator = MatchGenerator(database, projection_databse)
-app = Flask(__name__)
 
-@app.route('/')
-def default():
-    return render_template('movie_list.html', movies=movies)
+app = Flask(__name__)
+CORS(app) #comment this on deployment
+
+# Frontend idea: use a for loop to create a list of forms based on movies
+@app.route('/movies', methods=['GET'])
+def movies():
+    print(movies_to_rate)
+    return jsonify({"message": "",
+            "category": "success",
+            "data": movies_to_rate,
+            "status": 200})
     
+# Frontend idea: use a for loop to render the of reviews
 @app.route('/match', methods=['GET'])
 def match():
     match_data = {}
@@ -44,7 +54,6 @@ def match():
         print(user_input)
 
     match_data = match_generator.get_match(user_input)
-    print(match_data)
     return render_template('review_table.html', author=match_data[0], 
                            reviews=match_data[1])
     

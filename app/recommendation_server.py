@@ -3,23 +3,15 @@ from flask import jsonify
 from flask import request
 from flask_cors import CORS
 from flask_restful import Resource, Api
-import pandas as pd
-from pathlib import Path
 
 from app.main_datastore.main_datastore_proxy import MainDatastoreProxy
-from app.main_datastore.dataframe_ingestion_client import DataframeIngestionClient
 from app.projection.projection_datastore_proxy import ProjectionDatastoreProxy
 from app.projection.projection_engine import ProjectionEngine
 from app.recommendation.match_generator import MatchGenerator
 
 # NOTE: This approach is only for testing while we don't have a
-# persistent DB.
-test_data_file = Path(__file__).parent.parent / "tests/test_data.csv"
-test_data = pd.read_csv(test_data_file, header=0)
+# persistent projection DB.
 database = MainDatastoreProxy()
-client = DataframeIngestionClient(database)
-client.upload(test_data)
-
 authors = list(database.get_keys())
 projection_databse = ProjectionDatastoreProxy()
 projection_engine = ProjectionEngine(database, projection_databse)
@@ -48,8 +40,8 @@ class Match(Resource):
         user_input = {}
 
         # TODO cleanse user input
-        for movie, review in request.args.items():
-            user_input[movie] = float(review)
+        for movie, rating in request.args.items():
+            user_input[movie] = float(rating)
 
         match_data = match_generator.get_match(user_input)
 

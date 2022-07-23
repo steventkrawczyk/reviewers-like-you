@@ -31,8 +31,8 @@ class MatchGenerator:
     def get_match(self, user_input) -> Tuple[str, List[Tuple[str, str]]]:
         # TODO handle incomplete user input (i.e. did not rate all movies)
         vector = [0.0] * self.dim
-        for movie, review in user_input.items():
-            vector[self.movie_indices[movie]] = review
+        for movie, rating in user_input.items():
+            vector[self.movie_indices[movie]] = rating
         index_of_match = self.similarity_engine.get_closest_neighbor(vector)
         author_match = self.author_by_index[index_of_match]
         author_reviews = self.main_datastore.get(author_match)

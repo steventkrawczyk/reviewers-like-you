@@ -28,8 +28,8 @@ class ProjectionEngine:
         for author in self.authors:
             reviews_by_author = self.main_datastore_proxy.get(author)
             movies_by_author = set()
-            for movie, review in reviews_by_author:
-                if not math.isnan(float(review)):
+            for movie, rating in reviews_by_author:
+                if not math.isnan(float(rating)):
                     movies_by_author.add(movie)
             if not popular_movies:
                 popular_movies = movies_by_author
@@ -48,9 +48,9 @@ class ProjectionEngine:
         for author in self.authors:
             author_vector = [0.0] * dim
             reviews_by_author = self.main_datastore_proxy.get(author)
-            for movie, review in reviews_by_author:
+            for movie, rating in reviews_by_author:
                 if movie in movie_indices:
-                    author_vector[movie_indices[movie]] = float(review)
+                    author_vector[movie_indices[movie]] = float(rating)
             author_vectors[author] = author_vector
 
         return (author_vectors, movie_indices)

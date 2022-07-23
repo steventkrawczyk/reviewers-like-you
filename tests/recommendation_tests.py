@@ -16,7 +16,7 @@ class ProjectionTests(unittest.TestCase):
     def setUp(self):
         # Upload data
         self.test_data = pd.read_csv(TEST_DATA_FILE, header=0)
-        self.database = MainDatastoreProxy()
+        self.database = MainDatastoreProxy(in_memory=True)
         self.client = DataframeIngestionClient(self.database)
         self.client.upload(self.test_data)
 

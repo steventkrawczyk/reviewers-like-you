@@ -26,6 +26,7 @@ class ProjectionEngine:
         # Idea: popular movies are ones that every reviewer has
         # reviewed.
         for author in self.authors:
+            # TODO optimize main data store calls
             reviews_by_author = self.main_datastore_proxy.get(author)
             movies_by_author = set()
             for movie, rating in reviews_by_author:
@@ -47,6 +48,7 @@ class ProjectionEngine:
 
         for author in self.authors:
             author_vector = [0.0] * dim
+            # TODO optimize main data store calls
             reviews_by_author = self.main_datastore_proxy.get(author)
             for movie, rating in reviews_by_author:
                 if movie in movie_indices:

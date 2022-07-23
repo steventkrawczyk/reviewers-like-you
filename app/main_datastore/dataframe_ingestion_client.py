@@ -16,4 +16,5 @@ class DataframeIngestionClient:
         self.database.upload(row['author'], row['movie'], row['rating'])
 
     def upload(self, input_data: DataFrame) -> None:
+        # TODO take advantage of batch upload once main data proxy uses dynamo batch processing
         input_data.apply(self._upload_row, axis=1)

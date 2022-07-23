@@ -1,11 +1,11 @@
-from app.main_datastore.dataframe_ingestion_client import DataframeIngestionClient
-from app.main_datastore.main_datastore_proxy import MainDatastoreProxy
 import pandas as pd
 from pathlib import Path
 import sys
 import unittest
 
 sys.path.append("..")
+from app.main_datastore.dataframe_ingestion_client import DataframeIngestionClient
+from app.main_datastore.main_datastore_proxy import MainDatastoreProxy
 
 TEST_DATA_FILE = Path(__file__).parent / "test_data.csv"
 

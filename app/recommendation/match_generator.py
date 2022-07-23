@@ -1,4 +1,5 @@
 from typing import List, Tuple
+
 from app.main_datastore.main_datastore_proxy import MainDatastoreProxy
 from app.projection.projection_datastore_proxy import ProjectionDatastoreProxy
 from app.recommendation.similarity_engine import SimilarityEngine

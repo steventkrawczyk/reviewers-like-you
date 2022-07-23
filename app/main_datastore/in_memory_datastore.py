@@ -11,7 +11,6 @@ class InMemoryDatastore:
         self.database[author].append((movie, rating))
         self.keys.add(author)
 
-    # TODO Use dynamodb batch upload
     def batch_upload(self, reviews: List[Tuple[str, str, str]]) -> None:
         for review in reviews:
             self.upload(review)

@@ -35,10 +35,13 @@ class ProjectionDatastoreProxy:
         with open(MOVIE_INDICES_FILEPATH, 'w+', encoding='utf-8') as f:
             json.dump(movie_indices, f, ensure_ascii=False, indent=4)
 
-    def upload(self, projection: Dict[str, List[float]], movie_indices: Dict[str, int]) -> None:
-        self._save_data(projection, movie_indices)
+    def _cache_data(self, projection: Dict[str, List[float]], movie_indices: Dict[str, int]) -> None:
         self.projection = projection
         self.movie_indices = movie_indices
+
+    def upload(self, projection: Dict[str, List[float]], movie_indices: Dict[str, int]) -> None:
+        self._save_data(projection, movie_indices)
+        self._cache_data(projection, movie_indices)
 
     def get(self) -> Dict[str, List[float]]:
         if self.reload_on_get:

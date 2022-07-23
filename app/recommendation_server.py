@@ -6,7 +6,6 @@ from flask_restful import Resource, Api
 
 from app.main_datastore.main_datastore_proxy import MainDatastoreProxy
 from app.projection.projection_datastore_proxy import ProjectionDatastoreProxy
-from app.projection.projection_engine import ProjectionEngine
 from app.recommendation.match_generator import MatchGenerator
 
 

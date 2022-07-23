@@ -39,8 +39,8 @@ function App() {
     axios.get(requestUrl).then(response => {
       console.log("SUCCESS", response)
       var responseData = response.data.data
-      setAuthor(responseData.author)
       setRecommendations(responseData.reviews)
+      setAuthor(responseData.author)
     }).catch(error => {
       console.log(error)
     })

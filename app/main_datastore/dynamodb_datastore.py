@@ -26,7 +26,11 @@ class DynamoDbDatastore:
         scanResponse = self.database.scan(ProjectionExpression='author')
         return [item['author'] for item in scanResponse['Items']]
 
-    # TODO Use dynamodb batch upload
     def batch_upload(self, reviews: List[Tuple[str, str, str]]) -> None:
-        for review in reviews:
-            self.upload(review)
+        with localcontext() as ctx:
+            ctx.prec = 3
+            with self.database.batch_writer() as batch:
+                for review in reviews:
+                    reviewData = {'author': review[0], 'movie': review[1],
+                                'rating': ctx.create_decimal(review[2])}
+                    batch.put_item(Item=reviewData)

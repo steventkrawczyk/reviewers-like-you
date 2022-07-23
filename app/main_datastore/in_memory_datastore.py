@@ -13,7 +13,7 @@ class InMemoryDatastore:
 
     def batch_upload(self, reviews: List[Tuple[str, str, str]]) -> None:
         for review in reviews:
-            self.upload(review)
+            self.upload(review[0], review[1], review[2])
 
     def get(self, author: str) -> List[Tuple[str, str]]:
         return self.database[author]

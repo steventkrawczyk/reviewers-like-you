@@ -37,11 +37,10 @@ class MatchGenerator:
         for movie, rating in user_input.items():
             index = self.movie_indices[movie]
             if rating == -1:
-                vector[index] = self.average_vec[index]   
+                vector[index] = self.average_vec[index]
             else:
                 vector[index] = rating
         return vector
-
 
     def get_match(self, user_input: Dict[str, float]) -> Tuple[str, List[Tuple[str, str]]]:
         vector = self._compute_preferences_vector(user_input)

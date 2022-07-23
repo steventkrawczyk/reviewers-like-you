@@ -16,11 +16,11 @@ class ProjectionEngine:
         self.projection_datastore_proxy = projection_datastore_proxy
 
     def create_projection(self) -> None:
-        popular_movies = self.compute_popular_movies()
-        author_vectors, movie_indices = self.build_vectors(popular_movies)
-        self.store_projection(author_vectors, movie_indices)
+        popular_movies = self._compute_popular_movies()
+        author_vectors, movie_indices = self._build_vectors(popular_movies)
+        self._store_projection(author_vectors, movie_indices)
 
-    def compute_popular_movies(self) -> Set[str]:
+    def _compute_popular_movies(self) -> Set[str]:
         popular_movies = set()
 
         # Idea: popular movies are ones that every reviewer has
@@ -38,7 +38,7 @@ class ProjectionEngine:
 
         return popular_movies
 
-    def build_vectors(self, popular_movies: Set[str]) -> Tuple[Dict[str, List[float]], Dict[str, int]]:
+    def _build_vectors(self, popular_movies: Set[str]) -> Tuple[Dict[str, List[float]], Dict[str, int]]:
         movie_indices = dict()
         for index, movie in enumerate(popular_movies):
             movie_indices[movie] = index
@@ -57,5 +57,5 @@ class ProjectionEngine:
 
         return (author_vectors, movie_indices)
 
-    def store_projection(self, author_vectors: Dict[str, List[float]], movie_indices: Dict[str, int]) -> None:
+    def _store_projection(self, author_vectors: Dict[str, List[float]], movie_indices: Dict[str, int]) -> None:
         self.projection_datastore_proxy.upload(author_vectors, movie_indices)

@@ -9,15 +9,9 @@ from app.projection.projection_datastore_proxy import ProjectionDatastoreProxy
 from app.projection.projection_engine import ProjectionEngine
 from app.recommendation.match_generator import MatchGenerator
 
-# NOTE: This approach is only for testing while we don't have a
-# persistent projection DB.
-database = MainDatastoreProxy()
-authors = list(database.get_keys())
-projection_databse = ProjectionDatastoreProxy()
-projection_engine = ProjectionEngine(database, projection_databse)
-projection_engine.create_projection()
-# End test setup
 
+database = MainDatastoreProxy()
+projection_databse = ProjectionDatastoreProxy()
 movies_to_rate = list(projection_databse.get_movie_indices().keys())
 match_generator = MatchGenerator(database, projection_databse)
 

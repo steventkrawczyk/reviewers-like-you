@@ -2,7 +2,7 @@ from flask import Flask
 from flask import jsonify
 from flask import render_template
 from flask import request
-from flask_cors import CORS #comment this on deployment
+from flask_cors import CORS
 import pandas as pd
 from pathlib import Path
 
@@ -11,7 +11,6 @@ from app.main_datastore.dataframe_ingestion_client import DataframeIngestionClie
 from app.projection.projection_datastore_proxy import ProjectionDatastoreProxy
 from app.projection.projection_engine import ProjectionEngine
 from app.recommendation.match_generator import MatchGenerator
-
 
 # NOTE: This approach is only for testing while we don't have a
 # persistent DB.
@@ -31,9 +30,8 @@ movies_to_rate = list(projection_databse.get_movie_indices().keys())
 match_generator = MatchGenerator(database, projection_databse)
 
 app = Flask(__name__)
-CORS(app) #comment this on deployment
+CORS(app)
 
-# Frontend idea: use a for loop to create a list of forms based on movies
 @app.route('/movies', methods=['GET'])
 def movies():
     return jsonify({"message": "",
@@ -41,7 +39,6 @@ def movies():
             "data": movies_to_rate,
             "status": 200})
     
-# Frontend idea: use a for loop to render the of reviews
 @app.route('/match', methods=['GET'])
 def match():
     match_data = {}

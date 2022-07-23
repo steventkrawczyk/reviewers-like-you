@@ -4,6 +4,17 @@ import axios from 'axios'
 
 import FormInput from './FormInput.js';
 
+function createRow(movie, movieRatings, handleChange) {
+  movieRatings[movie] = movie in movieRatings ? movieRatings[movie] : { movie: movie, rating: 0.0, haveSeen: "True" }
+  return <div className="row" key={movie}>
+    <div className="col-sm-8">
+      <FormInput movieRating={movieRatings[movie]}
+        handleChange={handleChange}
+      />
+    </div>
+  </div>
+}
+
 function App() {
   const [movies, setMovies] = useState([])
   const [author, setAuthor] = useState("")
@@ -14,7 +25,7 @@ function App() {
   const handleChange = (evnt) => {
     var movie = evnt.target.id
     var changedProp = evnt.target.name
-    var newValue = changedProp == "rating" ? parseInt(evnt.target.value) : evnt.target.value
+    var newValue = changedProp === "rating" ? parseInt(evnt.target.value) : evnt.target.value
 
     // Copy over existing data for the updated movie and set the changed property
     var newMovieData = { movie: movie, rating: movieRatings[movie].rating, haveSeen: movieRatings[movie].haveSeen }
@@ -27,14 +38,15 @@ function App() {
 
   const handleSubmit = (evnt) => {
     const searchParams = new URLSearchParams();
-    // TODO Filter out movies that the user hasn't seen
-    movies.map(movie => (
-      console.log(movieRatings[movie].rating / 100),
-      searchParams.append(movie, movieRatings[movie].rating / 100)
-    ))
+    movies.map(movie => {
+      if (movieRatings[movie].haveSeen === "True") {
+        searchParams.append(movie, movieRatings[movie].rating / 100)
+      } else {
+        searchParams.append(movie, -1)
+      }
+      return 0
+    })
     var requestUrl = 'http://127.0.0.1:5000/match?' + searchParams.toString()
-    console.log(requestUrl)
-
 
     axios.get(requestUrl).then(response => {
       console.log("SUCCESS", response)
@@ -57,7 +69,7 @@ function App() {
     })
   }, [])
 
-  return (author == "" ?
+  return (author === "" ?
     <React.Fragment>
       <div className="App">
         <header className="App-header">
@@ -65,16 +77,7 @@ function App() {
         </header>
         <p>Please enter your rating for each movie as a score from 0 to 100.</p>
         <div className="container">
-          {movies.map(movie => (
-            movieRatings[movie] = movie in movieRatings ? movieRatings[movie] : { movie: movie, rating: 0.0, haveSeen: "False" },
-            <div className="row" key={movie}>
-              <div className="col-sm-8">
-                <FormInput movieRating={movieRatings[movie]}
-                  handleChange={handleChange}
-                />
-              </div>
-            </div>
-          ))}
+          {movies.map(movie => createRow(movie, movieRatings, handleChange))}
           <input type="submit" value="Submit" onClick={handleSubmit} />
         </div>
       </div>

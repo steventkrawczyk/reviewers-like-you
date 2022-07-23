@@ -1,4 +1,4 @@
-from typing import List, Tuple
+from typing import Dict, List, Tuple
 
 from app.main_datastore.main_datastore_proxy import MainDatastoreProxy
 from app.projection.projection_datastore_proxy import ProjectionDatastoreProxy
@@ -24,16 +24,27 @@ class MatchGenerator:
         self.author_by_index = dict()
         index = 0
         for author, vector in self.projection.items():
-            self.author_by_index[index] = author
-            index += 1
-            vectors.append(vector)
+            if author == "_average":
+                self.average_vec = vector
+            else:
+                self.author_by_index[index] = author
+                index += 1
+                vectors.append(vector)
         self.similarity_engine = SimilarityEngine(vectors)
 
-    def get_match(self, user_input) -> Tuple[str, List[Tuple[str, str]]]:
-        # TODO handle incomplete user input (i.e. did not rate all movies)
+    def _compute_preferences_vector(self, user_input: Dict[str, float]) -> List[float]:
         vector = [0.0] * self.dim
         for movie, rating in user_input.items():
-            vector[self.movie_indices[movie]] = rating
+            index = self.movie_indices[movie]
+            if rating == -1:
+                vector[index] = self.average_vec[index]   
+            else:
+                vector[index] = rating
+        return vector
+
+
+    def get_match(self, user_input: Dict[str, float]) -> Tuple[str, List[Tuple[str, str]]]:
+        vector = self._compute_preferences_vector(user_input)
         index_of_match = self.similarity_engine.get_closest_neighbor(vector)
         author_match = self.author_by_index[index_of_match]
         author_reviews = self.main_datastore.get(author_match)

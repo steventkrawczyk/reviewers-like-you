@@ -18,7 +18,6 @@ class MainDatastoreProxy:
     def upload(self, author: str, movie: str, rating: str) -> None:
         self.datastore.upload(author, movie, rating)
 
-    # TODO Use dynamodb batch upload
     def batch_upload(self, reviews: List[Tuple[str, str, str]]) -> None:
         self.datastore.batch_upload(reviews)
 

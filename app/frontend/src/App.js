@@ -29,7 +29,8 @@ function App() {
     const searchParams = new URLSearchParams();
     // TODO Filter out movies that the user hasn't seen
     movies.map(movie => (
-      searchParams.append(movie, movieRatings[movie].rating)
+      console.log(movieRatings[movie].rating / 100),
+      searchParams.append(movie, movieRatings[movie].rating / 100)
     ))
     var requestUrl = 'http://127.0.0.1:5000/match?' + searchParams.toString()
     console.log(requestUrl)
@@ -91,7 +92,7 @@ function App() {
                 Movie: {recommendation.movie}
               </div>
               <div className="col">
-                Rating: {recommendation.rating}
+                Rating: {recommendation.rating * 100}
               </div>
             </div>
           ))}

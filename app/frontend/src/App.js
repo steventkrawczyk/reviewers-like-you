@@ -42,6 +42,8 @@ function FormInput({movieRating, handleChange}) {
 
 function App() {
   const [movies, setMovies] = useState([])
+  const [author, setAuthor] = useState("")
+  const [recommendations, setRecommendations] = useState([])
 
   // Dictionary of js objects that look like this: {movie: {movie}, rating: 0.0, haveSeen: "False" }
   const [movieRatings, setMovieRatings] = useState({});
@@ -59,6 +61,29 @@ function App() {
     setMovieRatings(newInput)
   }
 
+  const handleSubmit = (evnt) => {
+    console.log("Entered Submit")
+    console.log(movieRatings)
+    const searchParams = new URLSearchParams();
+    // TODO Filter out movies that the user hasn't seen
+    movies.map(movie => (
+      searchParams.append(movie, movieRatings[movie].rating)
+    ))
+    var requestUrl = 'http://127.0.0.1:5000/match?' + searchParams.toString()
+    console.log(requestUrl)
+
+
+    axios.get(requestUrl).then(response => {
+      console.log("SUCCESS", response)
+      var responseData = response.data.data
+      setAuthor(responseData.author)
+      setRecommendations(responseData.reviews)
+    }).catch(error => {
+      console.log(error)
+    })
+
+  }
+
   // First server call to get movies for rating
   useEffect(() => {
     axios.get('http://127.0.0.1:5000/movies').then(response => {
@@ -69,7 +94,7 @@ function App() {
     })
   }, [])
 
-  return (
+  return (author == "" ? 
     <React.Fragment>
       <div className="App">
         <header className="App-header">
@@ -87,9 +112,30 @@ function App() {
               </div>
             </div>
           ))}
+          <input type="submit" value="Submit" onClick={handleSubmit}/>
         </div>
       </div>
-    </React.Fragment>
+    </React.Fragment> :
+   <React.Fragment>
+    <div className="App">
+        <header className="App-header">
+          <h1>Movie Reviewer Matcher</h1>
+        </header>
+        <p>You have matched with reviewer: {author}. Check out their reviews below!</p>
+        <div className="container">
+          {recommendations.map(recommendation => (
+            <div className="row" key={recommendation.movie}>
+              <div className="col">
+                Movie: {recommendation.movie}
+              </div>
+              <div className="col">
+                Rating: {recommendation.rating}
+              </div>
+            </div>
+          ))}
+        </div>
+    </div>
+   </React.Fragment>
   );
 }
 

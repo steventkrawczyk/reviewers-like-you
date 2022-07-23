@@ -10,6 +10,8 @@ TODO: We need our schema to protect against duplicate reviews. Today
 it does not.
 '''
 from collections import defaultdict
+from typing import List, Set, Tuple
+
 
 class MainDatastoreProxy:
     def __init__(self):
@@ -20,12 +22,12 @@ class MainDatastoreProxy:
         self.database[author].append((movie, review))
         self.keys.add(author)
 
-    def batch_upload(self, reviews: [(str, str, str)]) -> None:
+    def batch_upload(self, reviews: List[Tuple[str, str, str]]) -> None:
         for review in reviews:
             self.upload(review)
 
-    def get(self, author: str) -> [(str, str)]:
+    def get(self, author: str) -> List[Tuple[str, str]]:
         return self.database[author]
 
-    def get_keys(self):
+    def get_keys(self) -> Set[str]:
         return self.keys

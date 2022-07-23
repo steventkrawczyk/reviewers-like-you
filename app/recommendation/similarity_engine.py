@@ -1,10 +1,12 @@
+from typing import List
 import numpy as np
+
 
 class SimilarityEngine:
     def __init__(self, vectors):
         self.vectors = vectors
 
-    def get_closest_neighbor(self, input_vector) -> int:
+    def get_closest_neighbor(self, input_vector: List[float]) -> int:
         input_vector = np.array(input_vector)
         current_min_dist = float("inf")
         nn_index = -1

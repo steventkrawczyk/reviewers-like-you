@@ -32,16 +32,18 @@ match_generator = MatchGenerator(database, projection_databse)
 app = Flask(__name__)
 CORS(app)
 
+
 @app.route('/movies', methods=['GET'])
 def movies():
     return jsonify({"message": "",
-            "category": "success",
-            "data": movies_to_rate,
-            "status": 200})
-    
+                    "category": "success",
+                    "data": movies_to_rate,
+                    "status": 200})
+
+
 @app.route('/match', methods=['GET'])
 def match():
-    match_data = {}
+    match_data = ("", [])
     user_input = {}
 
     # TODO cleanse user input
@@ -50,6 +52,14 @@ def match():
         print(user_input)
 
     match_data = match_generator.get_match(user_input)
-    return render_template('review_table.html', author=match_data[0], 
-                           reviews=match_data[1])
-    
+
+    # TODO Revise data schema so that we can support serde more easily
+    responseData = {"author": match_data[0], "reviews": []}
+    for review_tuple in match_data[1]:
+        reviewJson = {"movie": review_tuple[0], "rating": review_tuple[1]}
+        responseData["reviews"].append(reviewJson)
+
+    return jsonify({"message": "",
+                    "category": "success",
+                    "data": responseData,
+                    "status": 200})

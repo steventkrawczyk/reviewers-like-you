@@ -51,7 +51,7 @@ class Batch(Resource):
         for key, arg in request.args.items():
             if key == "filepath":
                 filepath = arg
-        logging.info("Uploading file from " + filepath)
+        logging.debug("Uploading file from " + filepath)
         data = pd.read_csv(filepath, header=0)
         client.upload(data)
         return jsonify({"message": "",

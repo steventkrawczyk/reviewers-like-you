@@ -11,4 +11,4 @@
 
 # Design
 
-https://docs.google.com/document/d/1sPTaOpxOl5q8VmGsr-TLnwGrpLGtXugPjhlEqxvhL1Q/edit?usp=sharing
+https://tinyurl.com/reviewers-like-you

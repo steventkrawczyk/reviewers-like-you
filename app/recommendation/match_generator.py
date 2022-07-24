@@ -1,36 +1,21 @@
 from typing import Dict, List, Tuple
 
 from app.main_datastore.main_datastore_proxy import MainDatastoreProxy
-from app.projection.projection_datastore_proxy import ProjectionDatastoreProxy
 from app.recommendation.similarity_engine import SimilarityEngine
 
 
 class MatchGenerator:
-    # TODO create a factory for this
-    def __init__(self, main_datastore: MainDatastoreProxy, projection_datastore: ProjectionDatastoreProxy):
+    def __init__(self, main_datastore: MainDatastoreProxy,
+                 similarity_engine: SimilarityEngine,
+                 movie_indices: Dict[str, int],
+                 author_by_index: Dict[int, str],
+                 average_vec: List[float]):
         self.main_datastore = main_datastore
-        self.projection_datastore = projection_datastore
-
-        # We cache these because the calls to DB might be expensive
-        # TODO Once a real DB is implemented, evaluate the tradeoff
-        self.projection = self.projection_datastore.get()
-        self.movie_indices = self.projection_datastore.get_movie_indices()
-
+        self.author_by_index = author_by_index
+        self.similarity_engine = similarity_engine
+        self.movie_indices = movie_indices
+        self.average_vec = average_vec
         self.dim = len(self.movie_indices)
-        self._build_similarity_engine()
-
-    def _build_similarity_engine(self) -> None:
-        vectors = []
-        self.author_by_index = dict()
-        index = 0
-        for author, vector in self.projection.items():
-            if author == "_average":
-                self.average_vec = vector
-            else:
-                self.author_by_index[index] = author
-                index += 1
-                vectors.append(vector)
-        self.similarity_engine = SimilarityEngine(vectors)
 
     def _compute_preferences_vector(self, user_input: Dict[str, float]) -> List[float]:
         vector = [0.0] * self.dim

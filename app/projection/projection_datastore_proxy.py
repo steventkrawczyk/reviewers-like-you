@@ -12,12 +12,11 @@ MOVIE_INDICES_FILEPATH = f'data/movie_indices.json'
 
 
 class ProjectionDatastoreProxy:
-    def __init__(self, reload_on_get=False):
+    def __init__(self):
         self.projection = dict()
         self.movie_indices = dict()
         self._load_projection()
         self._load_movie_indices()
-        self.reload_on_get = reload_on_get
 
     def _load_projection(self) -> None:
         if os.path.isfile(PROJECTION_FILEPATH):
@@ -44,11 +43,7 @@ class ProjectionDatastoreProxy:
         self._cache_data(projection, movie_indices)
 
     def get(self) -> Dict[str, List[float]]:
-        if self.reload_on_get:
-            self._load_projection()
         return self.projection
 
     def get_movie_indices(self) -> Dict[str, int]:
-        if self.reload_on_get:
-            self._load_movie_indices()
         return self.movie_indices

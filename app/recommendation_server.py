@@ -6,13 +6,13 @@ from flask_restful import Resource, Api
 
 from app.main_datastore.main_datastore_proxy import MainDatastoreProxy
 from app.projection.projection_datastore_proxy import ProjectionDatastoreProxy
-from app.recommendation.match_generator import MatchGenerator
+from app.recommendation.match_generator_factory import MatchGeneratorFactory
 
 
 database = MainDatastoreProxy()
 projection_databse = ProjectionDatastoreProxy()
 movies_to_rate = list(projection_databse.get_movie_indices().keys())
-match_generator = MatchGenerator(database, projection_databse)
+match_generator = MatchGeneratorFactory(database, projection_databse).build()
 
 app = Flask(__name__)
 CORS(app)

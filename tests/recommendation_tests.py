@@ -3,8 +3,10 @@ from pathlib import Path
 import sys
 import unittest
 
+
+
 sys.path.append("..")
-from app.recommendation.match_generator import MatchGenerator
+from app.recommendation.match_generator_factory import MatchGeneratorFactory
 from app.projection.projection_engine import ProjectionEngine
 from app.projection.projection_datastore_proxy import ProjectionDatastoreProxy
 from app.main_datastore.dataframe_ingestion_client import DataframeIngestionClient
@@ -29,8 +31,9 @@ class ProjectionTests(unittest.TestCase):
         self.projection_engine.create_projection()
 
         # Create match generator
-        self.match_generator = MatchGenerator(
-            self.database, self.projection_databse)
+        self.match_generator = \
+            MatchGeneratorFactory(self.database, 
+                                  self.projection_databse).build()
 
     def test_get_match(self):
         test_user_input = {'bladerunner': 0.4}

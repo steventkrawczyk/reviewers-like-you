@@ -12,10 +12,13 @@ from app.projection.projection_engine import ProjectionEngine
 
 
 def main():
+    print("Initializing...")
     database = MainDatastoreProxy()
     projection_databse = ProjectionDatastoreFactory().build()
     projection_engine = ProjectionEngine(database, projection_databse)
+    print("Creating projection...")
     projection_engine.create_projection()
+    print("Done.")
 
 
 if __name__ == "__main__":

@@ -5,7 +5,7 @@ store.
 '''
 from typing import Dict, List, Tuple
 
-from app.main_datastore.main_datastore_proxy import MainDatastoreProxy
+from app.ingestion.main_datastore_proxy import MainDatastoreProxy
 from app.recommendation.similarity_engine import SimilarityEngine
 
 

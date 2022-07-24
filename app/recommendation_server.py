@@ -13,7 +13,7 @@ from flask import request
 from flask_cors import CORS
 from flask_restful import Resource, Api
 
-from app.main_datastore.main_datastore_proxy import MainDatastoreProxy
+from app.ingestion.main_datastore_proxy import MainDatastoreProxy
 from app.projection.projection_datastore_factory import ProjectionDatastoreFactory
 from app.recommendation.match_generator_factory import MatchGeneratorFactory
 

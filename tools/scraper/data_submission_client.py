@@ -6,8 +6,8 @@ upload at a later time.
 import os
 from pandas import DataFrame
 
-from app.main_datastore.main_datastore_proxy import MainDatastoreProxy
-from app.main_datastore.dataframe_ingestion_client import DataframeIngestionClient
+from app.ingestion.main_datastore_proxy import MainDatastoreProxy
+from app.ingestion.dataframe_ingestion_client import DataframeIngestionClient
 
 class DataSubmissionClient:
     def __init__(self, filepath: str = ""):

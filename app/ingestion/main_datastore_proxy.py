@@ -4,8 +4,8 @@ ingested from web scrapers, manual uploads, and user input.
 '''
 from typing import List, Set, Tuple
 
-from app.main_datastore.dynamodb_datastore import DynamoDbDatastore
-from app.main_datastore.in_memory_datastore import InMemoryDatastore
+from app.ingestion.dynamodb_datastore import DynamoDbDatastore
+from app.ingestion.in_memory_datastore import InMemoryDatastore
 
 
 class MainDatastoreProxy:

@@ -2,7 +2,7 @@
 This class is used to download data from the main datastore and create
 a projection of popular movies to use for similarity computations.
 '''
-from app.main_datastore.main_datastore_proxy import MainDatastoreProxy
+from app.ingestion.main_datastore_proxy import MainDatastoreProxy
 from app.projection.popularity_analyzer import PopularityAnalyzer
 from app.projection.projection_builder import ProjectionBuilder
 from app.projection.projection_datastore_proxy import ProjectionDatastoreProxy

@@ -6,7 +6,7 @@ This tool doesn't take any command line args. To run it, try something
 like this:
     `python -m tools.create_projection`
 '''
-from app.main_datastore.main_datastore_proxy import MainDatastoreProxy
+from app.ingestion.main_datastore_proxy import MainDatastoreProxy
 from app.projection.projection_datastore_factory import ProjectionDatastoreFactory
 from app.projection.projection_engine import ProjectionEngine
 

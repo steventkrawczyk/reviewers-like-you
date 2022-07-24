@@ -7,8 +7,8 @@ import unittest
 sys.path.append("..")
 from app.projection.projection_engine import ProjectionEngine
 from app.projection.projection_datastore_factory import ProjectionDatastoreFactory
-from app.main_datastore.dataframe_ingestion_client import DataframeIngestionClient
-from app.main_datastore.main_datastore_proxy import MainDatastoreProxy
+from app.ingestion.dataframe_ingestion_client import DataframeIngestionClient
+from app.ingestion.main_datastore_proxy import MainDatastoreProxy
 
 TEST_DATA_FILE = Path(__file__).parent / "test_data.csv"
 

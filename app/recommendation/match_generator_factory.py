@@ -2,7 +2,7 @@
 '''
 Factory class for MatchGenerator.
 '''
-from app.main_datastore.main_datastore_proxy import MainDatastoreProxy
+from app.ingestion.main_datastore_proxy import MainDatastoreProxy
 from app.projection.projection_datastore_proxy import ProjectionDatastoreProxy
 from app.recommendation.match_generator import MatchGenerator
 from app.recommendation.similarity_engine import SimilarityEngine

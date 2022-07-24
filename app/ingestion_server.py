@@ -16,8 +16,8 @@ from flask_cors import CORS
 from flask_restful import Resource, Api
 import pandas as pd
 
-from app.main_datastore.main_datastore_proxy import MainDatastoreProxy
-from app.main_datastore.dataframe_ingestion_client import DataframeIngestionClient
+from app.ingestion.main_datastore_proxy import MainDatastoreProxy
+from app.ingestion.dataframe_ingestion_client import DataframeIngestionClient
 
 
 database = MainDatastoreProxy()

@@ -10,11 +10,13 @@ from typing import Dict, List
 
 class ProjectionDatastoreProxy:
     def __init__(self, projection_filepath: str,
-                 movie_indices_filepath: str):
+                 movie_indices_filepath: str,
+                 in_memory: bool):
         self.projection = dict()
         self.movie_indices = dict()
         self.projection_filepath = projection_filepath
         self.movie_indices_filepath = movie_indices_filepath
+        self.in_memory = in_memory
 
     def _load_projection(self) -> None:
         if os.path.isfile(self.projection_filepath):
@@ -39,11 +41,13 @@ class ProjectionDatastoreProxy:
         self.movie_indices = movie_indices
 
     def load_data(self):
-        self._load_projection()
-        self._load_movie_indices()
+        if not self.in_memory:
+            self._load_projection()
+            self._load_movie_indices()
     
     def upload(self, projection: Dict[str, List[float]], movie_indices: Dict[str, int]) -> None:
-        self._save_data(projection, movie_indices)
+        if not self.in_memory:
+            self._save_data(projection, movie_indices)
         self._cache_data(projection, movie_indices)
 
     def get(self) -> Dict[str, List[float]]:

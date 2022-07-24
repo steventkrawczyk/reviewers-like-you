@@ -23,7 +23,7 @@ class ProjectionTests(unittest.TestCase):
 
         # Create projection
         self.authors = list(self.database.get_keys())
-        self.projection_databse = ProjectionDatastoreFactory().build()
+        self.projection_databse = ProjectionDatastoreFactory(in_memory=True).build()
         self.projection_engine = ProjectionEngine(
             self.database, self.projection_databse)
         self.projection_engine.create_projection()

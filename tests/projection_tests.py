@@ -19,7 +19,7 @@ class ProjectionTests(unittest.TestCase):
         self.client = DataframeIngestionClient(self.database)
         self.client.upload(self.test_data)
         self.authors = list(self.database.get_keys())
-        self.projection_databse = ProjectionDatastoreFactory().build()
+        self.projection_databse = ProjectionDatastoreFactory(in_memory=True).build()
         self.projection_engine = ProjectionEngine(
             self.database, self.projection_databse)
 

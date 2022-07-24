@@ -26,6 +26,11 @@ class MatchGenerator:
         vector = [0.0] * self.dim
         for movie, rating in user_input.items():
             index = self.movie_indices[movie]
+            # If we see a -1, it's because the user has not seen the
+            # movie. In this case, we use the average rating across
+            # all reviewers to set a rating for the user. For more on
+            # this approach, see the design doc "Filtering by haveSeen".
+            # https://docs.google.com/document/d/1E5aaVy49jOZzIXVVt2vu35q79hYqHlMsu5b1GxcZmDM/edit?usp=sharing
             if rating == -1:
                 vector[index] = self.average_vec[index]
             else:

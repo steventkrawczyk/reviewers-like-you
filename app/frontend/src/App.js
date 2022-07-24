@@ -42,6 +42,9 @@ function App() {
       if (movieRatings[movie].haveSeen === "True") {
         searchParams.append(movie, movieRatings[movie].rating / 100)
       } else {
+        // We use -1 to indicate that a movie has not been seen. This way, it can be handled by the backend.
+        // For more info, see "Filtering by haveSeen":
+        // https://docs.google.com/document/d/1E5aaVy49jOZzIXVVt2vu35q79hYqHlMsu5b1GxcZmDM/edit?usp=sharing
         searchParams.append(movie, -1)
       }
       return 0

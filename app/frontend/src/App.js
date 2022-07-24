@@ -15,6 +15,44 @@ function createRow(movie, movieRatings, handleChange) {
   </div>
 }
 
+function renderMoviePage(movies, movieRatings, handleChange, handleSubmit) {
+  return <React.Fragment>
+    <div className="App">
+      <header className="App-header">
+        <h1>Movie Reviewer Matcher</h1>
+      </header>
+      <p>Please enter your rating for each movie as a score from 0 to 100.</p>
+      <div className="container">
+        {movies.map(movie => createRow(movie, movieRatings, handleChange))}
+        <input type="submit" value="Submit" onClick={handleSubmit} />
+      </div>
+    </div>
+  </React.Fragment>
+}
+
+function renderMatchPage(author, recommendations) {
+  return <React.Fragment>
+    <div className="App">
+      <header className="App-header">
+        <h1>Movie Reviewer Matcher</h1>
+      </header>
+      <p>You have matched with reviewer: {author}. Check out their reviews below!</p>
+      <div className="container">
+        {recommendations.map(recommendation => (
+          <div className="row" key={recommendation.movie}>
+            <div className="col">
+              Movie: {recommendation.movie}
+            </div>
+            <div className="col">
+              Rating: {recommendation.rating * 100}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </React.Fragment>
+}
+
 function App() {
   const [movies, setMovies] = useState([])
   const [author, setAuthor] = useState("")
@@ -73,39 +111,8 @@ function App() {
   }, [])
 
   return (author === "" ?
-    <React.Fragment>
-      <div className="App">
-        <header className="App-header">
-          <h1>Movie Reviewer Matcher</h1>
-        </header>
-        <p>Please enter your rating for each movie as a score from 0 to 100.</p>
-        <div className="container">
-          {movies.map(movie => createRow(movie, movieRatings, handleChange))}
-          <input type="submit" value="Submit" onClick={handleSubmit} />
-        </div>
-      </div>
-    </React.Fragment> :
-    <React.Fragment>
-      <div className="App">
-        <header className="App-header">
-          <h1>Movie Reviewer Matcher</h1>
-        </header>
-        <p>You have matched with reviewer: {author}. Check out their reviews below!</p>
-        <div className="container">
-          {recommendations.map(recommendation => (
-            <div className="row" key={recommendation.movie}>
-              <div className="col">
-                Movie: {recommendation.movie}
-              </div>
-              <div className="col">
-                Rating: {recommendation.rating * 100}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </React.Fragment>
-  );
+    renderMoviePage(movies, movieRatings, handleChange, handleSubmit) :
+    renderMatchPage(author, recommendations));
 }
 
 export default App;

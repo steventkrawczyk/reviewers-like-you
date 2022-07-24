@@ -1,3 +1,3 @@
 #!/bin/sh
 
-python -m unittest tests.recommendation_tests
+python -m unittest tests.in_memory_tests

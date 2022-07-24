@@ -11,7 +11,6 @@ def create_table(dynamodb=None):
             'dynamodb', endpoint_url="http://localhost:8000")
 
     table = dynamodb.create_table(
-        # TODO Change this to 'movie_reviews_PROD' when we want to create prod table
         TableName='movie_reviews',
         KeySchema=[
             {
@@ -32,10 +31,6 @@ def create_table(dynamodb=None):
                 'AttributeName': 'movie',
                 'AttributeType': 'S'
             }
-            # {
-            #     'AttributeName': 'rating',
-            #     'AttributeType': 'N'
-            # }
         ],
         ProvisionedThroughput={
             'ReadCapacityUnits': 10,

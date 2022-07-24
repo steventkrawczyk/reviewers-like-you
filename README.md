@@ -4,7 +4,7 @@ Make sure you have the good python environment set up (i.e. using Python 3.7 ot 
 
 ## Unit tests
 
-Try unit tests by running `python -m unittest tests.<test_file_name>` from the root dir of this repo
+Try unit tests by running `python -m unittest tests.<test_file_name>` from the root dir of this repo, or run all tests with `pytest tests` 
 
 ## Jupyter notebook
 

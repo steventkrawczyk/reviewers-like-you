@@ -22,5 +22,3 @@ class WebScraper:
     '''
     def scrape_many_entires(self, max_entries: int) -> int:
         pass
-
-

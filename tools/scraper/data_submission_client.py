@@ -9,17 +9,18 @@ from pandas import DataFrame
 from app.ingestion.main_datastore_proxy import MainDatastoreProxy
 from app.ingestion.dataframe_ingestion_client import DataframeIngestionClient
 
+
 class DataSubmissionClient:
     def __init__(self, filepath: str = ""):
         if filepath != "":
             self.filepath = filepath
-        else: 
+        else:
             self.database = MainDatastoreProxy()
             self.client = DataframeIngestionClient(self.database)
 
     def submit(self, data: DataFrame) -> None:
         if self.filepath != "":
-            data.to_csv(self.filepath, mode='a+') 
+            data.to_csv(self.filepath, mode='a+')
         else:
             self.client.upload(data)
 
@@ -27,9 +28,9 @@ class DataSubmissionClient:
         if self.filepath != "":
             # If the file does not exist, create it and add a header
             if not os.path.isfile(self.filepath):
-                with open(self.filepath,'a+') as f:
+                with open(self.filepath, 'a+') as f:
                     f.write(["author", "movie", "rating"])
-            with open(self.filepath,'a') as f:
+            with open(self.filepath, 'a') as f:
                 f.write([author, movie, rating])
         else:
             self.database.upload(author, movie, rating)

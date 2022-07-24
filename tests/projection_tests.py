@@ -3,7 +3,6 @@ from pathlib import Path
 import sys
 import unittest
 
-
 sys.path.append("..")
 from app.projection.projection_engine import ProjectionEngine
 from app.projection.projection_datastore_factory import ProjectionDatastoreFactory

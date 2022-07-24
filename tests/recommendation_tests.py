@@ -3,9 +3,6 @@ from pathlib import Path
 import sys
 import unittest
 
-
-
-
 sys.path.append("..")
 from app.recommendation.match_generator_factory import MatchGeneratorFactory
 from app.projection.projection_engine import ProjectionEngine

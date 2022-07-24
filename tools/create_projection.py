@@ -17,5 +17,6 @@ def main():
     projection_engine = ProjectionEngine(database, projection_databse)
     projection_engine.create_projection()
 
+
 if __name__ == "__main__":
     main()

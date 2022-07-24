@@ -11,6 +11,7 @@ import sys
 from app.ingestion.dataframe_ingestion_client import DataframeIngestionClient
 from app.ingestion.main_datastore_proxy import MainDatastoreProxy
 
+
 def main():
     print("Initializing")
     database = MainDatastoreProxy()
@@ -21,6 +22,7 @@ def main():
     print("Uploading from file: " + file_name)
     client.upload(input_data)
     print("Done")
+
 
 if __name__ == "__main__":
     main()

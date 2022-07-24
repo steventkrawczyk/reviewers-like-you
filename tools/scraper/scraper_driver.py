@@ -14,10 +14,7 @@ def main():
     metrics_helper = ScraperMetricsHelper()
 
     # TODO Logic to kick off web scraper jobs, track and store results
-    # Things to track and store:
-    #   * Number of entires scraped successfully
-    #   * Number of entries not scraped successfully
-    #   * Time take to execute scraping job on X number of entires (time per entry)
+
 
 if __name__ == "__main__":
     main()

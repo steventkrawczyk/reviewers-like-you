@@ -1,6 +1,7 @@
 '''
 Creates a DynamoDb table for the main data store.
 '''
+import logging
 import boto3
 
 
@@ -46,4 +47,4 @@ def create_table(dynamodb=None):
 
 if __name__ == '__main__':
     table = create_table()
-    print("Table status:", table.table_status)
+    logging.info("Table status:", table.table_status)

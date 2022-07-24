@@ -2,6 +2,7 @@
 This is the client for the primary storage for raw input to the system,
 ingested from web scrapers, manual uploads, and user input.
 '''
+import logging
 from typing import List, Set, Tuple
 
 from app.ingestion.dynamodb_datastore import DynamoDbDatastore
@@ -12,8 +13,10 @@ class MainDatastoreProxy:
     def __init__(self, endpoint_url: str = "http://localhost:8000", 
                  table_name: str = "movie_reviews", in_memory=False):
         if in_memory:
+            logging.info("Using in memory mode for main datastore.")
             self.datastore = InMemoryDatastore()
         else:
+            logging.info("Connecting to dynamodb as main datastore.")
             self.datastore = DynamoDbDatastore(endpoint_url, table_name)
 
     def upload(self, author: str, movie: str, rating: str) -> None:

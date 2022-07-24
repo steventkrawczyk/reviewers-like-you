@@ -3,6 +3,7 @@ This class is used as a proxy to the database that stores our
 projection.
 '''
 import json
+import logging
 import os.path
 from typing import Dict, List
 
@@ -17,11 +18,13 @@ class ProjectionDatastoreProxy:
 
     def _load_projection(self) -> None:
         if os.path.isfile(self.projection_filepath):
+            logging.info("Loading projection data from file.")
             with open(self.projection_filepath) as f:
                 self.projection = json.load(f)
 
     def _load_movie_indices(self) -> None:
         if os.path.isfile(self.movie_indices_filepath):
+            logging.info("Loading movie index data from file.")
             with open(self.movie_indices_filepath) as f:
                 self.movie_indices = json.load(f)
     

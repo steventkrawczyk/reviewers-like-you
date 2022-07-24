@@ -3,6 +3,7 @@ This class powers the recommendation backend by finding an author match
 for the user, and enriching the response with data from the main data
 store.
 '''
+import logging
 from typing import Dict, List, Tuple
 
 from app.ingestion.main_datastore_proxy import MainDatastoreProxy
@@ -32,6 +33,7 @@ class MatchGenerator:
             # this approach, see the design doc "Filtering by haveSeen".
             # https://docs.google.com/document/d/1E5aaVy49jOZzIXVVt2vu35q79hYqHlMsu5b1GxcZmDM/edit?usp=sharing
             if rating == -1:
+                logging.warning("Filling missing review for " + movie)
                 vector[index] = self.average_vec[index]
             else:
                 vector[index] = rating

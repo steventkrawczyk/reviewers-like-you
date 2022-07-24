@@ -12,6 +12,7 @@ from flask import jsonify
 from flask import request
 from flask_cors import CORS
 from flask_restful import Resource, Api
+import logging
 
 from app.ingestion.main_datastore_proxy import MainDatastoreProxy
 from app.projection.projection_datastore_factory import ProjectionDatastoreFactory
@@ -46,6 +47,8 @@ class Match(Resource):
             user_input[movie] = float(rating)
 
         match_data = match_generator.get_match(user_input)
+
+        logging.info("User got matched with reviewer: " + str(match_data[0]))
 
         # TODO Revise data schema so that we can support serde more easily
         responseData = {"author": match_data[0], "reviews": []}

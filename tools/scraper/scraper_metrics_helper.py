@@ -1,6 +1,7 @@
 '''
 This class is used to emit metrics about the scraper performance.
 '''
+import logging
 import os
 import time
 
@@ -26,12 +27,10 @@ class ScraperMetricsHelper:
         self.time_in_ns = self.start - time.perf_counter_ns()
         if self.start == 0:
             self.time_in_ns = 0
-            raise RuntimeError(
-                "Cannot call end_timer before calling start_timer")
+            logging.error("You should not call end_timer before calling start_timer")
         self.start = 0
 
     def emit_metric(self, number_of_entries: int, entries_attempted: int) -> None:
         if self.time_in_ns == 0:
-            raise RuntimeError(
-                "Cannot call emit_metric without running timer or passing in time_in_ns")
+            logging.error("You should not call emit_metric without running timer or passing in time_in_ns")
         self.emit_metric(number_of_entries, entries_attempted, self.time_in_ns)

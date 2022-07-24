@@ -25,6 +25,7 @@ class DataSubmissionClient:
         else:
             self.client.upload(data)
 
+    # Preferred method for ingestion service performance.
     def submit_batch(self, reviews: List[Tuple[str, str, str]]) -> None:
         self.database.batch_upload(reviews)
 

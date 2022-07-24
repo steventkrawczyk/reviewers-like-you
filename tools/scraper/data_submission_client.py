@@ -4,7 +4,7 @@ data store, either directly or by saving the data off to a CSV for
 upload at a later time.
 '''
 import os
-from typing import List, Tuple
+from typing import List
 from pandas import DataFrame
 
 from app.ingestion.main_datastore_proxy import MainDatastoreProxy
@@ -27,7 +27,7 @@ class DataSubmissionClient:
             self.client.upload(data)
 
     # Preferred method for ingestion service performance.
-    def submit_batch(self, reviews: List[Tuple[str, str, str]]) -> None:
+    def submit_batch(self, reviews: List[Review]) -> None:
         self.database.batch_upload(reviews)
 
     def submit(self, author: str, movie: str, rating: str) -> None:

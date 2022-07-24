@@ -94,4 +94,3 @@ class IntegrationTests(unittest.TestCase):
 
         assert match[0] == 'steven', 'wrong match'
         logging.info("Success!")
-        assert False

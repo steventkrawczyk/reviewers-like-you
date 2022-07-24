@@ -27,7 +27,7 @@ class DynamoDbDatastore:
     def get(self, author: str) -> List[Review]:
         queryResponse = self.database.query(
             KeyConditionExpression=Key('author').eq(author))
-        return [Review(item['author'], item['movie'], item['rating']) for item in queryResponse['Items']]
+        return [Review.deserialize(item) for item in queryResponse['Items']]
 
     def get_keys(self) -> Set[str]:
         scanResponse = self.database.scan(ProjectionExpression='author')
@@ -36,5 +36,5 @@ class DynamoDbDatastore:
     # TODO work on paging
     def scan(self) -> List[Review]:
         scanResponse = self.database.scan()
-        return [Review(item['author'], item['movie'], item['rating']) for item in scanResponse['Items']]
+        return [Review.deserialize(item) for item in scanResponse['Items']]
 

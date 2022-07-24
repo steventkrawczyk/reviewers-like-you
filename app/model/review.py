@@ -15,3 +15,7 @@ class Review:
             return {'author': self.author, 'movie': self.movie,
                     'rating': ctx.create_decimal_from_float(self.rating)}
 
+    @staticmethod
+    def deserialize(input: Dict[str,object]):
+        return Review(input['author'], input['movie'], float(input['rating']))
+

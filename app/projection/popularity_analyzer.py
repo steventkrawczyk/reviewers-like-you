@@ -6,7 +6,7 @@ space for finding user-reviewer matches.
 import math
 from typing import List, Set
 
-from app.main_datastore.main_datastore_proxy import MainDatastoreProxy
+from app.ingestion.main_datastore_proxy import MainDatastoreProxy
 
 class PopularityAnalyzer:
     def __init__(self, main_datastore_proxy: MainDatastoreProxy):

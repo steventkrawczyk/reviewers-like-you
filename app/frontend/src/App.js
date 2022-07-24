@@ -4,6 +4,7 @@ import axios from 'axios'
 
 import FormInput from './FormInput.js';
 
+// Creates an individual row of form input to rate movies.
 function createRow(movie, movieRatings, handleChange) {
   movieRatings[movie] = movie in movieRatings ? movieRatings[movie] : { movie: movie, rating: 0.0, haveSeen: "True" }
   return <div className="row" key={movie}>
@@ -15,6 +16,7 @@ function createRow(movie, movieRatings, handleChange) {
   </div>
 }
 
+// Displays movies to rate, and accepts form input.
 function renderMoviePage(movies, movieRatings, handleChange, handleSubmit) {
   return <React.Fragment>
     <div className="App">
@@ -30,6 +32,7 @@ function renderMoviePage(movies, movieRatings, handleChange, handleSubmit) {
   </React.Fragment>
 }
 
+// Displays the author match, and creates a table of recommendations.
 function renderMatchPage(author, recommendations) {
   return <React.Fragment>
     <div className="App">
@@ -75,6 +78,7 @@ function App() {
   }
 
   const handleSubmit = (evnt) => {
+    // Build query parameters of the form "MOVIE=RATING" to send to the backend and get a match
     const searchParams = new URLSearchParams();
     movies.map(movie => {
       if (movieRatings[movie].haveSeen === "True") {
@@ -89,6 +93,8 @@ function App() {
     })
     var requestUrl = 'http://127.0.0.1:5000/match?' + searchParams.toString()
 
+    // Set the recommendation and author data. We set recommendations first, so when we set author
+    // the page can be fully rendered.
     axios.get(requestUrl).then(response => {
       console.log("SUCCESS", response)
       var responseData = response.data.data
@@ -110,6 +116,7 @@ function App() {
     })
   }, [])
 
+  // Render the movie or match page, depending on if we've set the author data.
   return (author === "" ?
     renderMoviePage(movies, movieRatings, handleChange, handleSubmit) :
     renderMatchPage(author, recommendations));

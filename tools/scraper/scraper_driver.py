@@ -1,5 +1,9 @@
 '''
 This will be the module used to drive the scraper process.
+
+This tool takes one command line argument, a number of entries to
+scrape. To run it, try something like this:
+    `python -m tools.scraper.scraper_driver 25`
 '''
 import logging
 import sys

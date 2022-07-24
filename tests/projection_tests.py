@@ -3,9 +3,10 @@ from pathlib import Path
 import sys
 import unittest
 
+
 sys.path.append("..")
 from app.projection.projection_engine import ProjectionEngine
-from app.projection.projection_datastore_proxy import ProjectionDatastoreProxy
+from app.projection.projection_datastore_factory import ProjectionDatastoreFactory
 from app.main_datastore.dataframe_ingestion_client import DataframeIngestionClient
 from app.main_datastore.main_datastore_proxy import MainDatastoreProxy
 
@@ -19,7 +20,7 @@ class ProjectionTests(unittest.TestCase):
         self.client = DataframeIngestionClient(self.database)
         self.client.upload(self.test_data)
         self.authors = list(self.database.get_keys())
-        self.projection_databse = ProjectionDatastoreProxy()
+        self.projection_databse = ProjectionDatastoreFactory().build()
         self.projection_engine = ProjectionEngine(
             self.database, self.projection_databse)
 

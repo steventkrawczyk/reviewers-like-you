@@ -33,6 +33,7 @@ class ProjectionBuilder:
                 if movie in movie_indices:
                     author_vector[movie_indices[movie]] = float(rating)
             author_vectors[author] = author_vector
+        return author_vectors
 
     def build_vectors(self, popular_movies: Set[str], authors: List[str]) -> Tuple[Dict[str, List[float]], Dict[str, int]]:
         movie_indices = dict()

@@ -30,7 +30,7 @@ Check out `notebooks/DataPipelineDemo.ipynb` for an overview and demonstration o
 
 1. Before you get started, run either `cp -R hooks/ .git/hooks` or `git config core.hooksPath hooks/` to set up the `pre-push` git hook, which will make sure all tests are passing locally before pushing your changes to remote.
 2. Make your changes and test locally, using `pytest tests`, and `unittest`, as well as manual testing with the local website.
-3. Commit your changes to a feature branch (not `main`).
-4. Follow the steps below to create a github PR: 
-https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request
+3. Commit your changes to a feature branch (not `main`) and push it.
+4. Follow the steps below to create a github PR from your branch:  
+ * https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request
 

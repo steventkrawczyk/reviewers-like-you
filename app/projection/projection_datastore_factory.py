@@ -1,10 +1,6 @@
 '''
 Factory class for ProjectionDatastoreProxy.
 '''
-import json
-import os.path
-from typing import Dict, List
-
 from app.projection.projection_datastore_proxy import ProjectionDatastoreProxy
 
 

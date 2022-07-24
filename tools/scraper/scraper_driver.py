@@ -6,6 +6,7 @@ from tools.scraper.scraper_metrics_helper import ScraperMetricsHelper
 from tools.scraper.web_scraper import WebScraper
 from tools.scraper.web_scraper_engine import WebScraperEngine
 
+BATCH_SIZE = 25
 
 def main():
     data_submission_client = DataSubmissionClient()
@@ -13,7 +14,10 @@ def main():
     web_scraper = WebScraper(data_submission_client, web_scraper_engine)
     metrics_helper = ScraperMetricsHelper()
 
-    # TODO Logic to kick off web scraper jobs, track and store results
+    metrics_helper.start_timer()
+    scraped = web_scraper.scrape_many_entires(BATCH_SIZE)
+    metrics_helper.end_timer()
+    metrics_helper.emit_metric(scraped, BATCH_SIZE)
 
 
 if __name__ == "__main__":

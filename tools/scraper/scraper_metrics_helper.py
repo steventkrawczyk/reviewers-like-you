@@ -7,7 +7,9 @@ import time
 
 
 class ScraperMetricsHelper:
-    def __init__(self, filepath=f'data/scraper_metrics.csv'):
+    def __init__(self, scraper_type: str = "default", 
+                 filepath: str = f'data/scraper_metrics.csv'):
+        self.scraper_type = scraper_type
         self.filepath = filepath
         self.start = 0
         self.time_in_ns = 0
@@ -15,9 +17,9 @@ class ScraperMetricsHelper:
     def emit_metric(self, number_of_entries: int, entries_attempted: int, time_in_ns: int) -> None:
         if not os.path.isfile(self.filepath):
             with open(self.filepath, 'a+') as f:
-                f.write(["number_of_entries", "entries_attempted", "time_in_ns"])
+                f.write(["scraper_type", "number_of_entries", "entries_attempted", "time_in_ns"])
         with open(self.filepath, 'a') as f:
-            f.write([number_of_entries, entries_attempted, time_in_ns])
+            f.write([self.scraper_type, number_of_entries, entries_attempted, time_in_ns])
 
     def start_timer(self) -> None:
         self.start = time.perf_counter_ns()

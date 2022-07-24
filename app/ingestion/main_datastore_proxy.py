@@ -11,7 +11,7 @@ from app.ingestion.in_memory_datastore import InMemoryDatastore
 
 class MainDatastoreProxy:
     def __init__(self, endpoint_url: str = "http://localhost:8000", 
-                 table_name: str = "movie_reviews", in_memory=False):
+                 table_name: str = "movie_reviews", in_memory: bool = False):
         if in_memory:
             logging.info("Using in memory mode for main datastore.")
             self.datastore = InMemoryDatastore()

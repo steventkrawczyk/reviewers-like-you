@@ -1,14 +1,12 @@
+import pandas as pd
+from pathlib import Path
+import unittest
+
 from app.ingestion.main_datastore_proxy import MainDatastoreProxy
 from app.ingestion.dataframe_ingestion_client import DataframeIngestionClient
 from app.projection.projection_datastore_factory import ProjectionDatastoreFactory
 from app.projection.projection_engine import ProjectionEngine
 from app.recommendation.match_generator_factory import MatchGeneratorFactory
-import pandas as pd
-from pathlib import Path
-import sys
-import unittest
-
-sys.path.append("..")
 
 TEST_DATA_FILE = Path(__file__).parent / "test_data.csv"
 

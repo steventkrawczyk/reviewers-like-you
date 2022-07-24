@@ -7,6 +7,7 @@ import logging
 from typing import Dict, List, Tuple
 
 from app.ingestion.main_datastore_proxy import MainDatastoreProxy
+from app.model.review import Review
 from app.recommendation.similarity_engine import SimilarityEngine
 
 
@@ -39,7 +40,7 @@ class MatchGenerator:
                 vector[index] = rating
         return vector
 
-    def get_match(self, user_input: Dict[str, float]) -> Tuple[str, List[Tuple[str, str]]]:
+    def get_match(self, user_input: Dict[str, float]) -> Tuple[str, List[Review]]:
         vector = self._compute_preferences_vector(user_input)
         index_of_match = self.similarity_engine.get_closest_neighbor(vector)
         author_match = self.author_by_index[index_of_match]

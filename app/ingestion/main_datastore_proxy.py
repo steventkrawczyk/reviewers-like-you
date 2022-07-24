@@ -3,10 +3,11 @@ This is the client for the primary storage for raw input to the system,
 ingested from web scrapers, manual uploads, and user input.
 '''
 import logging
-from typing import List, Set, Tuple
+from typing import List, Set
 
 from app.ingestion.dynamodb_datastore import DynamoDbDatastore
 from app.ingestion.in_memory_datastore import InMemoryDatastore
+from app.model.review import Review
 
 
 class MainDatastoreProxy:
@@ -19,13 +20,13 @@ class MainDatastoreProxy:
             logging.info("Connecting to dynamodb as main datastore.")
             self.datastore = DynamoDbDatastore(endpoint_url, table_name)
 
-    def upload(self, author: str, movie: str, rating: str) -> None:
-        self.datastore.upload(author, movie, rating)
+    def upload(self, review: Review) -> None:
+        self.datastore.upload(review)
 
-    def batch_upload(self, reviews: List[Tuple[str, str, str]]) -> None:
+    def batch_upload(self, reviews: List[Review]) -> None:
         self.datastore.batch_upload(reviews)
 
-    def get(self, author: str) -> List[Tuple[str, str]]:
+    def get(self, author: str) -> List[Review]:
         return self.datastore.get(author)
 
     def get_keys(self) -> Set[str]:

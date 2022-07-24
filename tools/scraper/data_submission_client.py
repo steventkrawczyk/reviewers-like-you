@@ -9,6 +9,7 @@ from pandas import DataFrame
 
 from app.ingestion.main_datastore_proxy import MainDatastoreProxy
 from app.ingestion.dataframe_ingestion_client import DataframeIngestionClient
+from app.model.review import Review
 
 
 class DataSubmissionClient:
@@ -38,4 +39,4 @@ class DataSubmissionClient:
             with open(self.filepath, 'a') as f:
                 f.write([author, movie, rating])
         else:
-            self.database.upload(author, movie, rating)
+            self.database.upload(Review(author, movie, rating))

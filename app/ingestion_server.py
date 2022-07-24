@@ -19,6 +19,7 @@ import pandas as pd
 
 from app.ingestion.main_datastore_proxy import MainDatastoreProxy
 from app.ingestion.dataframe_ingestion_client import DataframeIngestionClient
+from app.model.review import Review
 
 
 database = MainDatastoreProxy()
@@ -30,7 +31,7 @@ api = Api(app)
 
 
 class Upload(Resource):
-    def post(self):
+    def put(self):
         author, movie, rating = "", "", ""
         for key, arg in request.args.items():
             if key == "author":
@@ -39,14 +40,14 @@ class Upload(Resource):
                 movie = arg
             elif key == "rating":
                 rating = arg
-        database.upload(author, movie, rating)
+        database.upload(Review(author, movie, rating))
         return jsonify({"message": "",
                         "category": "success",
                         "status": 200})
 
 
 class Batch(Resource):
-    def post(self):
+    def put(self):
         filepath = ""
         for key, arg in request.args.items():
             if key == "filepath":

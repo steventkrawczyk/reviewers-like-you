@@ -29,9 +29,9 @@ class ProjectionBuilder:
             # instead of a scan for keys and a bunch of get_item(key)
             # calls.
             reviews_by_author = self.main_datastore_proxy.get(author)
-            for movie, rating in reviews_by_author:
-                if movie in movie_indices:
-                    author_vector[movie_indices[movie]] = float(rating)
+            for review in reviews_by_author:
+                if review.movie in movie_indices:
+                    author_vector[movie_indices[review.movie]] = review.rating
             author_vectors[author] = author_vector
         return author_vectors
 

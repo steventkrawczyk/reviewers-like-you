@@ -48,12 +48,12 @@ class Match(Resource):
 
         match_data = match_generator.get_match(user_input)
 
-        logging.info("User got matched with reviewer: " + str(match_data[0]))
+        logging.debug("User got matched with reviewer: " + str(match_data[0]))
 
         # TODO Revise data schema so that we can support serde more easily
         responseData = {"author": match_data[0], "reviews": []}
-        for review_tuple in match_data[1]:
-            reviewJson = {"movie": review_tuple[0], "rating": review_tuple[1]}
+        for review in match_data[1]:
+            reviewJson = {"movie": review.movie, "rating": review.rating}
             responseData["reviews"].append(reviewJson)
 
         return jsonify({"message": "",

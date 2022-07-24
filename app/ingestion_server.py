@@ -1,3 +1,14 @@
+'''
+This flask app exposes APIs for data ingestion. It offers two APIs:
+
+upload:
+    * author
+    * movie
+    * rating
+
+batch:
+    * filepath
+'''
 from flask import Flask
 from flask import jsonify
 from flask import request

@@ -20,7 +20,7 @@ class MainDatastoreTests(unittest.TestCase):
         self.client.upload(self.test_data)
 
         author_counts = self.test_data['author'].value_counts()
-        for index, row in self.test_data.iterrows():
+        for _, row in self.test_data.iterrows():
             author = row['author']
             stored_data = self.database.get(author)
             self.assertEqual(len(stored_data), author_counts[author],

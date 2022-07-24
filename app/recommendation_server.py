@@ -1,3 +1,12 @@
+'''
+This flask app exposes APIs for recommendation. It offers two APIs:
+
+movies:
+    no query parameters
+
+match:
+    query parameters are of the form "MOVIE=RATING"
+'''
 from flask import Flask
 from flask import jsonify
 from flask import request

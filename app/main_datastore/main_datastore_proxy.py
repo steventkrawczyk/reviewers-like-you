@@ -9,11 +9,12 @@ from app.main_datastore.in_memory_datastore import InMemoryDatastore
 
 
 class MainDatastoreProxy:
-    def __init__(self, in_memory=False):
+    def __init__(self, endpoint_url: str = "http://localhost:8000", 
+                 table_name: str = "movie_reviews", in_memory=False):
         if in_memory:
             self.datastore = InMemoryDatastore()
         else:
-            self.datastore = DynamoDbDatastore()
+            self.datastore = DynamoDbDatastore(endpoint_url, table_name)
 
     def upload(self, author: str, movie: str, rating: str) -> None:
         self.datastore.upload(author, movie, rating)

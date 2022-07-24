@@ -1,5 +1,7 @@
-from typing import Dict, List, Tuple
 
+'''
+Factory class for MatchGenerator.
+'''
 from app.main_datastore.main_datastore_proxy import MainDatastoreProxy
 from app.projection.projection_datastore_proxy import ProjectionDatastoreProxy
 from app.recommendation.match_generator import MatchGenerator
@@ -11,7 +13,7 @@ class MatchGeneratorFactory:
         self.main_datastore = main_datastore
         self.projection_datastore = projection_datastore
 
-    def build(self):
+    def build(self) -> MatchGenerator:
         vectors = []
         author_by_index = dict()
         index = 0

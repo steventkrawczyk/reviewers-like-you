@@ -1,3 +1,6 @@
+'''
+Creates a DynamoDb table for the main data store.
+'''
 import boto3
 
 
@@ -6,6 +9,7 @@ def create_table(dynamodb=None):
         dynamodb = boto3.resource('dynamodb', endpoint_url="http://localhost:8000")
 
     table = dynamodb.create_table(
+        # TODO Change this to 'movie_reviews_PROD' when we want to create prod table
         TableName='movie_reviews',
         KeySchema=[
             {

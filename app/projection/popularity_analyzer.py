@@ -1,3 +1,8 @@
+'''
+This class encapsulated the logic for creating a list of popular movies
+to use as the rows in our projection of the movie reviews into a vector
+space for finding user-reviewer matches.
+'''
 import math
 from typing import List, Set
 

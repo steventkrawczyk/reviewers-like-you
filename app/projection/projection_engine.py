@@ -9,6 +9,7 @@ from app.projection.popularity_analyzer import PopularityAnalyzer
 from app.projection.projection_builder import ProjectionBuilder
 from app.projection.projection_datastore_proxy import ProjectionDatastoreProxy
 
+
 class ProjectionEngine:
     def __init__(self, main_datastore_proxy: MainDatastoreProxy,
                  projection_datastore_proxy: ProjectionDatastoreProxy):

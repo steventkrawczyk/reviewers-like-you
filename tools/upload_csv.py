@@ -1,3 +1,10 @@
+'''
+Uploads a CSV file to the main data store.
+
+This tool takes one command line argument, a filepath. To run it, try
+something like this:
+    `python -m tools.upload_csv <YOUR_FILEPATH_HERE>`
+'''
 import pandas as pd
 import sys
 

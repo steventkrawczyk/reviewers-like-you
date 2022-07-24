@@ -1,3 +1,8 @@
+'''
+This class powers the recommendation backend by finding an author match
+for the user, and enriching the response with data from the main data
+store.
+'''
 from typing import Dict, List, Tuple
 
 from app.main_datastore.main_datastore_proxy import MainDatastoreProxy

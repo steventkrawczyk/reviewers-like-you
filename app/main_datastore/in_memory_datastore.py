@@ -1,3 +1,6 @@
+'''
+This is an in memory datastore, which is mostly used for debugging.
+'''
 from collections import defaultdict
 from typing import List, Set, Tuple
 

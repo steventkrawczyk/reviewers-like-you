@@ -1,3 +1,6 @@
+'''
+This is our client for DynamoDb.
+'''
 from decimal import localcontext
 import boto3
 from boto3.dynamodb.conditions import Key
@@ -5,10 +8,10 @@ from typing import List, Set, Tuple
 
 
 class DynamoDbDatastore:
-    def __init__(self, ):
+    def __init__(self, endpoint_url: str, table_name: str):
         self.dynamodb = boto3.resource(
-            'dynamodb', endpoint_url="http://localhost:8000")
-        self.database = self.dynamodb.Table("movie_reviews")
+            'dynamodb', endpoint_url=endpoint_url)
+        self.database = self.dynamodb.Table(table_name)
 
     def upload(self, author: str, movie: str, rating: str) -> None:
         with localcontext() as ctx:

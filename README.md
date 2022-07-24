@@ -1,4 +1,11 @@
-# How To Demo
+
+# Design
+
+![image info](./images/SystemDesign.png)
+
+https://tinyurl.com/reviewers-like-you
+
+# How to demo
 
 Make sure you have the good python environment set up (i.e. using Python 3.7 ot later)!
 
@@ -19,8 +26,11 @@ Check out `notebooks/DataPipelineDemo.ipynb` for an overview and demonstration o
 3. Try the flask server by running `FLASK_APP=app/recommendation_server.py flask run`. Currently, the flask app requires you to manually enter user input as query parameters on the URL, like `http://127.0.0.1:5000/match?bladerunner=1`
 4. To run the react app: with the flask app and dynamodb server running, `cd` into the `app/frontend` dir and run `yarn start`. It will open a web page. 
 
-# Design
+# Getting started
 
-![image info](./images/SystemDesign.png)
+1. Before you get started, run either `cp -R hooks/ .git/hooks` or `git config core.hooksPath hooks/` to set up the `pre-push` git hook, which will make sure all tests are passing locally before pushing your changes to remote.
+2. Make your changes and test locally, using `pytest tests`, and `unittest`, as well as manual testing with the local website.
+3. Commit your changes to a feature branch (not `main`).
+4. Follow the steps below to create a github PR: 
+https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request
 
-https://tinyurl.com/reviewers-like-you

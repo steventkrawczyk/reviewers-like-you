@@ -20,4 +20,6 @@ Check out `notebooks/DataPipelineDemo.ipynb` for an overview and demonstration o
 
 # Design
 
+![image info](./images/SystemDesign.png)
+
 https://tinyurl.com/reviewers-like-you

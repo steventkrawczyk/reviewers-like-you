@@ -39,10 +39,25 @@ jobs:
       run: |
         conda install pytest
         pytest
-    - name: Generate coverage report
+    - name: Test with pytest
+      env:
+        AWS_ACCESS_KEY_ID: fakeKeyId
+        AWS_SECRET_ACCESS_KEY: fakeAccessKey
+        AWS_REGION: us-west-2
       run: |
-        pytest --cov > data/cov.txt
+        pytest . --cov > data/cov.txt
     - name: pytest-coverage-commentator
       uses: coroo/pytest-coverage-commentator@v1.0.2
       with:
         pytest-coverage: data/cov.txt
+    - name: pytester-cov
+      uses: programmingwithalex/pytester-cov@v1.2.4
+      id: pytester-cov
+      uses: programmingwithalex/pytester-cov@main
+      with:
+        pytest-root-dir: '.'
+        cov-omit-list: 'tests/*, app/ingestion/main_datastore_proxy.py'
+        cov-threshold-single: 90
+        cov-threshold-total: 95
+
+

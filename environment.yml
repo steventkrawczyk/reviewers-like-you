@@ -9,4 +9,5 @@ dependencies:
   - flask_cors
   - flask-restful
   - docker-py
+  - pytest-cov
 prefix: /Users/stevenkrawczyk/opt/anaconda3/envs/reviewers-like-you-env

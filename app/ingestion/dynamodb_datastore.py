@@ -35,7 +35,7 @@ class DynamoDbDatastore(MainDatastoreProxy):
         return set([item['author'] for item in scanResponse['Items']])
 
     # TODO work on paging
-    def scan(self) -> List[Review]:
-        scanResponse = self.database.scan()
-        return [Review.deserialize(item) for item in scanResponse['Items']]
+    # def scan(self) -> List[Review]:
+    #     scanResponse = self.database.scan()
+    #     return [Review.deserialize(item) for item in scanResponse['Items']]
 

@@ -1,4 +1,4 @@
-name: Testing and Coverage
+name: Testing
 
 on: [push]
 

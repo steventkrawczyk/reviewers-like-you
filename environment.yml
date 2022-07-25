@@ -4,6 +4,7 @@ channels:
 dependencies:
   - conda
   - python=3.9
+  - python.app
   - conda-env
   - conda-build
   - conda-verify
@@ -13,4 +14,5 @@ dependencies:
   - navigator-updater
   - pylint
   - flake8
+  - pytest-cov
 prefix: /Users/stevenkrawczyk/opt/anaconda3

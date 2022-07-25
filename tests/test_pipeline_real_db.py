@@ -2,7 +2,6 @@ import docker
 import logging
 import time
 import unittest
-from botocore.client import Config
 import boto3
 import pandas as pd
 from pathlib import Path

@@ -2,16 +2,10 @@ name: reviewers-like-you-env
 channels:
   - defaults
 dependencies:
-  - conda
-  - python=3.9
-  - conda-env
-  - conda-build
-  - conda-verify
-  - _ipyw_jlab_nb_ext_conf
-  - anaconda==2022.05=py39_0
-  - anaconda-navigator
-  - navigator-updater
-  - pylint
-  - flake8
-  - pytest-cov
-prefix: /Users/stevenkrawczyk/opt/anaconda3
+  - pytest
+  - boto3
+  - pandas
+  - flask
+  - flask_cors
+  - flask-restful
+prefix: /Users/stevenkrawczyk/opt/anaconda3/envs/reviewers-like-you-env

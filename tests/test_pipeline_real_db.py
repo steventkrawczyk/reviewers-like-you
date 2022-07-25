@@ -36,7 +36,8 @@ class IntegrationTests(unittest.TestCase):
     def _container_is_running(self):
         with warnings.catch_warnings():
             warnings.simplefilter('ignore', DeprecationWarning)
-            inspect_results = APIClient().inspect_container("dynamodb-local")
+            client = APIClient()
+            inspect_results = client.inspect_container("dynamodb-local")
         return inspect_results['State']['Running']
 
     def _start_dynamo(self):

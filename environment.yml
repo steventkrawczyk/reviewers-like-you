@@ -8,4 +8,5 @@ dependencies:
   - flask
   - flask_cors
   - flask-restful
+  - docker-py
 prefix: /Users/stevenkrawczyk/opt/anaconda3/envs/reviewers-like-you-env

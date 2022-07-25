@@ -1,4 +1,8 @@
+import warnings
+from docker import APIClient
+from docker.models.containers import Container
 import logging
+import time
 import unittest
 import boto3
 import pandas as pd
@@ -29,8 +33,16 @@ class IntegrationTests(unittest.TestCase):
         logging.info("Tearing down...")
         self._delete_test_table()
 
+    def _container_is_running(self):
+        with warnings.catch_warnings():
+            warnings.simplefilter('ignore', DeprecationWarning)
+            inspect_results = APIClient().inspect_container("dynamodb-local")
+        return inspect_results['State']['Running']
+
     def _start_dynamo(self):
         subprocess.Popen("docker compose up", shell=True)
+        while not self._container_is_running():
+            time.sleep(0.1)
         
     def _create_test_table(self):
         table = self.dynamodb.create_table(

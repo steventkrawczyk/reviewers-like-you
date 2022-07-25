@@ -1,3 +1,4 @@
+import warnings
 import docker
 import logging
 import time
@@ -34,17 +35,21 @@ class IntegrationTests(unittest.TestCase):
     def _start_dynamo_docker_container(self):
         subprocess.Popen("docker compose up", shell=True)
 
-        client = docker.client.DockerClient()
-        while len(client.containers.list()) == 0:
-            time.sleep(0.1)
-        container = client.containers.get("dynamodb-local")
-        assert container.status == "running"
+        with warnings.catch_warnings():
+            warnings.simplefilter('ignore', DeprecationWarning)
+            client = docker.client.DockerClient()
+            while len(client.containers.list()) == 0:
+                time.sleep(0.1)
+            container = client.containers.get("dynamodb-local")
+            assert container.status == "running"
 
     def _stop_and_delete_dynamo_docker_container(self):
-        client = docker.client.DockerClient()
-        container = client.containers.get("dynamodb-local")
-        container.stop()
-        client.containers.prune()
+        with warnings.catch_warnings():
+            warnings.simplefilter('ignore', DeprecationWarning)
+            client = docker.client.DockerClient()
+            container = client.containers.get("dynamodb-local")
+            container.stop()
+            client.containers.prune()
         
     def _create_test_table(self):
         table = self.dynamodb.create_table(

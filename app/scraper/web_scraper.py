@@ -1,8 +1,8 @@
 '''
 This class exposes high level web scraping functionality to the scraper driver.
 '''
-from tools.scraper.data_submission_client import DataSubmissionClient
-from tools.scraper.web_scraper_engine import WebScraperEngine
+from app.scraper.data_submission_client import DataSubmissionClient
+from app.scraper.web_scraper_engine import WebScraperEngine
 
 
 class WebScraper:

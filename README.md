@@ -9,9 +9,16 @@ July 2022
 
 https://tinyurl.com/reviewers-like-you
 
-## How to demo
+## Setup
 
-Make sure you have the good python environment set up (i.e. using Python 3.7 ot later)!
+1. Install anaconda at: https://docs.anaconda.com/anaconda/install/
+2. Run `conda env create -f environment.yml` to create an environment to run our code
+3. Run `conda activate reviewers-like-you-env` to activate the enviroment
+4. Run `conda env list` to verify that the environment was created correctly
+
+Based on: https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#creating-an-environment-from-an-environment-yml-file
+
+## How to demo
 
 ### Unit tests
 

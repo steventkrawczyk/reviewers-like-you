@@ -3,13 +3,15 @@ Steven Krawczyk, Isaac Malsky
 
 July 2022
 
-## Design
+[Discord](https://discord.com/channels/1001211644745109537/1001211645252616224)
+
+[Design doc](https://docs.google.com/document/d/1sPTaOpxOl5q8VmGsr-TLnwGrpLGtXugPjhlEqxvhL1Q/edit)
 
 ![image info](./images/SystemDesign.png)
 
-https://tinyurl.com/reviewers-like-you
+## Getting started
 
-## Setup
+### Setup environment
 
 Make sure you already have python3 installed. Then run the following commands
 1. `pip install virtualenv` (or `pip3 install virtualenv`).
@@ -18,8 +20,6 @@ Make sure you already have python3 installed. Then run the following commands
 4. `pip install -r requirements.txt`
 
 Now you have a virtual environment for running our python code. You will need to activate it by running `source reviewers-like-you-venv/bin/activate` whenever you want to develop in this repo.
-
-## How to demo
 
 ### Unit tests
 
@@ -37,7 +37,7 @@ Check out `notebooks/DataPipelineDemo.ipynb` for an overview and demonstration o
 3. Try the flask server by running `FLASK_APP=app/recommendation_server.py flask run`. Currently, the flask app requires you to manually enter user input as query parameters on the URL, like `http://127.0.0.1:5000/match?bladerunner=1`
 4. To run the react app: with the flask app and dynamodb server running, `cd` into the `app/frontend` dir and run `yarn start`. It will open a web page. For troubleshooting with the frontend, look at the `README.md` in that dir.
 
-## Getting started
+### Submitting changes
 
 1. Before you get started, run either `cp -R hooks/ .git/hooks` or `git config core.hooksPath hooks/` to set up the `pre-push` git hook, which will make sure all tests are passing locally before pushing your changes to remote.
 2. Make your changes and test locally, using `pytest tests`, and `unittest`, as well as manual testing with the local website.

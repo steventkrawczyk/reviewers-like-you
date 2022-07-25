@@ -33,6 +33,7 @@ Check out `notebooks/DataPipelineDemo.ipynb` for an overview and demonstration o
 
 1. Setup a local dynamodb instance by installing docker and kicking off a container with dynamodb by running `docker compose up`
   * You may have to configure your AWS credentials in order to get things working, see https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.DownloadingAndRunning.html
+2. Create a dynamodb table with `python -m tools.create_table`
 2. Populate the DynamoDb table with data using `python -m tools.upload_csv tests/test_data.csv`
 3. Try the flask server by running `FLASK_APP=app/recommendation_server.py flask run`. Currently, the flask app requires you to manually enter user input as query parameters on the URL, like `http://127.0.0.1:5000/match?bladerunner=1`
 4. To run the react app: with the flask app and dynamodb server running, `cd` into the `app/frontend` dir and run `yarn start`. It will open a web page. For troubleshooting with the frontend, look at the `README.md` in that dir.

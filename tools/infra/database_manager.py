@@ -33,8 +33,11 @@ class DatabaseManager:
                 'WriteCapacityUnits': 10
             }
         )
-        return table
+        if 'TableDescription' not in table:
+            raise KeyError('TableDescription')
+        if 'TableStatus' not in table['TableDescription']:
+            raise KeyError('TableStatus')
+        return table['TableDescription']['TableStatus']
 
     def delete_table(self, table_name: str):
         self.dynamodb.delete_table(TableName=table_name)
-        

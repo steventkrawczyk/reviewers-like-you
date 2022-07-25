@@ -30,7 +30,7 @@ class IntegrationTests(unittest.TestCase):
         self._delete_test_table()
 
     def _start_dynamo(self):
-        subprocess.Popen("java -Djava.library.path=./dynamodb/DynamoDBLocal_lib -jar ./dynamodb/DynamoDBLocal.jar -inMemory", shell=True)
+        subprocess.Popen("docker compose up", shell=True)
         
     def _create_test_table(self):
         table = self.dynamodb.create_table(

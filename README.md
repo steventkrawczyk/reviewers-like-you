@@ -11,7 +11,13 @@ https://tinyurl.com/reviewers-like-you
 
 ## Setup
 
-TODO Explain environment setup using `pip`.
+Make sure you already have python3 installed. Then run the following commands
+1. `pip install virtualenv` (or `pip3 install virtualenv`).
+2. `virtualenv reviewers-like-you-venv`
+3. `source reviewers-like-you-venv/bin/activate`
+4. `pip install -r requirements.txt`
+
+Now you have a virtual environment for running our python code. You will need to activate it by running `source reviewers-like-you-venv/bin/activate` whenever you want to develop in this repo.
 
 ## How to demo
 

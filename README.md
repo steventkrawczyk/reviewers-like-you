@@ -35,7 +35,7 @@ Check out `notebooks/DataPipelineDemo.ipynb` for an overview and demonstration o
   * Note: There is already a version of dynamodb in this repo, in `dynamodb/`. Consider using that instead of downloading another copy to your machine.
 2. Populate the DynamoDb table with data using `python -m tools.upload_csv tests/test_data.csv`
 3. Try the flask server by running `FLASK_APP=app/recommendation_server.py flask run`. Currently, the flask app requires you to manually enter user input as query parameters on the URL, like `http://127.0.0.1:5000/match?bladerunner=1`
-4. To run the react app: with the flask app and dynamodb server running, `cd` into the `app/frontend` dir and run `yarn start`. It will open a web page. 
+4. To run the react app: with the flask app and dynamodb server running, `cd` into the `app/frontend` dir and run `yarn start`. It will open a web page. For troubleshooting with the frontend, look at the `README.md` in that dir.
 
 ## Getting started
 

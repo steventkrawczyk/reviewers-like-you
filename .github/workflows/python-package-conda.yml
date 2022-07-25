@@ -29,13 +29,17 @@ jobs:
       run: |
         docker pull amazon/dynamodb-local
     - name: Test with pytest
+      env:
+        AWS_ACCESS_KEY_ID: fakeKeyId
+        AWS_SECRET_ACCESS_KEY: fakeAccessKey
+        AWS_DEFAULT_REGION: us-west-2
       run: |
         pytest
     - name: Generate coverage report
       env:
         AWS_ACCESS_KEY_ID: fakeKeyId
         AWS_SECRET_ACCESS_KEY: fakeAccessKey
-        AWS_REGION: us-west-2
+        AWS_DEFAULT_REGION: us-west-2
       run: |
         pytest . --cov > data/cov.txt
     - name: Add coverage commend

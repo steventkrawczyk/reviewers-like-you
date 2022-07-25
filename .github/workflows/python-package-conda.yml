@@ -47,7 +47,7 @@ jobs:
       with:
         pytest-coverage: data/cov.txt
     - name: Check code coverage
-      uses: programmingwithalex/pytester-cov@main
+      uses: programmingwithalex/pytester-cov@v1.2.4
       with:
         pytest-root-dir: '.'
         cov-omit-list: 'tests/*, app/ingestion/main_datastore_proxy.py'

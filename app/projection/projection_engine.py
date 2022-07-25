@@ -10,11 +10,13 @@ from app.projection.projection_datastore_proxy import ProjectionDatastoreProxy
 
 class ProjectionEngine:
     def __init__(self, main_datastore_proxy: MainDatastoreProxy,
-                 projection_datastore_proxy: ProjectionDatastoreProxy):
+                 projection_datastore_proxy: ProjectionDatastoreProxy,
+                 popularity_analyzer: PopularityAnalyzer,
+                 projection_builder: ProjectionBuilder):
         self.main_datastore_proxy = main_datastore_proxy
         self.projection_datastore_proxy = projection_datastore_proxy
-        self.popularity_analyzer = PopularityAnalyzer(self.main_datastore_proxy)
-        self.projection_builder = ProjectionBuilder(self.main_datastore_proxy)
+        self.popularity_analyzer = popularity_analyzer
+        self.projection_builder = projection_builder
 
     def create_projection(self) -> None:
         authors = list(self.main_datastore_proxy.get_keys())

@@ -8,7 +8,7 @@ from pathlib import Path
 from app.ingestion.main_datastore_factory import MainDatastoreFactory
 from app.ingestion.dataframe_ingestion_client import DataframeIngestionClient
 from app.projection.projection_datastore_factory import ProjectionDatastoreFactory
-from app.projection.projection_engine import ProjectionEngine
+from app.projection.projection_engine_factory import ProjectionEngineFactory
 from app.recommendation.match_generator_factory import MatchGeneratorFactory
 from tools.infra.container_orchestrator import ContainerOrchestrator
 from tools.infra.database_manager import DatabaseManager
@@ -37,8 +37,8 @@ class IntegrationTests(unittest.TestCase):
         client.upload(data)
 
     def _do_projection(self, database, projection_databse):
-        projection_engine = ProjectionEngine(
-                database, projection_databse)
+        projection_engine = ProjectionEngineFactory(
+                database, projection_databse).build()
         projection_engine.create_projection()
 
     def _do_recommendation(self, database, projection_databse):

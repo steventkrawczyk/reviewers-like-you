@@ -51,8 +51,6 @@ jobs:
       with:
         pytest-coverage: data/cov.txt
     - name: pytester-cov
-      uses: programmingwithalex/pytester-cov@v1.2.4
-      id: pytester-cov
       uses: programmingwithalex/pytester-cov@main
       with:
         pytest-root-dir: '.'

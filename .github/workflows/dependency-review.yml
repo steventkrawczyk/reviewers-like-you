@@ -18,3 +18,33 @@ jobs:
         uses: actions/checkout@v3
       - name: 'Dependency Review'
         uses: actions/dependency-review-action@v2
+      - name: python-isort
+        uses: isort/isort-action@v1.0.0
+        with:
+          # Version of isort to use
+          isortVersion: # optional, default is latest
+          # files or directories to sort
+          sortPaths: # optional, default is .
+          # isort configuration options
+          configuration: # optional, default is --check-only --diff
+          # path(s) to requirements files that should be installed to properly configure third-party imports
+          requirementsFiles: # optional, default is 
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8 pytest
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      - name: Pull DynamoDb docker image
+        run: |
+          docker pull amazon/dynamodb-local
+      - name: Generate coverage report
+        env:
+          AWS_ACCESS_KEY_ID: fakeKeyId
+          AWS_SECRET_ACCESS_KEY: fakeAccessKey
+          AWS_DEFAULT_REGION: us-west-2
+        run: |
+          pytest . --cov --cov-branch 
+      - name: Pytest coverage comment
+        uses: MishaKav/pytest-coverage-comment@main
+        with:
+          pytest-coverage-path: data/cov.txt

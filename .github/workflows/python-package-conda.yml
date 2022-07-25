@@ -35,24 +35,3 @@ jobs:
         AWS_DEFAULT_REGION: us-west-2
       run: |
         pytest
-    - name: Generate coverage report
-      env:
-        AWS_ACCESS_KEY_ID: fakeKeyId
-        AWS_SECRET_ACCESS_KEY: fakeAccessKey
-        AWS_DEFAULT_REGION: us-west-2
-      run: |
-        pytest . --cov > data/cov.txt
-    - name: Add coverage comment
-      uses: coroo/pytest-coverage-commentator@v1.0.2
-      with:
-        pytest-coverage: data/cov.txt
-    - name: Check code coverage
-      uses: dima-engineer/pytest-cover@v0.1
-      with:
-        python-version: 3.9
-        pytest-root-dir: '.'
-        cov-omit-list: 'tests/*, app/ingestion/main_datastore_proxy.py'
-        cov-threshold-single: 90
-        cov-threshold-total: 95
-
-

@@ -1,6 +1,4 @@
-import warnings
-from docker import APIClient
-from docker.models.containers import Container
+import docker
 import logging
 import time
 import unittest
@@ -27,22 +25,24 @@ class IntegrationTests(unittest.TestCase):
         self.data = pd.read_csv(TEST_DATA_FILE, header=0)
         self.dynamodb = boto3.client('dynamodb', endpoint_url="http://localhost:8000", region_name="us-west-2")
         self._start_dynamo()
-        self.ddb_table = self._create_test_table()
         
     def tearDown(self):
         logging.info("Tearing down...")
-        self._delete_test_table()
-
-    def _container_is_running(self):
-        with warnings.catch_warnings():
-            warnings.simplefilter('ignore', DeprecationWarning)
-            inspect_results = APIClient().inspect_container("dynamodb-local")
-        return inspect_results['State']['Running']
+        self._stop_dynamo()
 
     def _start_dynamo(self):
         subprocess.Popen("docker compose up", shell=True)
-        while not self._container_is_running():
+
+        client = docker.client.DockerClient()
+        while len(client.containers.list()) == 0:
             time.sleep(0.1)
+
+    def _stop_dynamo(self):
+        client = docker.client.DockerClient()
+        container = client.containers.get("dynamodb-local")
+        container.stop()
+        client.containers.prune()
+        
         
     def _create_test_table(self):
         table = self.dynamodb.create_table(
@@ -93,7 +93,8 @@ class IntegrationTests(unittest.TestCase):
         return match_generator.get_match(test_user_input)
         
     def test_pipeline(self):
-        database = MainDatastoreFactory().build(table_name=TABLE_NAME)
+        self.ddb_table = self._create_test_table()
+        database = MainDatastoreFactory().build(table_name=self.table_name)
         projection_databse = ProjectionDatastoreFactory(
             in_memory=False).build()
 
@@ -106,3 +107,4 @@ class IntegrationTests(unittest.TestCase):
 
         assert match[0] == 'steven', 'wrong match'
         logging.info("Success!")
+        self._delete_test_table()

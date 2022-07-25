@@ -35,6 +35,7 @@ jobs:
         AWS_REGION: us-west-2
       run: |
         conda install pytest
+        pytest
         pytest --cov > data/cov.txt
     - name: pytest-coverage-commentator
       uses: coroo/pytest-coverage-commentator@v1.0.2

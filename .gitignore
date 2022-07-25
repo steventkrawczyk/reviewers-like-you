@@ -132,3 +132,4 @@ dmypy.json
 data/*.json
 data/*.csv
 shared-local-instance.db
+reviewers-like-you-venv/*

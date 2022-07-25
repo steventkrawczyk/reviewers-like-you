@@ -10,9 +10,9 @@ from app.scraper.web_scraper_engine import WebScraperEngine
 MAX_BATCH_SIZE = 25
 
 class ScraperDriver:
-    def __init__(self, data_submission_client: DataSubmissionClient = DataSubmissionClient(),
-                web_scraper_engine: WebScraperEngine = WebScraperEngine(),
-                metrics_helper: ScraperMetricsHelper = ScraperMetricsHelper()):
+    def __init__(self, data_submission_client: DataSubmissionClient,
+                web_scraper_engine: WebScraperEngine,
+                metrics_helper: ScraperMetricsHelper):
         self.metrics_helper = metrics_helper
         self.web_scraper = WebScraper(data_submission_client, web_scraper_engine)
 

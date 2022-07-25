@@ -7,14 +7,21 @@ scrape. To run it, try something like this:
 '''
 import logging
 import sys
+from app.scraper.data_submission_client import DataSubmissionClient
 from app.scraper.scraper_driver import ScraperDriver
+from app.scraper.scraper_metrics_helper import ScraperMetricsHelper
+from app.scraper.web_scraper_engine import WebScraperEngine
 
-BATCH_SIZE = 25
 
 def main():
     logging.info("Initializing...")
+    data_submission_client = DataSubmissionClient()
+    web_scraper_engine = WebScraperEngine()
+    metrics_helper = ScraperMetricsHelper()
+
+    scraper_driver = ScraperDriver(data_submission_client, web_scraper_engine, metrics_helper)
+
     total_entries = int(sys.argv[1:][0])
-    scraper_driver = ScraperDriver()
 
     logging.info("Attempting to scrape " + str(total_entries) + " entries overall.")
     scraper_driver.run(total_entries)

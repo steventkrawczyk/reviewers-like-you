@@ -43,7 +43,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: fakeAccessKey
           AWS_DEFAULT_REGION: us-west-2
         run: |
-          pytest . --cov --cov-branch 
+          pytest . --cov --cov-branch > data/cov.txt
       - name: Pytest coverage comment
         uses: MishaKav/pytest-coverage-comment@main
         with:

@@ -129,5 +129,6 @@ dmypy.json
 .pyre/
 
 # Project specific
-data/*
+data/*.json
+data/*.csv
 shared-local-instance.db

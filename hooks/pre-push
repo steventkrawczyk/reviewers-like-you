@@ -2,3 +2,4 @@
 
 
 pytest
+pytest --cov --cov-branch --cov-fail-under=95

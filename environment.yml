@@ -1,4 +1,4 @@
-name: base
+name: reviewers-like-you-env
 channels:
   - defaults
 dependencies:

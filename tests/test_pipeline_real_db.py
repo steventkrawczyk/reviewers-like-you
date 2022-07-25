@@ -24,20 +24,22 @@ class IntegrationTests(unittest.TestCase):
         self.table_name = TABLE_NAME
         self.data = pd.read_csv(TEST_DATA_FILE, header=0)
         self.dynamodb = boto3.client('dynamodb', endpoint_url="http://localhost:8000", region_name="us-west-2")
-        self._start_dynamo()
+        self._start_dynamo_docker_container()
         
     def tearDown(self):
         logging.info("Tearing down...")
-        self._stop_dynamo()
+        self._stop_and_delete_dynamo_docker_container()
 
-    def _start_dynamo(self):
+    def _start_dynamo_docker_container(self):
         subprocess.Popen("docker compose up", shell=True)
 
         client = docker.client.DockerClient()
         while len(client.containers.list()) == 0:
             time.sleep(0.1)
+        container = client.containers.get("dynamodb-local")
+        assert container.status == "running"
 
-    def _stop_dynamo(self):
+    def _stop_and_delete_dynamo_docker_container(self):
         client = docker.client.DockerClient()
         container = client.containers.get("dynamodb-local")
         container.stop()

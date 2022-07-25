@@ -45,7 +45,6 @@ class IntegrationTests(unittest.TestCase):
         container.stop()
         client.containers.prune()
         
-        
     def _create_test_table(self):
         table = self.dynamodb.create_table(
             TableName=self.table_name,

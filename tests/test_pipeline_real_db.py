@@ -1,18 +1,17 @@
-import warnings
-import docker
 import logging
-import time
+
 import unittest
-import boto3
 import pandas as pd
 from pathlib import Path
-import subprocess
+
 
 from app.ingestion.main_datastore_factory import MainDatastoreFactory
 from app.ingestion.dataframe_ingestion_client import DataframeIngestionClient
 from app.projection.projection_datastore_factory import ProjectionDatastoreFactory
 from app.projection.projection_engine import ProjectionEngine
 from app.recommendation.match_generator_factory import MatchGeneratorFactory
+from tools.infra.container_orchestrator import ContainerOrchestrator
+from tools.infra.database_manager import DatabaseManager
 
 TEST_DATA_FILE = Path(__file__).parent / "test_data.csv"
 TABLE_NAME = 'movie_reviews_test'
@@ -24,65 +23,14 @@ class IntegrationTests(unittest.TestCase):
         self.table_name = TABLE_NAME
         self.data = pd.read_csv(TEST_DATA_FILE, header=0)
 
-        self.dynamodb = boto3.client('dynamodb', endpoint_url="http://localhost:8000", region_name="us-west-2")
-        self._start_dynamo_docker_container()
+        self.orchestrator = ContainerOrchestrator()
+        self.orchestrator.start_containers()
+
+        self.database_manager = DatabaseManager()
         
     def tearDown(self):
         logging.info("Tearing down...")
-        self._stop_and_delete_dynamo_docker_container()
-
-    # TODO There should be a way to do this entirely with the SDK instead of relying on subprocess
-    def _start_dynamo_docker_container(self):
-        subprocess.Popen("docker compose up", shell=True)
-
-        with warnings.catch_warnings():
-            warnings.simplefilter('ignore', DeprecationWarning)
-            client = docker.client.DockerClient()
-            while len(client.containers.list()) == 0:
-                time.sleep(0.1)
-            container = client.containers.get("dynamodb-local")
-            assert container.status == "running"
-
-    def _stop_and_delete_dynamo_docker_container(self):
-        with warnings.catch_warnings():
-            warnings.simplefilter('ignore', DeprecationWarning)
-            client = docker.client.DockerClient()
-            container = client.containers.get("dynamodb-local")
-            container.stop()
-            client.containers.prune()
-        
-    def _create_test_table(self):
-        table = self.dynamodb.create_table(
-            TableName=self.table_name,
-            KeySchema=[
-                {
-                    'AttributeName': 'author',
-                    'KeyType': 'HASH'  # Partition key
-                },
-                {
-                    'AttributeName': 'movie',
-                    'KeyType': 'RANGE'  # Sort key
-                }
-            ],
-            AttributeDefinitions=[
-                {
-                    'AttributeName': 'author',
-                    'AttributeType': 'S'
-                },
-                {
-                    'AttributeName': 'movie',
-                    'AttributeType': 'S'
-                }
-            ],
-            ProvisionedThroughput={
-                'ReadCapacityUnits': 10,
-                'WriteCapacityUnits': 10
-            }
-        )
-        return table
-
-    def _delete_test_table(self):
-        self.dynamodb.delete_table(TableName=self.table_name)
+        self.orchestrator.stop_containers()
 
     def _do_ingestion(self, database, data):
         client = DataframeIngestionClient(database)
@@ -100,7 +48,7 @@ class IntegrationTests(unittest.TestCase):
         return match_generator.get_match(test_user_input)
         
     def test_pipeline(self):
-        self.ddb_table = self._create_test_table()
+        self.database_manager.create_reviews_table(self.table_name)
         database = MainDatastoreFactory().build(table_name=self.table_name)
         projection_databse = ProjectionDatastoreFactory(
             in_memory=False).build()
@@ -114,4 +62,4 @@ class IntegrationTests(unittest.TestCase):
 
         assert match[0] == 'steven', 'wrong match'
         logging.info("Success!")
-        self._delete_test_table()
+        self.database_manager.delete_table(self.table_name)

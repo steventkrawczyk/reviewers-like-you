@@ -28,7 +28,7 @@ jobs:
     - name: Pull DynamoDb docker image and create container
       run: |
         docker pull amazon/dynamodb-local
-        docker compose up
+        docker compose up -d
     - name: Test with pytest
       env:
         AWS_ACCESS_KEY_ID: fakeKeyId

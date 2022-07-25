@@ -47,7 +47,7 @@ jobs:
       with:
         pytest-coverage: data/cov.txt
     - name: Check code coverage
-      uses: dima-engineer/pytest-cover@main
+      uses: dima-engineer/pytest-cover@v0.1
       with:
         python-version: 3.9
         pytest-root-dir: '.'

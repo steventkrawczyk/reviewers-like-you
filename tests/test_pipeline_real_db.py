@@ -30,6 +30,7 @@ class IntegrationTests(unittest.TestCase):
         logging.info("Tearing down...")
         self._stop_and_delete_dynamo_docker_container()
 
+    # TODO There should be a way to do this entirely with the SDK instead of relying on subprocess
     def _start_dynamo_docker_container(self):
         subprocess.Popen("docker compose up", shell=True)
 

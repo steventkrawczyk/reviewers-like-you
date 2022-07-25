@@ -11,12 +11,7 @@ https://tinyurl.com/reviewers-like-you
 
 ## Setup
 
-1. Install anaconda at: https://docs.anaconda.com/anaconda/install/
-2. Run `conda env create -f environment.yml` to create an environment to run our code
-3. Run `conda activate reviewers-like-you-env` to activate the enviroment
-4. Run `conda env list` to verify that the environment was created correctly
-
-Based on: https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#creating-an-environment-from-an-environment-yml-file
+TODO Explain environment setup using `pip`.
 
 ## How to demo
 

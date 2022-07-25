@@ -2,6 +2,7 @@ import docker
 import logging
 import time
 import unittest
+from botocore.client import Config
 import boto3
 import pandas as pd
 from pathlib import Path
@@ -13,7 +14,6 @@ from app.projection.projection_datastore_factory import ProjectionDatastoreFacto
 from app.projection.projection_engine import ProjectionEngine
 from app.recommendation.match_generator_factory import MatchGeneratorFactory
 
-
 TEST_DATA_FILE = Path(__file__).parent / "test_data.csv"
 TABLE_NAME = 'movie_reviews_test'
 
@@ -23,6 +23,7 @@ class IntegrationTests(unittest.TestCase):
         logging.info("Initializing...")
         self.table_name = TABLE_NAME
         self.data = pd.read_csv(TEST_DATA_FILE, header=0)
+
         self.dynamodb = boto3.client('dynamodb', endpoint_url="http://localhost:8000", region_name="us-west-2")
         self._start_dynamo_docker_container()
         

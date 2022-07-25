@@ -1,0 +1,43 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.9.12, pytest-7.1.1, pluggy-1.0.0
+rootdir: /Users/stevenkrawczyk/Development/reviewers-like-you
+plugins: anyio-3.5.0, cov-3.0.0
+collected 2 items
+
+tests/test_pipeline_in_memory.py .                                       [ 50%]
+tests/test_pipeline_real_db.py .                                         [100%]Initializing DynamoDB Local with the following configuration:
+Port:	8000
+InMemory:	true
+DbPath:	null
+SharedDb:	false
+shouldDelayTransientStatuses:	false
+CorsParams:	*
+
+
+
+---------- coverage: platform darwin, python 3.9.12-final-0 ----------
+Name                                             Stmts   Miss  Cover
+--------------------------------------------------------------------
+app/__init__.py                                      0      0   100%
+app/ingestion/dataframe_ingestion_client.py          9      0   100%
+app/ingestion/dynamodb_datastore.py                 26      4    85%
+app/ingestion/in_memory_datastore.py                18      0   100%
+app/ingestion/main_datastore_factory.py             13      0   100%
+app/ingestion/main_datastore_proxy.py               16      4    75%
+app/model/review.py                                 15      0   100%
+app/projection/popularity_analyzer.py               18      0   100%
+app/projection/projection_builder.py                31      0   100%
+app/projection/projection_datastore_factory.py      10      0   100%
+app/projection/projection_datastore_proxy.py        41      0   100%
+app/projection/projection_engine.py                 15      0   100%
+app/recommendation/match_generator.py               28      2    93%
+app/recommendation/match_generator_factory.py       22      0   100%
+app/recommendation/similarity_engine.py             16      0   100%
+tests/__init__.py                                    0      0   100%
+tests/test_pipeline_in_memory.py                    31      1    97%
+tests/test_pipeline_real_db.py                      52      0   100%
+--------------------------------------------------------------------
+TOTAL                                              361     11    97%
+
+
+============================== 2 passed in 1.12s ===============================

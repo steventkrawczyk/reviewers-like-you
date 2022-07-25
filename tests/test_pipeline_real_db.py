@@ -22,7 +22,7 @@ class IntegrationTests(unittest.TestCase):
         self.table_name = TABLE_NAME
         self.data = pd.read_csv(TEST_DATA_FILE, header=0)
         self.dynamodb = boto3.client('dynamodb', endpoint_url="http://localhost:8000", region_name="us-west-2")
-        self.ddb_open = self._start_dynamo()
+        self._start_dynamo()
         self.ddb_table = self._create_test_table()
         
     def tearDown(self):

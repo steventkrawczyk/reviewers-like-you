@@ -14,12 +14,12 @@ from flask_cors import CORS
 from flask_restful import Resource, Api
 import logging
 
-from app.ingestion.main_datastore_proxy import MainDatastoreProxy
+from app.ingestion.main_datastore_factory import MainDatastoreFactory
 from app.projection.projection_datastore_factory import ProjectionDatastoreFactory
 from app.recommendation.match_generator_factory import MatchGeneratorFactory
 
 
-database = MainDatastoreProxy()
+database = MainDatastoreFactory().build()
 projection_databse = ProjectionDatastoreFactory().build()
 movies_to_rate = list(projection_databse.get_movie_indices().keys())
 match_generator = MatchGeneratorFactory(database, projection_databse).build()

@@ -7,14 +7,14 @@ like this:
     `python -m tools.create_projection`
 '''
 import logging
-from app.ingestion.main_datastore_proxy import MainDatastoreProxy
+from app.ingestion.main_datastore_factory import MainDatastoreFactory
 from app.projection.projection_datastore_factory import ProjectionDatastoreFactory
 from app.projection.projection_engine import ProjectionEngine
 
 
 def main():
     logging.info("Initializing...")
-    database = MainDatastoreProxy()
+    database = MainDatastoreFactory().build()
     projection_databse = ProjectionDatastoreFactory().build()
     projection_engine = ProjectionEngine(database, projection_databse)
     logging.info("Creating projection...")

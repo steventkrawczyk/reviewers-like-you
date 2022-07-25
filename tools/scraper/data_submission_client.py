@@ -7,7 +7,7 @@ import os
 from typing import List
 from pandas import DataFrame
 
-from app.ingestion.main_datastore_proxy import MainDatastoreProxy
+from app.ingestion.main_datastore_factory import MainDatastoreFactory
 from app.ingestion.dataframe_ingestion_client import DataframeIngestionClient
 from app.model.review import Review
 
@@ -17,7 +17,7 @@ class DataSubmissionClient:
         if filepath != "":
             self.filepath = filepath
         else:
-            self.database = MainDatastoreProxy()
+            self.database = MainDatastoreFactory().build()
             self.client = DataframeIngestionClient(self.database)
 
     def submit_dataframe(self, data: DataFrame) -> None:

@@ -10,12 +10,12 @@ import pandas as pd
 import sys
 
 from app.ingestion.dataframe_ingestion_client import DataframeIngestionClient
-from app.ingestion.main_datastore_proxy import MainDatastoreProxy
+from app.ingestion.main_datastore_factory import MainDatastoreFactory
 
 
 def main():
     logging.info("Initializing...")
-    database = MainDatastoreProxy()
+    database = MainDatastoreFactory().build()
     client = DataframeIngestionClient(database)
     file_name = sys.argv[1:][0]
     input_data = pd.read_csv(file_name, header=0)

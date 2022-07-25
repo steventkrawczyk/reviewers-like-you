@@ -17,12 +17,12 @@ from flask_cors import CORS
 from flask_restful import Resource, Api
 import pandas as pd
 
-from app.ingestion.main_datastore_proxy import MainDatastoreProxy
+from app.ingestion.main_datastore_factory import MainDatastoreFactory
 from app.ingestion.dataframe_ingestion_client import DataframeIngestionClient
 from app.model.review import Review
 
 
-database = MainDatastoreProxy()
+database = MainDatastoreFactory().build()
 client = DataframeIngestionClient(database)
 
 app = Flask(__name__)

@@ -5,7 +5,7 @@ import pandas as pd
 from pathlib import Path
 import subprocess
 
-from app.ingestion.main_datastore_proxy import MainDatastoreProxy
+from app.ingestion.main_datastore_factory import MainDatastoreFactory
 from app.ingestion.dataframe_ingestion_client import DataframeIngestionClient
 from app.projection.projection_datastore_factory import ProjectionDatastoreFactory
 from app.projection.projection_engine import ProjectionEngine
@@ -81,7 +81,7 @@ class IntegrationTests(unittest.TestCase):
         return match_generator.get_match(test_user_input)
         
     def test_pipeline(self):
-        database = MainDatastoreProxy(table_name=TABLE_NAME, in_memory=False)
+        database = MainDatastoreFactory().build(table_name=TABLE_NAME)
         projection_databse = ProjectionDatastoreFactory(
             in_memory=False).build()
 

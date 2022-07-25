@@ -4,11 +4,12 @@ This is our client for DynamoDb.
 import boto3
 from boto3.dynamodb.conditions import Key
 from typing import List, Set
+from app.ingestion.main_datastore_proxy import MainDatastoreProxy
 
 from app.model.review import Review
 
 
-class DynamoDbDatastore:
+class DynamoDbDatastore(MainDatastoreProxy):
     def __init__(self, endpoint_url: str, table_name: str):
         self.dynamodb = boto3.resource(
             'dynamodb', endpoint_url=endpoint_url)

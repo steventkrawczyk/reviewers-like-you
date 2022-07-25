@@ -3,11 +3,12 @@ This is an in memory datastore, which is mostly used for debugging.
 '''
 from collections import defaultdict
 from typing import List, Set
+from app.ingestion.main_datastore_proxy import MainDatastoreProxy
 
 from app.model.review import Review
 
 
-class InMemoryDatastore:
+class InMemoryDatastore(MainDatastoreProxy):
     def __init__(self, ):
         self.database = defaultdict(list)
         self.keys = set()

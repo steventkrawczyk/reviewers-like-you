@@ -46,4 +46,3 @@ jobs:
         uses: MishaKav/pytest-coverage-comment@main
         with:
           pytest-coverage-path: data/cov.txt
-

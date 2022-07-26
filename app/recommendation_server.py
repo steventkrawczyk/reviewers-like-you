@@ -52,9 +52,9 @@ class Match(Resource):
 
         # TODO Revise data schema so that we can support serde more easily
         responseData = {"author": match_data[0], "reviews": []}
-        # for review in match_data[1]:
-        #     reviewJson = {"movie": review.movie, "rating": review.rating}
-        #     responseData["reviews"].append(reviewJson)
+        for review in match_data[1]:
+            reviewJson = {"movie": review.movie, "rating": review.rating}
+            responseData["reviews"].append(reviewJson)
 
         return jsonify({"message": "",
                         "category": "success",

@@ -1,5 +1,5 @@
 import logging
-from flask import Flask
+from flask import Flask, request
 from flask import jsonify
 from flask_cors import CORS
 from flask_restful import Resource, Api
@@ -14,14 +14,21 @@ api = Api(app)
 
 main_datastore_proxy = MainDatastoreFactory().build()
 projection_datastore_proxy = ProjectionDatastoreFactory().build()
-projection_engine = ProjectionEngineFactory(main_datastore_proxy, projection_datastore_proxy)
+projection_engine = ProjectionEngineFactory(main_datastore_proxy, projection_datastore_proxy).build()
 
 
 class Create(Resource):
     def put(self):
+        async_execution = False
+
+        for key, arg in request.args.items():
+            if key == "async":
+                async_execution = bool(arg)
+
         logging.info("Creating projection...")
         projection_engine.create_projection()
         logging.info("Done!")
+
         return jsonify({"message": "",
                 "category": "success",
                 "status": 200})

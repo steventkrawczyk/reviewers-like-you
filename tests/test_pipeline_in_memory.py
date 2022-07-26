@@ -28,19 +28,17 @@ class InMemoryTests(unittest.TestCase):
             self.database, self.projection_databse).build()
         self.projection_engine.create_projection()
 
-    def _do_recommendation(self):
-        self.match_generator = \
-            MatchGeneratorFactory(self.database,
-                                  self.projection_databse).build()
-        test_user_input = {'bladerunner': 0.4}
-        match = self.match_generator.get_match(test_user_input)
-        self.assertEqual(match[0], 'steven',
-                         'wrong match')
-    
+    def _do_recommendation(self, test_user_input):
+        self.match_generator = MatchGeneratorFactory(
+            self.database, self.projection_databse).build()
+        return self.match_generator.get_match(test_user_input)
+
     def test_pipeline(self):
         self._do_ingestion()
         self._do_projection()
-        self._do_recommendation()
+        test_user_input = {'bladerunner': 0.4}
+        match = self._do_recommendation(test_user_input)
+        self.assertEqual(match[0], 'steven', 'wrong match')
 
 
 if __name__ == '__main__':

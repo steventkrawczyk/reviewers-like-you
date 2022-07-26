@@ -1,5 +1,4 @@
 #!/bin/sh
 
 
-pytest
-pytest --cov --cov-branch --cov-fail-under=95
+pytest tests/test_pipeline_in_memory.py

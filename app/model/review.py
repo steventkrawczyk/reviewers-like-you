@@ -19,3 +19,7 @@ class Review:
     def deserialize(input: Dict[str,object]):
         return Review(input['author'], input['movie'], float(input['rating']))
 
+    @staticmethod
+    def deserialize(author: str, movie: str, rating: str):
+        return Review(author, movie, float(rating))
+

@@ -46,15 +46,18 @@ class Match(Resource):
         for movie, rating in request.args.items():
             user_input[movie] = float(rating)
 
+
+        print("Matching for " + str(user_input))
         match_data = match_generator.get_match(user_input)
+        print("match_data " + str(match_data))
 
         logging.debug("User got matched with reviewer: " + str(match_data[0]))
 
         # TODO Revise data schema so that we can support serde more easily
         responseData = {"author": match_data[0], "reviews": []}
-        for review in match_data[1]:
-            reviewJson = {"movie": review.movie, "rating": review.rating}
-            responseData["reviews"].append(reviewJson)
+        # for review in match_data[1]:
+        #     reviewJson = {"movie": review.movie, "rating": review.rating}
+        #     responseData["reviews"].append(reviewJson)
 
         return jsonify({"message": "",
                         "category": "success",

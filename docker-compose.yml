@@ -7,5 +7,58 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - "./docker/dynamodb:/home/dynamodblocal/data"
+      - "./data/dynamodb:/home/dynamodblocal/data"
     working_dir: /home/dynamodblocal
+  ingestion:
+    environment:
+      AWS_ACCESS_KEY_ID: fakeKeyId
+      AWS_SECRET_ACCESS_KEY: fakeAccessKey
+      AWS_DEFAULT_REGION: us-west-2
+    depends_on:
+      - dynamodb-local
+    links:
+      - "dynamodb-local"
+    build: config/ingestion
+    volumes:
+      - .:/reviewers-like-you
+    ports:
+      - "5001:5001"
+  projection:
+    environment:
+      AWS_ACCESS_KEY_ID: fakeKeyId
+      AWS_SECRET_ACCESS_KEY: fakeAccessKey
+      AWS_DEFAULT_REGION: us-west-2
+    depends_on:
+      - dynamodb-local
+    links:
+      - "dynamodb-local"
+    build: config/projection
+    volumes:
+      - .:/reviewers-like-you
+    ports:
+      - "5002:5002" 
+  recommendation:
+    environment:
+      AWS_ACCESS_KEY_ID: fakeKeyId
+      AWS_SECRET_ACCESS_KEY: fakeAccessKey
+      AWS_DEFAULT_REGION: us-west-2
+    depends_on:
+      - dynamodb-local
+    links:
+      - "dynamodb-local"
+    build: config/recommendation
+    volumes:
+      - .:/reviewers-like-you
+    ports:
+      - "5000:5000"
+  scraper:
+    environment:
+      AWS_ACCESS_KEY_ID: fakeKeyId
+      AWS_SECRET_ACCESS_KEY: fakeAccessKey
+      AWS_DEFAULT_REGION: us-west-2
+    build: config/scraper
+    volumes:
+      - .:/reviewers-like-you
+    ports:
+      - "5003:5003"
+    

@@ -40,8 +40,8 @@ class Upload(Resource):
                 movie = arg
             elif key == "rating":
                 rating = arg
-        review = Review(author, movie, rating)
-        logging.debug("Uploading review " + review)
+        review = Review.deserialize(author, movie, rating)
+        logging.debug("Uploading review " + str(review))
         database.upload(review)
         return jsonify({"message": "",
                         "category": "success",
@@ -49,14 +49,22 @@ class Upload(Resource):
 
 
 class Batch(Resource):
+    def _extract_and_upload(self, filepath: str):
+        data = pd.read_csv(filepath, header=0)
+        client.upload(data)
+
     def put(self):
         filepath = ""
+        async_execution = False
+
         for key, arg in request.args.items():
             if key == "filepath":
                 filepath = arg
+            if key == "async":
+                async_execution = bool(arg)
+
         logging.debug("Uploading file from " + filepath)
-        data = pd.read_csv(filepath, header=0)
-        client.upload(data)
+        self._extract_and_upload(filepath)
         return jsonify({"message": "",
                         "category": "success",
                         "status": 200})

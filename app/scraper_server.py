@@ -22,11 +22,15 @@ scraper_driver = ScraperDriver(data_submission_client, web_scraper_engine, metri
 
 
 class Scrape(Resource):
-    def put(self):
+    async def put(self):
         count = 0
+        async_execution = False
+        
         for key, arg in request.args.items():
             if key == "count":
                 count = arg
+            if key == "async":
+                async_execution = bool(arg)
         
         logging.info("Attempting to scrape " + str(count) + " entries overall.")
         scraper_driver.run(count)

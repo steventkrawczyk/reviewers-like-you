@@ -13,6 +13,8 @@ July 2022
 
 ### Setup environment
 
+#### Python
+
 Make sure you already have python3 installed. Then run the following commands
 1. `pip install virtualenv` (or `pip3 install virtualenv`).
 2. `virtualenv reviewers-like-you-venv`
@@ -20,6 +22,14 @@ Make sure you already have python3 installed. Then run the following commands
 4. `pip install -r requirements.txt`
 
 Now you have a virtual environment for running our python code. You will need to activate it by running `source reviewers-like-you-venv/bin/activate` whenever you want to develop in this repo.
+
+#### Docker
+
+Make sure you have docker installed and setup. You will need to build our base image before you can launch the backend containers. Run `docker build --no-cache --tag reviewers-like-you .`. This process will take a while, because we have to build and install some large dependencies. Fortunately, you should only have to do this once, unless our python dependencies or other base image requirements change.
+
+#### React
+
+You'll need `npm` and/or `yarn` to work with the react app. You can learn more in `app/frontend/README.md`. Our app was setup using [this tool](https://github.com/facebook/create-react-app).
 
 ### Unit tests
 

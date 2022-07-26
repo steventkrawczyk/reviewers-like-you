@@ -56,6 +56,10 @@ services:
       AWS_ACCESS_KEY_ID: fakeKeyId
       AWS_SECRET_ACCESS_KEY: fakeAccessKey
       AWS_DEFAULT_REGION: us-west-2
+    depends_on:
+      - dynamodb-local
+    links:
+      - "dynamodb-local"
     build: config/scraper
     volumes:
       - .:/reviewers-like-you

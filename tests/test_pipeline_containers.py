@@ -49,7 +49,7 @@ class IntegrationTests(unittest.TestCase):
         self.assertEqual(response.status, 200)
 
     def _do_ingestion_single_review(self, review):
-        query_parameters = urllib.parse.urlencode(review.serialize())
+        query_parameters = urllib.parse.urlencode(review.to_dict())
         request = URL_BASE + INGESTION_PORT + UPLOAD_API + query_parameters
         response = self.http.request('PUT', request)
         self.assertEqual(response.status, 200)

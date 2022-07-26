@@ -18,19 +18,19 @@ class DynamoDbDatastore(MainDatastoreProxy):
         return
 
     def upload(self, review: Review) -> None:
-        reviewData = review.serialize()
+        reviewData = review.to_dict()
         self.database.put_item(Item=reviewData)
 
     def batch_upload(self, reviews: List[Review]) -> None:
         with self.database.batch_writer() as batch:
             for review in reviews:
-                reviewData = review.serialize()
+                reviewData = review.to_dict()
                 batch.put_item(Item=reviewData)
 
     def get(self, author: str) -> List[Review]:
         queryResponse = self.database.query(
             KeyConditionExpression=Key('author').eq(author))
-        return [Review.deserialize(item) for item in queryResponse['Items']]
+        return [Review.from_dict(item) for item in queryResponse['Items']]
 
     def get_keys(self) -> Set[str]:
         scanResponse = self.database.scan(ProjectionExpression='author')
@@ -39,4 +39,4 @@ class DynamoDbDatastore(MainDatastoreProxy):
     # TODO work on paging
     # def scan(self) -> List[Review]:
     #     scanResponse = self.database.scan()
-    #     return [Review.deserialize(item) for item in scanResponse['Items']]
+    #     return [Review.from_dict(item) for item in scanResponse['Items']]

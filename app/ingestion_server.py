@@ -32,15 +32,8 @@ api = Api(app)
 
 class Upload(Resource):
     def put(self):
-        author, movie, rating = "", "", ""
-        for key, arg in request.args.items():
-            if key == "author":
-                author = arg
-            elif key == "movie":
-                movie = arg
-            elif key == "rating":
-                rating = arg
-        review = Review.build(author, movie, rating)
+        # TODO Cleanse input
+        review = Review.from_dict(request.args)
         logging.debug("Uploading review " + str(review))
         database.upload(review)
         return jsonify({"message": "",

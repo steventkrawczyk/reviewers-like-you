@@ -9,16 +9,12 @@ class Review:
     movie: str
     rating: float
 
-    def serialize(self) -> Dict[str, object]:
+    def to_dict(self) -> Dict[str, object]:
         with localcontext() as ctx:
             ctx.prec = 3
             return {'author': self.author, 'movie': self.movie,
                     'rating': ctx.create_decimal_from_float(self.rating)}
 
     @staticmethod
-    def deserialize(input: Dict[str, object]):
+    def from_dict(input: Dict[str, object]):
         return Review(input['author'], input['movie'], float(input['rating']))
-
-    @staticmethod
-    def build(author: str, movie: str, rating: str):
-        return Review(author, movie, float(rating))

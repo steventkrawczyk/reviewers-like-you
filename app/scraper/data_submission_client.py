@@ -1,8 +1,3 @@
-'''
-This class offers the scraper an API for submitting data to the main
-data store, either directly or by saving the data off to a CSV for
-upload at a later time.
-'''
 import os
 from typing import List
 from pandas import DataFrame
@@ -13,6 +8,12 @@ from app.model.review import Review
 
 
 class DataSubmissionClient:
+    '''
+    This class offers the scraper an API for submitting data to the main
+    data store, either directly or by saving the data off to a CSV for
+    upload at a later time.
+    '''
+
     def __init__(self, filepath: str = "data/scraped_data.csv"):
         if filepath != "":
             self.filepath = filepath

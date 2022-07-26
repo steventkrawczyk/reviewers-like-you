@@ -21,5 +21,6 @@ class TimedMetricsHelper:
         self.time_in_ns = self.start - time.perf_counter_ns()
         if self.start == 0:
             self.time_in_ns = 0
-            logging.error("You should not call end_timer before calling start_timer")
+            logging.error(
+                "You should not call end_timer before calling start_timer")
         self.start = 0

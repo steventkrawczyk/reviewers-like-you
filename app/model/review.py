@@ -5,6 +5,9 @@ from typing import Dict
 
 @dataclass
 class Review:
+    '''
+    Data class for review, the primary entity of our main data store.
+    '''
     author: str
     movie: str
     rating: float

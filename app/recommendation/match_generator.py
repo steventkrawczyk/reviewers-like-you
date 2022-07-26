@@ -1,8 +1,3 @@
-'''
-This class powers the recommendation backend by finding an author match
-for the user, and enriching the response with data from the main data
-store.
-'''
 import logging
 from typing import Dict, List, Tuple
 
@@ -12,6 +7,12 @@ from app.recommendation.similarity_engine import SimilarityEngine
 
 
 class MatchGenerator:
+    '''
+    This class powers the recommendation backend by finding an author match
+    for the user, and enriching the response with data from the main data
+    store.
+    '''
+
     def __init__(self, main_datastore: MainDatastoreProxy,
                  similarity_engine: SimilarityEngine,
                  movie_indices: Dict[str, int],

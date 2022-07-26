@@ -1,7 +1,3 @@
-'''
-This class is used as a proxy to the database that stores our
-projection.
-'''
 import json
 import logging
 import os.path
@@ -9,6 +5,11 @@ from typing import Dict, List
 
 
 class ProjectionDatastoreProxy:
+    '''
+    This class is used as a proxy to the database that stores our
+    projection.
+    '''
+
     def __init__(self, projection_filepath: str,
                  movie_indices_filepath: str,
                  in_memory: bool):

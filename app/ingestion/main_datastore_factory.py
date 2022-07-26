@@ -1,7 +1,3 @@
-'''
-This is the client for the primary storage for raw input to the system,
-ingested from web scrapers, manual uploads, and user input.
-'''
 import boto3
 import logging
 
@@ -11,9 +7,15 @@ from app.ingestion.main_datastore_proxy import MainDatastoreProxy
 
 
 class MainDatastoreFactory:
+    '''
+    This is the client for the primary storage for raw input to the system,
+    ingested from web scrapers, manual uploads, and user input.
+    '''
+
     def __init__(self, endpoint_url: str = "http://dynamodb-local:8000", in_memory: bool = False):
         if not in_memory:
-            self.dynamodb = boto3.resource('dynamodb', endpoint_url=endpoint_url)
+            self.dynamodb = boto3.resource(
+                'dynamodb', endpoint_url=endpoint_url)
         self.in_memory = in_memory
 
     def build(self, table_name: str = "movie_reviews") -> MainDatastoreProxy:

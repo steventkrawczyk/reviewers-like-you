@@ -1,7 +1,3 @@
-
-'''
-Factory class for MatchGenerator.
-'''
 from app.ingestion.main_datastore_proxy import MainDatastoreProxy
 from app.projection.projection_datastore_proxy import ProjectionDatastoreProxy
 from app.recommendation.match_generator import MatchGenerator
@@ -9,6 +5,10 @@ from app.recommendation.similarity_engine import SimilarityEngine
 
 
 class MatchGeneratorFactory:
+    '''
+    Factory class for MatchGenerator.
+    '''
+
     def __init__(self, main_datastore: MainDatastoreProxy, projection_datastore: ProjectionDatastoreProxy):
         self.main_datastore = main_datastore
         self.projection_datastore = projection_datastore

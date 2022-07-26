@@ -1,10 +1,11 @@
-'''
-Factory class for ProjectionDatastoreProxy.
-'''
 from app.projection.projection_datastore_proxy import ProjectionDatastoreProxy
 
 
 class ProjectionDatastoreFactory:
+    '''
+    Factory class for ProjectionDatastoreProxy.
+    '''
+
     def __init__(self, projection_filepath: str = f'data/projection.json',
                  movie_indices_filepath: str = f'data/movie_indices.json',
                  in_memory: bool = False):

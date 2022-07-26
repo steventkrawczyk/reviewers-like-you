@@ -1,6 +1,3 @@
-'''
-This client is used to upload pandas dataframes to our database.
-'''
 from pandas import DataFrame
 
 from app.ingestion.main_datastore_proxy import MainDatastoreProxy
@@ -8,6 +5,10 @@ from app.model.review import Review
 
 
 class DataframeIngestionClient:
+    '''
+    This client is used to upload pandas dataframes to our database.
+    '''
+
     def __init__(self, database: MainDatastoreProxy):
         self.database = database
 

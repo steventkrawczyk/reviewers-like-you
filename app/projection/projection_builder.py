@@ -1,14 +1,15 @@
-'''
-This class encapsulates the logic to build our vector projection space
-given a list of authors, movies for rows, and a main data store to grab
-movie reviews from.
-'''
 from typing import Dict, List, Set, Tuple
 
 from app.ingestion.main_datastore_proxy import MainDatastoreProxy
 
 
 class ProjectionBuilder:
+    '''
+    This class encapsulates the logic to build our vector projection space
+    given a list of authors, movies for rows, and a main data store to grab
+    movie reviews from.
+    '''
+
     def __init__(self, main_datastore_proxy: MainDatastoreProxy):
         self.main_datastore_proxy = main_datastore_proxy
 
@@ -26,9 +27,6 @@ class ProjectionBuilder:
         author_vectors = dict()
         for author in authors:
             author_vector = [0.0] * dim
-            # TODO optimize storage call, e.g. by doing one scan
-            # instead of a scan for keys and a bunch of get_item(key)
-            # calls.
             reviews_by_author = self.main_datastore_proxy.get(author)
             for review in reviews_by_author:
                 if review.movie in movie_indices:

@@ -1,0 +1,40 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.9.13, pytest-7.1.2, pluggy-1.0.0
+rootdir: /Users/stevenkrawczyk/Development/reviewers-like-you
+plugins: cov-3.0.0
+collected 2 items
+
+tests/test_pipeline_containers.py .                                      [ 50%]
+tests/test_pipeline_in_memory.py .                                       [100%]
+
+---------- coverage: platform darwin, python 3.9.13-final-0 ----------
+Name                                             Stmts   Miss Branch BrPart  Cover
+----------------------------------------------------------------------------------
+app/__init__.py                                      0      0      0      0   100%
+app/ingestion/dataframe_ingestion_client.py          9      0      4      0   100%
+app/ingestion/dynamodb_datastore.py                 24     12      8      0    44%
+app/ingestion/in_memory_datastore.py                18      0      4      0   100%
+app/ingestion/main_datastore_factory.py             16      3      6      2    77%
+app/ingestion/main_datastore_proxy.py               16      4      2      0    78%
+app/model/review.py                                 15      1      2      0    94%
+app/projection/popularity_analyzer.py               18      0     10      1    96%
+app/projection/projection_builder.py                31      0     14      0   100%
+app/projection/projection_datastore_factory.py      10      0      2      0   100%
+app/projection/projection_datastore_proxy.py        41     15     10      2    59%
+app/projection/projection_engine.py                 15      0      2      0   100%
+app/projection/projection_engine_factory.py         13      0      2      0   100%
+app/recommendation/match_generator.py               28      2      6      1    91%
+app/recommendation/match_generator_factory.py       21      0      6      0   100%
+app/recommendation/similarity_engine.py             16      0      6      0   100%
+tests/__init__.py                                    0      0      0      0   100%
+tests/test_pipeline_containers.py                   72      0      2      0   100%
+tests/test_pipeline_in_memory.py                    31      1      4      1    94%
+tools/__init__.py                                    0      0      0      0   100%
+tools/infra/__init__.py                              0      0      0      0   100%
+tools/infra/container_orchestrator.py               10      0      2      0   100%
+tools/infra/database_manager.py                     13      2      6      2    79%
+----------------------------------------------------------------------------------
+TOTAL                                              417     40     98      9    89%
+
+
+============================== 2 passed in 15.44s ==============================

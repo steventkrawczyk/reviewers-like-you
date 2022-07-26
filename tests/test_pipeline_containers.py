@@ -29,14 +29,9 @@ class IntegrationTests(unittest.TestCase):
     def setUp(self):
         logging.info("Initializing...")
         self.table_name = TABLE_NAME
-        self.data = pd.read_csv(TEST_DATA_FILE, header=0)
-
+        self.http = urllib3.PoolManager()
         self.orchestrator = ContainerOrchestrator()
         self.orchestrator.start_containers()
-
-        self.database_manager = DatabaseManager()
-
-        self.http = urllib3.PoolManager()
 
     def tearDown(self):
         logging.info("Tearing down...")
@@ -76,7 +71,8 @@ class IntegrationTests(unittest.TestCase):
         return (result["data"]["author"], result["data"]["reviews"])
 
     def test_pipeline(self):
-        self.database_manager.create_reviews_table(self.table_name)
+        database_manager = DatabaseManager()
+        database_manager.create_reviews_table(self.table_name)
 
         logging.info("Doing ingestion...")
         review = Review("steven", "bladerunner", 0.8)
@@ -92,4 +88,4 @@ class IntegrationTests(unittest.TestCase):
 
         self.assertEqual(match[0], "steven")
         logging.info("Success!")
-        self.database_manager.delete_table(self.table_name)
+        database_manager.delete_table(self.table_name)

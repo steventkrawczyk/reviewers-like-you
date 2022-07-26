@@ -3,6 +3,7 @@ This is our client for DynamoDb.
 '''
 import boto3
 from boto3.dynamodb.conditions import Key
+from boto3.resources.base import ServiceResource
 from typing import List, Set
 from app.ingestion.main_datastore_proxy import MainDatastoreProxy
 
@@ -10,9 +11,8 @@ from app.model.review import Review
 
 
 class DynamoDbDatastore(MainDatastoreProxy):
-    def __init__(self, endpoint_url: str, table_name: str):
-        self.database = boto3.resource(
-            'dynamodb', endpoint_url=endpoint_url).Table(table_name)
+    def __init__(self, dynamodb: ServiceResource, table_name: str):
+        self.database = dynamodb.Table(table_name)
 
     def _get_table(self):
         return

@@ -33,7 +33,7 @@ Check out `notebooks/DataPipelineDemo.ipynb` for an overview and demonstration o
 
 1. Launch docker containers with our databases and web APIs by running `docker compose up`
 2. Create a dynamodb table with `python -m tools.create_table`
-3. Populate the DynamoDb table with data using `python -m tools.upload_csv tests/test_data.csv`
+3. Populate the DynamoDb table with data using `python -m tools.upload_data tests/test_data.csv`
 4. To run the react app: with the flask app and dynamodb server running, `cd` into the `app/frontend` dir and run `yarn start`. It will open a web page. For troubleshooting with the frontend, look at the `README.md` in that dir.
 
 ### Submitting changes

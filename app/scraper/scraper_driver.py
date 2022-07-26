@@ -3,7 +3,7 @@ This will be the class used to drive the scraper process.
 '''
 import logging
 from app.scraper.data_submission_client import DataSubmissionClient
-from app.scraper.scraper_metrics_helper import ScraperMetricsHelper
+from app.metrics.scraper_metrics_helper import ScraperMetricsHelper
 from app.scraper.web_scraper import WebScraper
 from app.scraper.web_scraper_engine import WebScraperEngine
 
@@ -24,6 +24,6 @@ class ScraperDriver:
             self.metrics_helper.start_timer()
             scraped = self.web_scraper.scrape_many_entires(batch_size)
             self.self.metrics_helper.end_timer()
-            self.metrics_helper.emit_metric(scraped, batch_size)
+            self.metrics_helper.record_scraper_performance(scraped, batch_size)
             logging.info("Scraped " + str(scraped) + " entries!")
             entries_to_scrape -= scraped

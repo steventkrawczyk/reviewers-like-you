@@ -10,15 +10,16 @@ class WebScraper:
         self.data_submission_client = data_submission_client
         self.web_scraper_engine = web_scraper_engine
 
-    '''
-    Attempts to scrape a single entry. If successful, returns True.
-    '''
+
     def scrape_single_entry(self) -> bool:
+        '''
+        Attempts to scrape a single entry. If successful, returns True.
+        '''
         pass
 
-    '''
-    Attempts to scrape max_entries number of entries. Returns the true
-    number of entries scraped.
-    '''
     def scrape_many_entires(self, max_entries: int) -> int:
+        '''
+        Attempts to scrape max_entries number of entries. Returns the true
+        number of entries scraped.
+        '''
         pass

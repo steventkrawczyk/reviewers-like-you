@@ -31,9 +31,15 @@ Make sure you have docker installed and setup. You will need to build our base i
 
 You'll need `npm` and/or `yarn` to work with the react app. You can learn more in `app/frontend/README.md`. Our app was setup using [this tool](https://github.com/facebook/create-react-app).
 
-### Unit tests
+### Tests
 
-Try unit tests by running `python -m unittest tests.<test_file_name>` from the root dir of this repo, or run all tests with `pytest tests` 
+#### Unit and integration tests
+
+Try our tests by running `python -m unittest tests.<test_file_name>` from the root dir of this repo, or run all tests by running `pytest`.
+
+#### Load testing
+
+We use [locust](https://docs.locust.io/en/stable/what-is-locust.html) for load testing. Try `locust -f tests/locustfile.py -u 10 -r 1 -t 60 --headless --only-summary -H http://localhost:5000 --csv data/metrics/locust/perf` to run a load test and check out the results in `data/metrics/locust/perf`
 
 ### Jupyter notebook
 

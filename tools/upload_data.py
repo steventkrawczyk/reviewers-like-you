@@ -15,7 +15,7 @@ from app.ingestion.main_datastore_factory import MainDatastoreFactory
 
 def main():
     logging.info("Initializing...")
-    database = MainDatastoreFactory().build(endpoint_url="http://localhost:8000")
+    database = MainDatastoreFactory(endpoint_url="http://localhost:8000").build()
     client = DataframeIngestionClient(database)
     file_name = sys.argv[1:][0]
     input_data = pd.read_csv(file_name, header=0)

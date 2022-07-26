@@ -32,7 +32,6 @@ api = Api(app)
 
 class Upload(Resource):
     def put(self):
-        # TODO Cleanse input
         review = Review.from_dict(request.args)
         logging.debug("Uploading review " + str(review))
         database.upload(review)
@@ -42,6 +41,9 @@ class Upload(Resource):
 
 
 class Batch(Resource):
+    # def __init__(self):
+    #     pass
+
     def _extract_and_upload(self, filepath: str):
         data = pd.read_csv(filepath, header=0)
         client.upload(data)

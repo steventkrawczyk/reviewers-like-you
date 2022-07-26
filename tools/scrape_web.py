@@ -9,7 +9,7 @@ import logging
 import sys
 from app.scraper.data_submission_client import DataSubmissionClient
 from app.scraper.scraper_driver import ScraperDriver
-from app.scraper.scraper_metrics_helper import ScraperMetricsHelper
+from app.metrics.scraper_metrics_helper import ScraperMetricsHelper
 from app.scraper.web_scraper_engine import WebScraperEngine
 
 

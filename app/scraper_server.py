@@ -23,7 +23,7 @@ scraper_driver = ScraperDriver(
 
 
 class Scrape(Resource):
-    async def put(self):
+    def put(self):
         count = 0
         async_execution = False
 

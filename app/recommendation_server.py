@@ -19,51 +19,66 @@ from app.projection.projection_datastore_factory import ProjectionDatastoreFacto
 from app.recommendation.match_generator_factory import MatchGeneratorFactory
 
 
-database = MainDatastoreFactory().build()
-projection_databse = ProjectionDatastoreFactory().build()
-movies_to_rate = list(projection_databse.get_movie_indices().keys())
-match_generator = MatchGeneratorFactory(database, projection_databse).build()
-
 app = Flask(__name__)
 CORS(app)
 api = Api(app)
 
 
 class Movies(Resource):
+    def __init__(self, movies):
+        self.movies = movies
+
     def get(self):
         return jsonify({"message": "",
                         "category": "success",
-                        "data": movies_to_rate,
+                        "data": self.movies,
                         "status": 200})
 
 
 class Match(Resource):
-    def get(self):
-        match_data = ("", [])
-        user_input = {}
+    def __init__(self, match_generator, movies):
+        self.match_generator = match_generator
+        self.movies = movies
 
-        # TODO cleanse user input
-        for movie, rating in request.args.items():
-            user_input[movie] = float(rating)
+    def _process_request(self, request_data):
+        user_ratings = {}
+        for movie, rating in request_data:
+            if movie in self.movies:
+                user_ratings[movie] = float(rating)
+            else:
+                logging.warning("Parameter in request but not in our index of movies: " + movie)
+        return user_ratings
 
-        match_data = match_generator.get_match(user_input)
+    def _get_match(self, user_input):
+        return self.match_generator.get_match(user_input)
 
-        logging.debug("User got matched with reviewer: " + str(match_data[0]))
-
-        # TODO Revise data schema so that we can support serde more easily
-        responseData = {"author": match_data[0], "reviews": []}
+    def _build_response(self, match_data):
+        response_data = {"author": match_data[0], "reviews": []}
         for review in match_data[1]:
-            reviewJson = {"movie": review.movie, "rating": review.rating}
-            responseData["reviews"].append(reviewJson)
+            review_json = {"movie": review.movie, "rating": review.rating}
+            response_data["reviews"].append(review_json)
+        return response_data
 
+    def get(self):
+        user_ratings = self._process_request(request.args.items())
+        match_data = self._get_match(user_ratings)
+        logging.debug("User got matched with reviewer: " + str(match_data[0]))
+        response_data = self._build_response(match_data)
         return jsonify({"message": "",
                         "category": "success",
-                        "data": responseData,
+                        "data": response_data,
                         "status": 200})
 
 
-api.add_resource(Movies, '/movies')
-api.add_resource(Match, '/match')
+database = MainDatastoreFactory().build()
+projection_databse = ProjectionDatastoreFactory().build()
+movies_to_rate = list(projection_databse.get_movie_indices().keys())
+match_generator = MatchGeneratorFactory(database, projection_databse).build()
+
+api.add_resource(Movies, '/movies',
+                 resource_class_kwargs={'movies': movies_to_rate})
+api.add_resource(Match, '/match', resource_class_kwargs={
+                 'match_generator': match_generator, 'movies': movies_to_rate})
 
 if __name__ == '__main__':
     app.run(debug=True)

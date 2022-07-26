@@ -10,11 +10,10 @@ class ProjectionEngineFactory:
                  projection_datastore_proxy: ProjectionDatastoreProxy):
         self.main_datastore_proxy = main_datastore_proxy
         self.projection_datastore_proxy = projection_datastore_proxy
-        
+
     def build(self):
         popularity_analyzer = PopularityAnalyzer(self.main_datastore_proxy)
         projection_builder = ProjectionBuilder(self.main_datastore_proxy)
-        return ProjectionEngine(self.main_datastore_proxy, 
-                                self.projection_datastore_proxy, 
+        return ProjectionEngine(self.main_datastore_proxy,
+                                self.projection_datastore_proxy,
                                 popularity_analyzer, projection_builder)
-

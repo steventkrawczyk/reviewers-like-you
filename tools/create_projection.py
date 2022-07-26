@@ -16,7 +16,8 @@ def main():
     logging.info("Initializing...")
     database = MainDatastoreFactory().build()
     projection_databse = ProjectionDatastoreFactory().build()
-    projection_engine = ProjectionEngineFactory(database, projection_databse).build()
+    projection_engine = ProjectionEngineFactory(
+        database, projection_databse).build()
     logging.info("Creating projection...")
     projection_engine.create_projection()
     logging.info("Done.")

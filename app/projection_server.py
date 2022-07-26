@@ -14,7 +14,8 @@ api = Api(app)
 
 main_datastore_proxy = MainDatastoreFactory().build()
 projection_datastore_proxy = ProjectionDatastoreFactory().build()
-projection_engine = ProjectionEngineFactory(main_datastore_proxy, projection_datastore_proxy).build()
+projection_engine = ProjectionEngineFactory(
+    main_datastore_proxy, projection_datastore_proxy).build()
 
 
 class Create(Resource):
@@ -30,8 +31,9 @@ class Create(Resource):
         logging.info("Done!")
 
         return jsonify({"message": "",
-                "category": "success",
-                "status": 200})
+                        "category": "success",
+                        "status": 200})
+
 
 api.add_resource(Create, '/create')
 

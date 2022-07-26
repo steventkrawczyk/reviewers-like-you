@@ -7,6 +7,7 @@ from typing import Dict, List, Set, Tuple
 
 from app.ingestion.main_datastore_proxy import MainDatastoreProxy
 
+
 class ProjectionBuilder:
     def __init__(self, main_datastore_proxy: MainDatastoreProxy):
         self.main_datastore_proxy = main_datastore_proxy
@@ -21,7 +22,7 @@ class ProjectionBuilder:
             average_vector.append(rating_average)
         return average_vector
 
-    def _build_vectors(self, authors: List[str], movie_indices: Dict[str,int], dim: int):
+    def _build_vectors(self, authors: List[str], movie_indices: Dict[str, int], dim: int):
         author_vectors = dict()
         for author in authors:
             author_vector = [0.0] * dim

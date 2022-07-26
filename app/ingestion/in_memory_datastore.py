@@ -14,7 +14,8 @@ class InMemoryDatastore(MainDatastoreProxy):
         self.keys = set()
 
     def upload(self, review: Review) -> None:
-        self.database[review.author].append(Review(review.author, review.movie, review.rating))
+        self.database[review.author].append(
+            Review(review.author, review.movie, review.rating))
         self.keys.add(review.author)
 
     def batch_upload(self, reviews: List[Review]) -> None:

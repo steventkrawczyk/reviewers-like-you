@@ -18,27 +18,30 @@ data_submission_client = DataSubmissionClient()
 web_scraper_engine = WebScraperEngine()
 metrics_helper = ScraperMetricsHelper()
 
-scraper_driver = ScraperDriver(data_submission_client, web_scraper_engine, metrics_helper)
+scraper_driver = ScraperDriver(
+    data_submission_client, web_scraper_engine, metrics_helper)
 
 
 class Scrape(Resource):
     async def put(self):
         count = 0
         async_execution = False
-        
+
         for key, arg in request.args.items():
             if key == "count":
                 count = arg
             if key == "async":
                 async_execution = bool(arg)
-        
-        logging.info("Attempting to scrape " + str(count) + " entries overall.")
+
+        logging.info("Attempting to scrape " +
+                     str(count) + " entries overall.")
         scraper_driver.run(count)
         logging.info("Done scraping.")
-        
+
         return jsonify({"message": "",
-                "category": "success",
-                "status": 200})
+                        "category": "success",
+                        "status": 200})
+
 
 api.add_resource(Scrape, '/scrape')
 

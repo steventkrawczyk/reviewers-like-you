@@ -29,7 +29,7 @@ class ProjectionDatastoreProxy:
             logging.info("Loading movie index data from file.")
             with open(self.movie_indices_filepath) as f:
                 self.movie_indices = json.load(f)
-    
+
     def _save_data(self, projection: Dict[str, List[float]], movie_indices: Dict[str, int]) -> None:
         with open(self.projection_filepath, 'w+', encoding='utf-8') as f:
             json.dump(projection, f, ensure_ascii=False, indent=4)
@@ -44,7 +44,7 @@ class ProjectionDatastoreProxy:
         if not self.in_memory:
             self._load_projection()
             self._load_movie_indices()
-    
+
     def upload(self, projection: Dict[str, List[float]], movie_indices: Dict[str, int]) -> None:
         if not self.in_memory:
             self._save_data(projection, movie_indices)

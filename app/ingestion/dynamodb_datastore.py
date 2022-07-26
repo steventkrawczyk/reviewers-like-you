@@ -11,9 +11,11 @@ from app.model.review import Review
 
 class DynamoDbDatastore(MainDatastoreProxy):
     def __init__(self, endpoint_url: str, table_name: str):
-        self.dynamodb = boto3.resource(
-            'dynamodb', endpoint_url=endpoint_url)
-        self.database = self.dynamodb.Table(table_name)
+        self.database = boto3.resource(
+            'dynamodb', endpoint_url=endpoint_url).Table(table_name)
+
+    def _get_table(self):
+        return
 
     def upload(self, review: Review) -> None:
         reviewData = review.serialize()
@@ -38,4 +40,3 @@ class DynamoDbDatastore(MainDatastoreProxy):
     # def scan(self) -> List[Review]:
     #     scanResponse = self.database.scan()
     #     return [Review.deserialize(item) for item in scanResponse['Items']]
-

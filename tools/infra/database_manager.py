@@ -2,8 +2,9 @@ import boto3
 
 
 class DatabaseManager:
-    def __init__(self, endpoint_url: str ="http://localhost:8000", region_name: str ="us-west-2"):
-        self.dynamodb = boto3.client('dynamodb', endpoint_url=endpoint_url, region_name=region_name)
+    def __init__(self, endpoint_url: str = "http://localhost:8000", region_name: str = "us-west-2"):
+        self.dynamodb = boto3.client(
+            'dynamodb', endpoint_url=endpoint_url, region_name=region_name)
 
     def create_reviews_table(self, table_name: str):
         table = self.dynamodb.create_table(

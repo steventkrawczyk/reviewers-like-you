@@ -20,6 +20,8 @@ class ProjectionEngine:
 
     def create_projection(self) -> None:
         authors = list(self.main_datastore_proxy.get_keys())
-        popular_movies = self.popularity_analyzer.compute_popular_movies(authors)
-        author_vectors, movie_indices = self.projection_builder.build_vectors(popular_movies, authors)
+        popular_movies = self.popularity_analyzer.compute_popular_movies(
+            authors)
+        author_vectors, movie_indices = self.projection_builder.build_vectors(
+            popular_movies, authors)
         self.projection_datastore_proxy.upload(author_vectors, movie_indices)

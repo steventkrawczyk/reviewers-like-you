@@ -40,7 +40,7 @@ class Upload(Resource):
                 movie = arg
             elif key == "rating":
                 rating = arg
-        review = Review.deserialize(author, movie, rating)
+        review = Review.build(author, movie, rating)
         logging.debug("Uploading review " + str(review))
         database.upload(review)
         return jsonify({"message": "",

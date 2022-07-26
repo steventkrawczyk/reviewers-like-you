@@ -8,6 +8,7 @@ from typing import List, Set
 
 from app.ingestion.main_datastore_proxy import MainDatastoreProxy
 
+
 class PopularityAnalyzer:
     def __init__(self, main_datastore_proxy: MainDatastoreProxy):
         self.main_datastore_proxy = main_datastore_proxy

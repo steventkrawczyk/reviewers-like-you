@@ -19,11 +19,13 @@ def main():
     web_scraper_engine = WebScraperEngine()
     metrics_helper = ScraperMetricsHelper()
 
-    scraper_driver = ScraperDriver(data_submission_client, web_scraper_engine, metrics_helper)
+    scraper_driver = ScraperDriver(
+        data_submission_client, web_scraper_engine, metrics_helper)
 
     total_entries = int(sys.argv[1:][0])
 
-    logging.info("Attempting to scrape " + str(total_entries) + " entries overall.")
+    logging.info("Attempting to scrape " +
+                 str(total_entries) + " entries overall.")
     scraper_driver.run(total_entries)
     logging.info("Done scraping.")
 

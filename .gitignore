@@ -131,6 +131,6 @@ dmypy.json
 # Project specific
 data/*.json
 data/*.csv
-shared-local-instance.db
-reviewers-like-you-venv/*
+data/dynamodb/*
 data/minio/*
+reviewers-like-you-venv/*

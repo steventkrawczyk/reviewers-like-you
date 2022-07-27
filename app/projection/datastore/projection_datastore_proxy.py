@@ -1,4 +1,3 @@
-import os.path
 from typing import Dict, List
 
 from app.projection.datastore.projection_datastore_shard import ProjectionDatastoreShard

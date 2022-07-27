@@ -1,5 +1,7 @@
 from typing import List
-import numpy as np
+
+from app.recommendation.similarity_computation import SimilarityComputation
+from app.recommendation.similarity_shard import SimilarityShard
 
 
 class SimilarityEngine:
@@ -9,17 +11,26 @@ class SimilarityEngine:
     using distance formula.
     '''
 
-    def __init__(self, vectors):
-        self.vectors = vectors
+    def __init__(self, shards: List[SimilarityShard]):
+        self.shards = shards
 
-    def get_closest_neighbor(self, input_vector: List[float]) -> int:
-        input_vector = np.array(input_vector)
-        current_min_dist = float("inf")
-        nn_index = -1
-        for index, vector in enumerate(self.vectors):
-            vector = np.array(vector)
-            dist = np.linalg.norm(input_vector-vector)
-            if dist < current_min_dist:
-                current_min_dist = dist
-                nn_index = index
-        return nn_index
+    def find_average_vector(self) ->  List[float]:
+        average_vector = None
+        for shard in self.shards:
+            shard_average_vector = shard.find_average_vector()
+            if shard_average_vector is not None:
+                average_vector = shard_average_vector
+        return average_vector
+
+    def get_closest_neighbor(self, input_vector: List[float]) -> str:
+        vectors_from_shards = []
+        author_index = dict()
+        for shard_index, shard in enumerate(self.shards):
+            nn_index_from_shard = shard.get_closest_neighbor(input_vector)
+            vector_from_shard = shard.get_vector(nn_index_from_shard)
+            author_index[shard_index] = shard.decode_match(nn_index_from_shard)
+            vectors_from_shards.append(vector_from_shard)
+        nn_index = SimilarityComputation.merge_computation(input_vector, vectors_from_shards)
+        return author_index[nn_index]
+
+

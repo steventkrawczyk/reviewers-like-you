@@ -16,10 +16,8 @@ class MatchGenerator:
     def __init__(self, main_datastore: MainDatastoreProxy,
                  similarity_engine: SimilarityEngine,
                  movie_indices: Dict[str, int],
-                 author_by_index: Dict[int, str],
                  average_vec: List[float]):
         self.main_datastore = main_datastore
-        self.author_by_index = author_by_index
         self.similarity_engine = similarity_engine
         self.movie_indices = movie_indices
         self.average_vec = average_vec
@@ -43,7 +41,6 @@ class MatchGenerator:
 
     def get_match(self, user_input: Dict[str, float]) -> Tuple[str, List[Review]]:
         vector = self._compute_preferences_vector(user_input)
-        index_of_match = self.similarity_engine.get_closest_neighbor(vector)
-        author_match = self.author_by_index[index_of_match]
+        author_match = self.similarity_engine.get_closest_neighbor(vector)
         author_reviews = self.main_datastore.get(author_match)
         return (author_match, author_reviews)

@@ -1,7 +1,7 @@
 from app.ingestion.main_datastore_proxy import MainDatastoreProxy
 from app.projection.projection_datastore_proxy import ProjectionDatastoreProxy
 from app.recommendation.match_generator import MatchGenerator
-from app.recommendation.similarity_engine import SimilarityEngine
+from app.recommendation.similarity_engine_factory import SimilarityEngineFactory
 
 
 class MatchGeneratorFactory:
@@ -14,18 +14,7 @@ class MatchGeneratorFactory:
         self.projection_datastore = projection_datastore
 
     def build(self) -> MatchGenerator:
-        vectors = []
-        author_by_index = dict()
-        index = 0
-        average_vec = []
-        for author, vector in self.projection_datastore.get().items():
-            if author == "_average":
-                average_vec = vector
-            else:
-                author_by_index[index] = author
-                index += 1
-                vectors.append(vector)
-        similarity_engine = SimilarityEngine(vectors)
+        similarity_engine = SimilarityEngineFactory(self.projection_datastore).build()
+        average_vec = similarity_engine.find_average_vector()
         return MatchGenerator(self.main_datastore, similarity_engine,
-                              self.projection_datastore.get_movie_indices(),
-                              author_by_index, average_vec)
+                              self.projection_datastore.get_movie_indices(), average_vec)

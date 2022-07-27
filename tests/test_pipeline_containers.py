@@ -95,5 +95,9 @@ class IntegrationTests(unittest.TestCase):
         match = self._get_match(test_user_input)
         self.assertNotEqual(match[0], "steven")
 
+        test_user_input = {'bladerunner': -1.0}
+        match = self._get_match(test_user_input)
+        self.assertNotEqual(match[0], "steven")
+
         logging.info("Success!")
         database_manager.delete_table(self.table_name)

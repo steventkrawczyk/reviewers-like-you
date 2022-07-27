@@ -46,6 +46,10 @@ class InMemoryTests(unittest.TestCase):
         match = self._do_recommendation(test_user_input)
         self.assertNotEqual(match[0], 'steven', 'wrong match')
 
+        test_user_input = {'bladerunner': -1.0}
+        match = self._do_recommendation(test_user_input)
+        self.assertNotEqual(match[0], 'steven', 'wrong match')
+
 
 if __name__ == '__main__':
     unittest.main()

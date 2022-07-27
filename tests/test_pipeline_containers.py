@@ -29,9 +29,12 @@ class IntegrationTests(unittest.TestCase):
         self.table_name = TABLE_NAME
         self.orchestrator = ContainerOrchestrator()
         self.orchestrator.start_containers()
+        self.database_manager = DatabaseManager()
+        self.database_manager.create_reviews_table(self.table_name)
 
     def tearDown(self):
         logging.info("Tearing down...")
+        self.database_manager.delete_table(self.table_name)
         self.orchestrator.stop_containers()
 
     def _do_ingestion_batch(self, filename):
@@ -74,9 +77,6 @@ class IntegrationTests(unittest.TestCase):
         return (match_data["data"]["author"], match_data["data"]["reviews"])
 
     def test_pipeline(self):
-        database_manager = DatabaseManager()
-        database_manager.create_reviews_table(self.table_name)
-
         logging.info("Doing ingestion...")
         review = Review("steven", "bladerunner", 0.8)
         self._do_ingestion_batch(TEST_DATA_FILE)
@@ -100,4 +100,3 @@ class IntegrationTests(unittest.TestCase):
         self.assertNotEqual(match[0], "steven")
 
         logging.info("Success!")
-        database_manager.delete_table(self.table_name)

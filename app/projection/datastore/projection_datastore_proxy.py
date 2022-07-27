@@ -60,8 +60,8 @@ class ProjectionDatastoreProxy:
     def load_data(self):
         if not self.in_memory:
             self._load_movie_indices()
-        if self.shard_count == 0:
-            self._initialize_shards()
+            if self.shard_count == 0:
+                self._initialize_shards()
         for shard in self.shards:
             shard.load_data()
 

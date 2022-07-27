@@ -1,12 +1,13 @@
+from tools.infra.database_manager import DatabaseManager
+from tools.infra.container_orchestrator import ContainerOrchestrator
+from app.model.review import Review
+import json
 import logging
 import sys
 import urllib
 from locust import HttpUser, constant, events, task, tag
 
 sys.path.append('..')
-from app.model.review import Review
-from tools.infra.container_orchestrator import ContainerOrchestrator
-from tools.infra.database_manager import DatabaseManager
 
 
 TEST_DATA_FILE = "tests/test_data.csv"
@@ -81,6 +82,7 @@ class ReviewersLikeYouUser(HttpUser):
     @task
     def match(self):
         test_user_input = {'bladerunner': 0.4}
-        query_parameters = urllib.parse.urlencode(test_user_input)
-        request = URL_BASE + RECOMMENDATION_PORT + MATCH_API + query_parameters
-        self.client.get(request, name=MATCH_API)
+        data = json.dumps(test_user_input).encode("utf-8")
+        request = URL_BASE + RECOMMENDATION_PORT + MATCH_API
+        self.client.post(request, data=data, headers={
+                         "Content-Type": "application/json"}, name=MATCH_API)

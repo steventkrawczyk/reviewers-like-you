@@ -78,26 +78,31 @@ function App() {
   }
 
   const handleSubmit = (evnt) => {
-    // Build query parameters of the form "MOVIE=RATING" to send to the backend and get a match
-    const searchParams = new URLSearchParams();
-    movies.map(movie => {
+    var userMovieRatings = {}
+    Object.keys(movieRatings).map(function(movie, review) {
       if (movieRatings[movie].haveSeen === "True") {
-        searchParams.append(movie, movieRatings[movie].rating / 100)
+        userMovieRatings[movie] = movieRatings[movie].rating.toFixed(3) / 100.0
       } else {
         // We use -1 to indicate that a movie has not been seen. This way, it can be handled by the backend.
         // For more info, see "Filtering by haveSeen":
         // https://docs.google.com/document/d/1E5aaVy49jOZzIXVVt2vu35q79hYqHlMsu5b1GxcZmDM/edit?usp=sharing
-        searchParams.append(movie, -1)
+        userMovieRatings[movie] = -1
       }
-      return 0
-    })
-    var requestUrl = 'http://127.0.0.1:5000/match?' + searchParams.toString()
+    });
 
-    // Set the recommendation and author data. We set recommendations first, so when we set author
-    // the page can be fully rendered.
-    axios.get(requestUrl).then(response => {
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: JSON.stringify(userMovieRatings)
+    };
+
+    var requestUrl = 'http://127.0.0.1:5000/match'
+    axios.post(requestUrl, requestOptions).then(response => {
       console.log("SUCCESS", response)
       var responseData = response.data.data
+
+      // Set the recommendation and author data. We set recommendations first, so when we set author
+      // the page can be fully rendered.
       setRecommendations(responseData.reviews)
       setAuthor(responseData.author)
     }).catch(error => {

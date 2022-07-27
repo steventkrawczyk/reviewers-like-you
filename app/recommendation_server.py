@@ -40,13 +40,14 @@ class Match(Resource):
         self.match_generator = match_generator
         self.movies = movies
 
-    def _process_request(self, request_data):
+    def _process_request(self, request):
         user_ratings = {}
-        for movie, rating in request_data:
+        for movie, rating in request.get_json().items():
             if movie in self.movies:
                 user_ratings[movie] = float(rating)
             else:
-                logging.warning("Parameter in request but not in our index of movies: " + movie)
+                logging.warning(
+                    "Parameter in request data but not in our index of movies: " + movie)
         return user_ratings
 
     def _get_match(self, user_input):
@@ -59,8 +60,8 @@ class Match(Resource):
             response_data["reviews"].append(review_json)
         return response_data
 
-    def get(self):
-        user_ratings = self._process_request(request.args.items())
+    def post(self):
+        user_ratings = self._process_request(request)
         match_data = self._get_match(user_ratings)
         logging.debug("User got matched with reviewer: " + str(match_data[0]))
         response_data = self._build_response(match_data)

@@ -1,14 +1,12 @@
 import json
 import logging
 import unittest
-import pandas as pd
-import urllib
-
-import urllib3
+from urllib import request, parse
 
 from app.model.review import Review
 from tools.infra.container_orchestrator import ContainerOrchestrator
 from tools.infra.database_manager import DatabaseManager
+
 
 TEST_DATA_FILE = "tests/test_data.csv"
 TABLE_NAME = 'movie_reviews'
@@ -22,14 +20,13 @@ UPLOAD_API = "/upload?"
 BATCH_API = "/batch?"
 CREATE_API = "/create"
 MOVIES_API = "/movies"
-MATCH_API = "/match?"
+MATCH_API = "/match"
 
 
 class IntegrationTests(unittest.TestCase):
     def setUp(self):
         logging.info("Initializing...")
         self.table_name = TABLE_NAME
-        self.http = urllib3.PoolManager()
         self.orchestrator = ContainerOrchestrator()
         self.orchestrator.start_containers()
 
@@ -38,37 +35,43 @@ class IntegrationTests(unittest.TestCase):
         self.orchestrator.stop_containers()
 
     def _do_ingestion_batch(self, filename):
-        query_parameters = urllib.parse.urlencode({"filepath": filename})
-        request = URL_BASE + INGESTION_PORT + BATCH_API + query_parameters
-        response = self.http.request('PUT', request)
-        self.assertEqual(response.status, 200)
+        ingestion_query_parameters = parse.urlencode({"filepath": filename})
+        ingestion_request_url = URL_BASE + INGESTION_PORT + BATCH_API + ingestion_query_parameters
+        ingestion_request =  request.Request(ingestion_request_url, method="PUT")
+        ingestion_response = request.urlopen(ingestion_request)
+        self.assertEqual(ingestion_response.status, 200)
 
     def _do_ingestion_single_review(self, review):
-        query_parameters = urllib.parse.urlencode(review.to_dict())
-        request = URL_BASE + INGESTION_PORT + UPLOAD_API + query_parameters
-        response = self.http.request('PUT', request)
-        self.assertEqual(response.status, 200)
+        ingestion_query_parameters = parse.urlencode(review.to_dict())
+        ingestion_request_url = URL_BASE + INGESTION_PORT + UPLOAD_API + ingestion_query_parameters
+        ingestion_request =  request.Request(ingestion_request_url, method="PUT")
+        ingestion_response = request.urlopen(ingestion_request)
+        self.assertEqual(ingestion_response.status, 200)
 
     def _do_projection(self):
-        request = URL_BASE + PROJECTION_PORT + CREATE_API
-        response = self.http.request('PUT', request)
-        self.assertEqual(response.status, 200)
+        create_request_url = URL_BASE + PROJECTION_PORT + CREATE_API
+        create_request =  request.Request(create_request_url, method="PUT")
+        create_response = request.urlopen(create_request)
+        self.assertEqual(create_response.status, 200)
 
     def _do_recommendation(self, test_user_input):
-        request = URL_BASE + RECOMMENDATION_PORT + MOVIES_API
-        response = self.http.request('GET', request)
-        self.assertEqual(response.status, 200)
+        movies_request_url = URL_BASE + RECOMMENDATION_PORT + MOVIES_API
+        movies_request =  request.Request(movies_request_url, method="GET")
+        movies_response = request.urlopen(movies_request)
+        self.assertEqual(movies_response.status, 200)
 
-        query_parameters = urllib.parse.urlencode(test_user_input)
-        request = URL_BASE + RECOMMENDATION_PORT + MATCH_API + query_parameters
-        response = self.http.request('GET', request)
-        self.assertEqual(response.status, 200)
+        match_request_url = URL_BASE + RECOMMENDATION_PORT + MATCH_API 
+        data = json.dumps(test_user_input).encode("utf-8")
+        match_request =  request.Request(match_request_url, data=data, method="POST")
+        match_request.add_header("Content-Type", "application/json")
+        match_response = request.urlopen(match_request)
+        self.assertEqual(match_response.status, 200)
+        match_data = json.loads(match_response.read())
+        self.assertIn("data", match_data)
+        self.assertIn("author", match_data["data"])
+        self.assertIn("reviews", match_data["data"])
 
-        result = json.loads(response.data.decode('utf-8'))
-        self.assertIn("data", result)
-        self.assertIn("author", result["data"])
-        self.assertIn("reviews", result["data"])
-        return (result["data"]["author"], result["data"]["reviews"])
+        return (match_data["data"]["author"], match_data["data"]["reviews"])
 
     def test_pipeline(self):
         database_manager = DatabaseManager()

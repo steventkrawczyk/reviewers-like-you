@@ -14,7 +14,7 @@ from app.projection.projection_engine_factory import ProjectionEngineFactory
 
 def main():
     logging.info("Initializing...")
-    database = MainDatastoreFactory().build()
+    database = MainDatastoreFactory(endpoint_url="http://localhost:8000").build()
     projection_databse = ProjectionDatastoreFactory().build()
     projection_engine = ProjectionEngineFactory(
         database, projection_databse).build()

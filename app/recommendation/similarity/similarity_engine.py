@@ -23,14 +23,13 @@ class SimilarityEngine:
         return average_vector
 
     def get_closest_neighbor(self, input_vector: List[float]) -> str:
-        vectors_from_shards = []
+        distances_from_shards = []
         author_index = dict()
         for shard_index, shard in enumerate(self.shards):
-            nn_index_from_shard = shard.get_closest_neighbor(input_vector)
-            vector_from_shard = shard.get_vector(nn_index_from_shard)
+            nn_index_from_shard, distance_from_shard = shard.get_closest_neighbor(input_vector)
+            distances_from_shards.append(distance_from_shard)
             author_index[shard_index] = shard.decode_match(nn_index_from_shard)
-            vectors_from_shards.append(vector_from_shard)
-        nn_index = SimilarityComputation.driver_computation(input_vector, vectors_from_shards)
+        nn_index = SimilarityComputation.driver_computation(distances_from_shards)
         return author_index[nn_index]
 
 

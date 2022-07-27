@@ -1,9 +1,8 @@
-import json
-import logging
 import os.path
 from typing import Dict, List
 
 from app.projection.datastore.projection_datastore_shard import ProjectionDatastoreShard
+from app.projection.datastore.projection_file_store import ProjectionFileStore
 
 
 class ProjectionDatastoreProxy:
@@ -12,12 +11,14 @@ class ProjectionDatastoreProxy:
     projection.
     '''
 
-    def __init__(self, projection_filepath_root: str,
+    def __init__(self, file_store: ProjectionFileStore,
+                 projection_filepath_root: str,
                  movie_indices_filepath: str,
                  in_memory: bool,
                  shard_size: int = 25):
         self.shards = []
         self.movie_indices = dict()
+        self.file_store = file_store
         self.projection_filepath_root = projection_filepath_root
         self.movie_indices_filepath = movie_indices_filepath
         self.in_memory = in_memory
@@ -27,6 +28,7 @@ class ProjectionDatastoreProxy:
     def _get_shard_filepath(self, shard_index: str) -> str:
         return self.projection_filepath_root + str(shard_index) + ".json"
 
+    # TODO Use new API
     def _initialize_shards(self):
         shard_index = 0
         while True:
@@ -37,20 +39,17 @@ class ProjectionDatastoreProxy:
                 return
 
     def _create_new_shard(self):
-        new_shard = ProjectionDatastoreShard(
+        new_shard = ProjectionDatastoreShard(self.file_store,
             self._get_shard_filepath(self.shard_count), self.in_memory)
         self.shards.append(new_shard)
         self.shard_count += 1
 
     def _load_movie_indices(self) -> None:
-        if os.path.isfile(self.movie_indices_filepath):
-            logging.info("Loading movie index data from file.")
-            with open(self.movie_indices_filepath) as f:
-                self.movie_indices = json.load(f)
+        if self.file_store.check_if_object_exists(self.movie_indices_filepath):
+            self.movie_indices = self.file_store.get_object(self.movie_indices_filepath)
 
     def _save_data(self, movie_indices: Dict[str, int]) -> None:
-        with open(self.movie_indices_filepath, 'w+', encoding='utf-8') as f:
-            json.dump(movie_indices, f, ensure_ascii=False, indent=4)
+        self.file_store.put_object(self.movie_indices_filepath, movie_indices)
 
     def _cache_data(self, movie_indices: Dict[str, int]) -> None:
         self.movie_indices = movie_indices

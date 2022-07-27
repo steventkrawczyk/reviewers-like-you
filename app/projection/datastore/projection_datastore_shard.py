@@ -1,7 +1,6 @@
-import json
-import logging
-import os
 from typing import Dict, List
+
+from app.projection.datastore.projection_file_store import ProjectionFileStore
 
 
 class ProjectionDatastoreShard:
@@ -10,20 +9,18 @@ class ProjectionDatastoreShard:
     storing projection vectors.
     '''
 
-    def __init__(self, projection_filepath: str, in_memory: bool):
+    def __init__(self, file_store: ProjectionFileStore, projection_filepath: str, in_memory: bool):
         self.projection = dict()
+        self.file_store = file_store
         self.projection_filepath = projection_filepath
         self.in_memory = in_memory
 
     def _load_projection(self) -> None:
-        if os.path.isfile(self.projection_filepath):
-            logging.info("Loading projection data from file.")
-            with open(self.projection_filepath) as f:
-                self.projection = json.load(f)
+        if self.file_store.check_if_object_exists(self.projection_filepath):
+            self.projection = self.file_store.get_object(self.projection_filepath)
 
     def _save_data(self, projection: Dict[str, List[float]]) -> None:
-        with open(self.projection_filepath, 'w+', encoding='utf-8') as f:
-            json.dump(projection, f, ensure_ascii=False, indent=4)
+        self.file_store.put_object(self.projection_filepath, projection)
 
     def _cache_data(self, projection: Dict[str, List[float]]) -> None:
         self.projection = projection

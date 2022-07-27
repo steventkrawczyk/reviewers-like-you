@@ -25,20 +25,29 @@ api = Api(app)
 
 
 class Movies(Resource):
-    def __init__(self, movies):
-        self.movies = movies
+    def __init__(self, projection_datastore):
+        self.projection_datastore = projection_datastore
 
     def get(self):
+        movies = list(self.projection_datastore.get_movie_indices().keys())
         return jsonify({"message": "",
                         "category": "success",
-                        "data": self.movies,
+                        "data": movies,
                         "status": 200})
 
 
 class Match(Resource):
-    def __init__(self, match_generator, movies):
-        self.match_generator = match_generator
-        self.movies = movies
+    def __init__(self, main_datastore, projection_datastore):
+        self.main_datastore = main_datastore
+        self.projection_datastore = projection_datastore
+
+    # NOTE This is required for testing, since otherwise we init
+    # an empty projection when we run `docker compose up`.
+    def _load_match_generator(self):
+        self.movies = list(
+            self.projection_datastore.get_movie_indices().keys())
+        self.match_generator = MatchGeneratorFactory(
+            self.main_datastore, self.projection_datastore).build()
 
     def _process_request(self, request):
         user_ratings = {}
@@ -61,6 +70,7 @@ class Match(Resource):
         return response_data
 
     def post(self):
+        self._load_match_generator()
         user_ratings = self._process_request(request)
         match_data = self._get_match(user_ratings)
         logging.debug("User got matched with reviewer: " + str(match_data[0]))
@@ -71,15 +81,13 @@ class Match(Resource):
                         "status": 200})
 
 
-database = MainDatastoreFactory().build()
-projection_databse = ProjectionDatastoreFactory().build()
-movies_to_rate = list(projection_databse.get_movie_indices().keys())
-match_generator = MatchGeneratorFactory(database, projection_databse).build()
+main_datastore = MainDatastoreFactory().build()
+projection_datastore = ProjectionDatastoreFactory().build()
 
 api.add_resource(Movies, '/movies',
-                 resource_class_kwargs={'movies': movies_to_rate})
-api.add_resource(Match, '/match', resource_class_kwargs={
-                 'match_generator': match_generator, 'movies': movies_to_rate})
+                 resource_class_kwargs={'projection_datastore': projection_datastore})
+api.add_resource(Match, '/match',
+                 resource_class_kwargs={'main_datastore': main_datastore, 'projection_datastore': projection_datastore})
 
 if __name__ == '__main__':
     app.run(debug=True)

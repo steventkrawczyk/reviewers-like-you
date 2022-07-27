@@ -9,7 +9,20 @@ services:
     volumes:
       - "./data/dynamodb:/home/dynamodblocal/data"
     working_dir: /home/dynamodblocal
+  minio:
+    command: "server /data --console-address \":9001\""
+    image: "minio/minio:latest"
+    container_name: minio
+    environment:
+      MINIO_ROOT_USER: AKIAIOSFODNN7EXAMPLE
+      MINIO_ROOT_PASSWORD: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKE
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - "./data/minio:/data"
   ingestion:
+    container_name: ingestion
     environment:
       AWS_ACCESS_KEY_ID: fakeKeyId
       AWS_SECRET_ACCESS_KEY: fakeAccessKey
@@ -24,34 +37,41 @@ services:
     ports:
       - "5001:5001"
   projection:
+    container_name: projection
     environment:
       AWS_ACCESS_KEY_ID: fakeKeyId
       AWS_SECRET_ACCESS_KEY: fakeAccessKey
       AWS_DEFAULT_REGION: us-west-2
     depends_on:
       - dynamodb-local
+      - minio
     links:
       - "dynamodb-local"
+      - "minio"
     build: config/projection
     volumes:
       - .:/reviewers-like-you
     ports:
       - "5002:5002" 
   recommendation:
+    container_name: recommendation
     environment:
       AWS_ACCESS_KEY_ID: fakeKeyId
       AWS_SECRET_ACCESS_KEY: fakeAccessKey
       AWS_DEFAULT_REGION: us-west-2
     depends_on:
       - dynamodb-local
+      - minio
     links:
       - "dynamodb-local"
+      - "minio"
     build: config/recommendation
     volumes:
       - .:/reviewers-like-you
     ports:
       - "5000:5000"
   scraper:
+    container_name: scraper
     environment:
       AWS_ACCESS_KEY_ID: fakeKeyId
       AWS_SECRET_ACCESS_KEY: fakeAccessKey

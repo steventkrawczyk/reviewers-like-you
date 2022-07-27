@@ -1,5 +1,3 @@
-
-
 import json
 import logging
 import os
@@ -7,6 +5,11 @@ from typing import Dict, List
 
 
 class ProjectionDatastoreShard:
+    '''
+    A single shard for projection data storage. Corresponds to one file
+    storing projection vectors.
+    '''
+
     def __init__(self, projection_filepath: str, in_memory: bool):
         self.projection = dict()
         self.projection_filepath = projection_filepath

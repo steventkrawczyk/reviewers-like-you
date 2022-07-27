@@ -30,7 +30,7 @@ class SimilarityEngine:
             vector_from_shard = shard.get_vector(nn_index_from_shard)
             author_index[shard_index] = shard.decode_match(nn_index_from_shard)
             vectors_from_shards.append(vector_from_shard)
-        nn_index = SimilarityComputation.merge_computation(input_vector, vectors_from_shards)
+        nn_index = SimilarityComputation.driver_computation(input_vector, vectors_from_shards)
         return author_index[nn_index]
 
 

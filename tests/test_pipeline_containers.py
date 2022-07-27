@@ -54,12 +54,13 @@ class IntegrationTests(unittest.TestCase):
         create_response = request.urlopen(create_request)
         self.assertEqual(create_response.status, 200)
 
-    def _do_recommendation(self, test_user_input):
+    def _get_movies(self):   
         movies_request_url = URL_BASE + RECOMMENDATION_PORT + MOVIES_API
         movies_request =  request.Request(movies_request_url, method="GET")
         movies_response = request.urlopen(movies_request)
         self.assertEqual(movies_response.status, 200)
 
+    def _get_match(self, test_user_input):
         match_request_url = URL_BASE + RECOMMENDATION_PORT + MATCH_API 
         data = json.dumps(test_user_input).encode("utf-8")
         match_request =  request.Request(match_request_url, data=data, method="POST")
@@ -70,7 +71,6 @@ class IntegrationTests(unittest.TestCase):
         self.assertIn("data", match_data)
         self.assertIn("author", match_data["data"])
         self.assertIn("reviews", match_data["data"])
-
         return (match_data["data"]["author"], match_data["data"]["reviews"])
 
     def test_pipeline(self):
@@ -86,9 +86,14 @@ class IntegrationTests(unittest.TestCase):
         self._do_projection()
 
         logging.info("Doing recommendation...")
+        self._get_movies()
         test_user_input = {'bladerunner': 0.4}
-        match = self._do_recommendation(test_user_input)
-
+        match = self._get_match(test_user_input)
         self.assertEqual(match[0], "steven")
+
+        test_user_input = {'bladerunner': 1.0}
+        match = self._get_match(test_user_input)
+        self.assertNotEqual(match[0], "steven")
+
         logging.info("Success!")
         database_manager.delete_table(self.table_name)

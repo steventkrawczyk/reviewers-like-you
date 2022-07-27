@@ -14,7 +14,8 @@ class MatchGeneratorFactory:
         self.projection_datastore = projection_datastore
 
     def build(self) -> MatchGenerator:
-        similarity_engine = SimilarityEngineFactory(self.projection_datastore).build()
+        similarity_engine = SimilarityEngineFactory(
+            self.projection_datastore).build()
         average_vec = similarity_engine.find_average_vector()
         return MatchGenerator(self.main_datastore, similarity_engine,
                               self.projection_datastore.get_movie_indices(), average_vec)

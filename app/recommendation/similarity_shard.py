@@ -1,5 +1,4 @@
 from typing import Dict, List
-
 from app.recommendation.similarity_computation import SimilarityComputation
 
 
@@ -7,7 +6,8 @@ class SimilarityShard:
     '''
     A single compute shard for SimilarityEngine.
     '''
-    def __init__(self, vectors: List[List[float]], author_index: Dict[int,str], average_vector: List[float] = None):
+
+    def __init__(self, vectors: List[List[float]], author_index: Dict[int, str], average_vector: List[float] = None):
         self.vectors = vectors
         self.author_index = author_index
         self.average_vector = average_vector
@@ -25,4 +25,3 @@ class SimilarityShard:
 
     def get_vector(self, index):
         return self.vectors[index]
-

@@ -35,10 +35,16 @@ class InMemoryTests(unittest.TestCase):
 
     def test_pipeline(self):
         self._do_ingestion()
+        
         self._do_projection()
+
         test_user_input = {'bladerunner': 0.4}
         match = self._do_recommendation(test_user_input)
         self.assertEqual(match[0], 'steven', 'wrong match')
+
+        test_user_input = {'bladerunner': 1.0}
+        match = self._do_recommendation(test_user_input)
+        self.assertNotEqual(match[0], 'steven', 'wrong match')
 
 
 if __name__ == '__main__':

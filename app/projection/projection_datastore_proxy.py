@@ -37,7 +37,8 @@ class ProjectionDatastoreProxy:
                 return
 
     def _create_new_shard(self):
-        new_shard = ProjectionDatastoreShard(self._get_shard_filepath(self.shard_count), self.in_memory)
+        new_shard = ProjectionDatastoreShard(
+            self._get_shard_filepath(self.shard_count), self.in_memory)
         self.shards.append(new_shard)
         self.shard_count += 1
 
@@ -51,7 +52,7 @@ class ProjectionDatastoreProxy:
         with open(self.movie_indices_filepath, 'w+', encoding='utf-8') as f:
             json.dump(movie_indices, f, ensure_ascii=False, indent=4)
 
-    def _cache_data(self, movie_indices: Dict[str, int]) -> None:    
+    def _cache_data(self, movie_indices: Dict[str, int]) -> None:
         self.movie_indices = movie_indices
 
     def load_data(self):

@@ -1,17 +1,20 @@
-
-
 from typing import List
 import numpy as np
 
 
 class SimilarityComputation:
+    '''
+    This class is used to define the computations for the shards and
+    the driver (SimilarityEngine) that are used complete the distributed
+    similarity computation.
+    '''
     @staticmethod
     def shard_computation(input_vector: List[float], possible_neighbors: List[List[float]]):
         print("shard")
         return SimilarityComputation._get_closest_neighbor(input_vector, possible_neighbors)
 
     @staticmethod
-    def merge_computation(input_vector: List[float], possible_neighbors: List[List[float]]):
+    def driver_computation(input_vector: List[float], possible_neighbors: List[List[float]]):
         print("merge")
         return SimilarityComputation._get_closest_neighbor(input_vector, possible_neighbors)
 

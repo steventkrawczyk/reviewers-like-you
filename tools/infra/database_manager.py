@@ -7,38 +7,41 @@ class DatabaseManager:
             'dynamodb', endpoint_url=endpoint_url, region_name=region_name)
 
     def create_reviews_table(self, table_name: str):
-        table = self.dynamodb.create_table(
-            TableName=table_name,
-            KeySchema=[
-                {
-                    'AttributeName': 'author',
-                    'KeyType': 'HASH'  # Partition key
-                },
-                {
-                    'AttributeName': 'movie',
-                    'KeyType': 'RANGE'  # Sort key
+        try:
+            table = self.dynamodb.create_table(
+                TableName=table_name,
+                KeySchema=[
+                    {
+                        'AttributeName': 'author',
+                        'KeyType': 'HASH'  # Partition key
+                    },
+                    {
+                        'AttributeName': 'movie',
+                        'KeyType': 'RANGE'  # Sort key
+                    }
+                ],
+                AttributeDefinitions=[
+                    {
+                        'AttributeName': 'author',
+                        'AttributeType': 'S'
+                    },
+                    {
+                        'AttributeName': 'movie',
+                        'AttributeType': 'S'
+                    }
+                ],
+                ProvisionedThroughput={
+                    'ReadCapacityUnits': 10,
+                    'WriteCapacityUnits': 10
                 }
-            ],
-            AttributeDefinitions=[
-                {
-                    'AttributeName': 'author',
-                    'AttributeType': 'S'
-                },
-                {
-                    'AttributeName': 'movie',
-                    'AttributeType': 'S'
-                }
-            ],
-            ProvisionedThroughput={
-                'ReadCapacityUnits': 10,
-                'WriteCapacityUnits': 10
-            }
-        )
-        if 'TableDescription' not in table:
-            raise KeyError('TableDescription')
-        if 'TableStatus' not in table['TableDescription']:
-            raise KeyError('TableStatus')
-        return table['TableDescription']['TableStatus']
+            )
+            if 'TableDescription' not in table:
+                raise KeyError('TableDescription')
+            if 'TableStatus' not in table['TableDescription']:
+                raise KeyError('TableStatus')
+            return table['TableDescription']['TableStatus']
+        except:
+            return "ALREADY_EXISTS"
 
     def delete_table(self, table_name: str):
         self.dynamodb.delete_table(TableName=table_name)

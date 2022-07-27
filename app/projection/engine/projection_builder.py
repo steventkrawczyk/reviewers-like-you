@@ -23,14 +23,18 @@ class ProjectionBuilder:
             average_vector.append(rating_average)
         return average_vector
 
+    def _build_vector_for_author(self, author: str, movie_indices: Dict[str, int], dim: int):
+        author_vector = [0.0] * dim
+        reviews_by_author = self.main_datastore_proxy.get(author)
+        for review in reviews_by_author:
+            if review.movie in movie_indices:
+                author_vector[movie_indices[review.movie]] = review.rating
+        return author_vector
+    
     def _build_vectors(self, authors: List[str], movie_indices: Dict[str, int], dim: int):
         author_vectors = dict()
         for author in authors:
-            author_vector = [0.0] * dim
-            reviews_by_author = self.main_datastore_proxy.get(author)
-            for review in reviews_by_author:
-                if review.movie in movie_indices:
-                    author_vector[movie_indices[review.movie]] = review.rating
+            author_vector = self._build_vector_for_author(author, movie_indices, dim)
             author_vectors[author] = author_vector
         return author_vectors
 

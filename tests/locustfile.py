@@ -1,14 +1,12 @@
-from tools.infra.database_manager import DatabaseManager
-from tools.infra.container_orchestrator import ContainerOrchestrator
-from app.model.review import Review
 import json
 import logging
 import sys
 import urllib
 from locust import HttpUser, constant, events, task, tag
 
-sys.path.append('..')
-
+from tools.infra.database_manager import DatabaseManager
+from tools.infra.container_orchestrator import ContainerOrchestrator
+from app.model.review import Review
 
 TEST_DATA_FILE = "tests/test_data.csv"
 TABLE_NAME = 'movie_reviews'

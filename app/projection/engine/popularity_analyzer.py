@@ -21,12 +21,11 @@ class PopularityAnalyzer:
         # reviewed.
         for author in authors:
             reviews_by_author = self.main_datastore_proxy.get(author)
-            movies_by_author = set()
-            for review in reviews_by_author:
-                if not math.isnan(review.rating):
-                    movies_by_author.add(review.movie)
-            if not popular_movies:
+            movies_by_author = set(
+                [review.movie for review in reviews_by_author])
+            if popular_movies:
+                popular_movies = popular_movies.intersection(movies_by_author)
+            else:
                 popular_movies = movies_by_author
-            popular_movies = popular_movies.intersection(movies_by_author)
 
         return popular_movies

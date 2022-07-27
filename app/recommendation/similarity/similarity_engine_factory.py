@@ -1,6 +1,6 @@
-from app.projection.projection_datastore_proxy import ProjectionDatastoreProxy
-from app.recommendation.similarity_engine import SimilarityEngine
-from app.recommendation.similarity_shard_factory import SimilarityShardFactory
+from app.projection.datastore.projection_datastore_proxy import ProjectionDatastoreProxy
+from app.recommendation.similarity.similarity_engine import SimilarityEngine
+from app.recommendation.similarity.similarity_shard_factory import SimilarityShardFactory
 
 
 class SimilarityEngineFactory:

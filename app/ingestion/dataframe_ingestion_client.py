@@ -1,6 +1,6 @@
 from pandas import DataFrame
 
-from app.ingestion.main_datastore_proxy import MainDatastoreProxy
+from app.ingestion.datastore.main_datastore_proxy import MainDatastoreProxy
 from app.model.review import Review
 
 

@@ -1,7 +1,7 @@
 from typing import List
 
-from app.recommendation.similarity_computation import SimilarityComputation
-from app.recommendation.similarity_shard import SimilarityShard
+from app.recommendation.similarity.similarity_computation import SimilarityComputation
+from app.recommendation.similarity.similarity_shard import SimilarityShard
 
 
 class SimilarityEngine:

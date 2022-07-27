@@ -1,7 +1,7 @@
-from app.ingestion.main_datastore_proxy import MainDatastoreProxy
-from app.projection.popularity_analyzer import PopularityAnalyzer
-from app.projection.projection_builder import ProjectionBuilder
-from app.projection.projection_datastore_proxy import ProjectionDatastoreProxy
+from app.ingestion.datastore.main_datastore_proxy import MainDatastoreProxy
+from app.projection.engine.popularity_analyzer import PopularityAnalyzer
+from app.projection.engine.projection_builder import ProjectionBuilder
+from app.projection.datastore.projection_datastore_proxy import ProjectionDatastoreProxy
 
 
 class ProjectionEngine:

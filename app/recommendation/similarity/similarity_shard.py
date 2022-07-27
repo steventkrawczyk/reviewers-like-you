@@ -1,5 +1,5 @@
 from typing import Dict, List
-from app.recommendation.similarity_computation import SimilarityComputation
+from app.recommendation.similarity.similarity_computation import SimilarityComputation
 
 
 class SimilarityShard:

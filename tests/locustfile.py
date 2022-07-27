@@ -1,6 +1,5 @@
 import json
 import logging
-import sys
 import urllib
 from locust import HttpUser, constant, events, task, tag
 

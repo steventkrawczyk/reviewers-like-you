@@ -1,6 +1,6 @@
 from typing import Dict, List, Set, Tuple
 
-from app.ingestion.main_datastore_proxy import MainDatastoreProxy
+from app.ingestion.datastore.main_datastore_proxy import MainDatastoreProxy
 
 
 class ProjectionBuilder:

@@ -1,4 +1,4 @@
-from app.projection.projection_datastore_proxy import ProjectionDatastoreProxy
+from app.projection.datastore.projection_datastore_proxy import ProjectionDatastoreProxy
 
 
 class ProjectionDatastoreFactory:

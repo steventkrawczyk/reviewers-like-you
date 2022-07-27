@@ -1,7 +1,7 @@
 from boto3.dynamodb.conditions import Key
 from boto3.resources.base import ServiceResource
 from typing import List, Set
-from app.ingestion.main_datastore_proxy import MainDatastoreProxy
+from app.ingestion.datastore.main_datastore_proxy import MainDatastoreProxy
 
 from app.model.review import Review
 

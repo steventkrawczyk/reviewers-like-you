@@ -3,7 +3,7 @@ import logging
 import os.path
 from typing import Dict, List
 
-from app.projection.projection_datastore_shard import ProjectionDatastoreShard
+from app.projection.datastore.projection_datastore_shard import ProjectionDatastoreShard
 
 
 class ProjectionDatastoreProxy:

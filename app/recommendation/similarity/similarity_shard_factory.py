@@ -1,5 +1,5 @@
-from app.projection.projection_datastore_shard import ProjectionDatastoreShard
-from app.recommendation.similarity_shard import SimilarityShard
+from app.projection.datastore.projection_datastore_shard import ProjectionDatastoreShard
+from app.recommendation.similarity.similarity_shard import SimilarityShard
 
 
 class SimilarityShardFactory:

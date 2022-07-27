@@ -1,7 +1,7 @@
-from app.ingestion.main_datastore_proxy import MainDatastoreProxy
-from app.projection.projection_datastore_proxy import ProjectionDatastoreProxy
+from app.ingestion.datastore.main_datastore_proxy import MainDatastoreProxy
+from app.projection.datastore.projection_datastore_proxy import ProjectionDatastoreProxy
 from app.recommendation.match_generator import MatchGenerator
-from app.recommendation.similarity_engine_factory import SimilarityEngineFactory
+from app.recommendation.similarity.similarity_engine_factory import SimilarityEngineFactory
 
 
 class MatchGeneratorFactory:

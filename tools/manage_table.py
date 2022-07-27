@@ -16,8 +16,8 @@ if __name__ == '__main__':
     action = 'create'
     table_name = 'movie_reviews'
     if len(command_line_args) == 2:
-        action = int(command_line_args[0])
-        table_name = int(command_line_args[1])
+        action = command_line_args[0]
+        table_name = command_line_args[1]
     
     status = "UNKNOWN"
     if action == 'create':

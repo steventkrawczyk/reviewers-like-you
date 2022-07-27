@@ -22,6 +22,7 @@ MOVIES_API = "/movies"
 MATCH_API = "/match?"
 
 orchestrator = ContainerOrchestrator()
+database_manager = DatabaseManager()
 review = Review("steven", "bladerunner", 0.8).to_dict()
 
 
@@ -30,13 +31,13 @@ def on_test_start(environment, **kwargs):
     logging.info("Starting new load test...")
     orchestrator = ContainerOrchestrator()
     orchestrator.start_containers()
-    database_manager = DatabaseManager()
     database_manager.create_reviews_table(TABLE_NAME)
 
 
 @events.test_stop.add_listener
 def on_test_stop(environment, **kwargs):
     logging.info("Finished load test, cleaning up...")
+    database_manager.delete_table(TABLE_NAME)
     orchestrator.stop_containers()
 
 

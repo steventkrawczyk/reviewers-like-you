@@ -15,8 +15,8 @@ class ProjectionFileStore:
         self.bucket_name = bucket_name
         # TODO Move these keys to env variables
         self.client = \
-            Minio("play.min.io", access_key="Q3AM3UQ867SPQQA43P2F",
-                  secret_key="zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG")
+            Minio("minio:9000", access_key="minioadmin",
+                  secret_key="minioadmin", secure=False)
 
     # TODO setup versioning
     def make_projections_bucket(self):

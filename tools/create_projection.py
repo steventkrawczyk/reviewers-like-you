@@ -7,20 +7,15 @@ like this:
     `python -m tools.create_projection`
 '''
 import logging
-from app.ingestion.main_datastore_factory import MainDatastoreFactory
-from app.projection.projection_datastore_factory import ProjectionDatastoreFactory
-from app.projection.projection_engine_factory import ProjectionEngineFactory
+from urllib import request
 
 
 def main():
-    logging.info("Initializing...")
-    database = MainDatastoreFactory(endpoint_url="http://localhost:8000").build()
-    projection_databse = ProjectionDatastoreFactory().build()
-    projection_engine = ProjectionEngineFactory(
-        database, projection_databse).build()
     logging.info("Creating projection...")
-    projection_engine.create_projection()
-    logging.info("Done.")
+    create_request_url = "http://localhost:5002/create"
+    create_request =  request.Request(create_request_url, method="PUT")
+    create_response = request.urlopen(create_request)
+    logging.info("Status: " + str(create_response.status))
 
 
 if __name__ == "__main__":

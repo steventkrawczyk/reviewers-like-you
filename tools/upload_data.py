@@ -6,6 +6,7 @@ something like this:
     `python -m tools.upload_data <YOUR_FILEPATH_HERE>`
 '''
 import logging
+from urllib import parse, request
 import pandas as pd
 import sys
 
@@ -14,15 +15,17 @@ from app.ingestion.main_datastore_factory import MainDatastoreFactory
 
 
 def main():
-    logging.info("Initializing...")
-    database = MainDatastoreFactory(endpoint_url="http://localhost:8000").build()
-    client = DataframeIngestionClient(database)
-    file_name = sys.argv[1:][0]
-    input_data = pd.read_csv(file_name, header=0)
+    command_line_args = sys.argv[1:]
+    file_name = "tests/test_data.csv"
+    if len(command_line_args) == 1:
+        file_name = command_line_args[0]
 
     logging.info("Uploading from file: " + file_name)
-    client.upload(input_data)
-    logging.info("Done")
+    ingestion_query_parameters = parse.urlencode({"filepath": file_name})
+    ingestion_request_url = "http://localhost:5001/batch?" + ingestion_query_parameters
+    ingestion_request =  request.Request(ingestion_request_url, method="PUT")
+    ingestion_response = request.urlopen(ingestion_request)
+    logging.info("Status: " + str(ingestion_response.status))
 
 
 if __name__ == "__main__":

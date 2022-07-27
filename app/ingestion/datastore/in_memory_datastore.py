@@ -1,7 +1,7 @@
 from collections import defaultdict
 from typing import List, Set
-from app.ingestion.datastore.main_datastore_proxy import MainDatastoreProxy
 
+from app.ingestion.main_datastore_proxy import MainDatastoreProxy
 from app.model.review import Review
 
 

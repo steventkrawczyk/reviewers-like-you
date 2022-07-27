@@ -3,7 +3,7 @@ import logging
 
 from app.ingestion.datastore.dynamodb_datastore import DynamoDbDatastore
 from app.ingestion.datastore.in_memory_datastore import InMemoryDatastore
-from app.ingestion.datastore.main_datastore_proxy import MainDatastoreProxy
+from app.ingestion.main_datastore_proxy import MainDatastoreProxy
 
 
 class MainDatastoreFactory:

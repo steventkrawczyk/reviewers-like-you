@@ -31,6 +31,10 @@ Make sure you have docker installed and setup. You will need to build our base i
 
 You'll need `npm` and/or `yarn` to work with the react app. You can learn more in `app/frontend/README.md`. Our app was setup using [this tool](https://github.com/facebook/create-react-app).
 
+#### DynamoDb
+
+We use DynamoDb local as our database. We do not need to download it, because we run it in a docker container, but we will need AWS credentials set up to use some of the command line tools. For more info, read the [DynamoDb local docs](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.DownloadingAndRunning.html).
+
 ### Tests
 
 #### Unit and integration tests

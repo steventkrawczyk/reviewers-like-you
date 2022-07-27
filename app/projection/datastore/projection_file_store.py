@@ -26,7 +26,6 @@ class ProjectionFileStore:
 
     def put_object(self, name: str, data: object):
         serialized_data = json.dumps(data).encode()
-        print(serialized_data)
         self.client.put_object(bucket_name=self.bucket_name,
                                object_name=name,
                                length=len(serialized_data),

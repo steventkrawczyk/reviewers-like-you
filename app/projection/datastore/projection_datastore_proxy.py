@@ -4,6 +4,8 @@ from typing import Dict, List
 from app.projection.datastore.projection_datastore_shard import ProjectionDatastoreShard
 from app.projection.datastore.projection_file_store import ProjectionFileStore
 
+MAX_SHARD_COUNT = 100
+
 
 class ProjectionDatastoreProxy:
     '''
@@ -31,8 +33,8 @@ class ProjectionDatastoreProxy:
     # TODO Use new API
     def _initialize_shards(self):
         shard_index = 0
-        while True:
-            if os.path.isfile(self._get_shard_filepath(shard_index)):
+        while self.shard_count < MAX_SHARD_COUNT:
+            if self.file_store.check_if_object_exists(self._get_shard_filepath(shard_index)):
                 self._create_new_shard()
                 shard_index += 1
             else:
@@ -40,13 +42,14 @@ class ProjectionDatastoreProxy:
 
     def _create_new_shard(self):
         new_shard = ProjectionDatastoreShard(self.file_store,
-            self._get_shard_filepath(self.shard_count), self.in_memory)
+                                             self._get_shard_filepath(self.shard_count), self.in_memory)
         self.shards.append(new_shard)
         self.shard_count += 1
 
     def _load_movie_indices(self) -> None:
         if self.file_store.check_if_object_exists(self.movie_indices_filepath):
-            self.movie_indices = self.file_store.get_object(self.movie_indices_filepath)
+            self.movie_indices = self.file_store.get_object(
+                self.movie_indices_filepath)
 
     def _save_data(self, movie_indices: Dict[str, int]) -> None:
         self.file_store.put_object(self.movie_indices_filepath, movie_indices)

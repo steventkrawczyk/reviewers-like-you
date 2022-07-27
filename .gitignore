@@ -133,3 +133,4 @@ data/*.json
 data/*.csv
 shared-local-instance.db
 reviewers-like-you-venv/*
+data/minio/*

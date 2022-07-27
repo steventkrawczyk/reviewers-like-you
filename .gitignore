@@ -129,6 +129,5 @@ dmypy.json
 .pyre/
 
 # Project specific
-data/*
 reviewers-like-you-venv/*
 docker/*

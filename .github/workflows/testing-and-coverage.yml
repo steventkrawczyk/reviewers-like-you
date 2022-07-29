@@ -6,7 +6,7 @@ on:
       - 'app/**'
 
 jobs:
-  build-linux:
+  test:
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 5

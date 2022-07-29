@@ -4,6 +4,8 @@ on:
   push:
     paths:
       - 'app/**'
+      - 'tests/**'
+      - 'tools/infra/**'
 
 jobs:
   test:

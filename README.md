@@ -28,7 +28,7 @@ Now you have a virtual environment for running our python code. You will need to
 
 #### Docker
 
-Make sure you have docker installed and setup. You will need to build our base image before you can launch the backend containers. Run `docker build --no-cache --tag reviewers-like-you .`. This process will take a while, because we have to build and install some large dependencies. Fortunately, you should only have to do this once, unless our python dependencies or other base image requirements change.
+Make sure you have docker installed and setup. You will need to build our base image before you can launch the backend containers. Run `docker build --no-cache --tag stevenkrawczyk/reviewers-like-you .`. This process will take a while, because we have to build and install some large dependencies. Fortunately, you should only have to do this once, unless our python dependencies or other base image requirements change.
 
 #### React
 

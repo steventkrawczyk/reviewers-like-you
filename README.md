@@ -36,7 +36,7 @@ You'll need `npm` and/or `yarn` to work with the react app. You can learn more i
 
 ### Tests
 
-#### Unit and integration tests
+#### End-to-end and integration tests
 
 Try some tests by running `python -m unittest tests.test_pipeline_in_memory` from the root dir of this repo, or run all tests by running `./tests/run_tests.sh`.
 

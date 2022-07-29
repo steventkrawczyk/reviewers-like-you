@@ -5,6 +5,8 @@ July 2022
 
 [Design doc](https://docs.google.com/document/d/1sPTaOpxOl5q8VmGsr-TLnwGrpLGtXugPjhlEqxvhL1Q/edit)
 
+[Runbook](https://docs.google.com/document/d/1PVQZQyA8hbLpeZnJOZMJi2J8mLf0H-ztqKgS7Fe_sO4/edit)
+
 [Discord server](https://discord.com/channels/1001211644745109537/1001211645252616224)
 
 ![image info](./images/SystemDesign.png)

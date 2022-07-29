@@ -39,9 +39,7 @@ Try some tests by running `python -m unittest tests.test_pipeline_in_memory` fro
 
 #### Load testing
 
-TODO: Docker integration
-
-We use [locust](https://docs.locust.io/en/stable/what-is-locust.html) for load testing. Try `locust -f tests/locustfile.py -u 10 -r 1 -t 60 --headless --only-summary -H http://localhost:5000 --csv data/metrics/locust/perf` to run a load test and check out the results in `data/metrics/locust/perf`
+We use [locust](https://docs.locust.io/en/stable/what-is-locust.html) for load testing. Try `./tests/load_test.sh` to run a load test and check out the results in `data/metrics/locust/perf`
 
 ### Jupyter notebook
 

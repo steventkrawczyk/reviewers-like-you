@@ -1,6 +1,9 @@
-name: Testing
+name: Testing and Coverage
 
-on: [push]
+on:
+  push:
+    paths:
+      - 'app/**'
 
 jobs:
   build-linux:

@@ -1,3 +1,4 @@
+import logging
 import boto3
 
 
@@ -41,7 +42,11 @@ class DatabaseManager:
                 raise KeyError('TableStatus')
             return table['TableDescription']['TableStatus']
         except:
+            logging.warning("Unable to create table.")
             return "ALREADY_EXISTS"
 
     def delete_table(self, table_name: str):
-        self.dynamodb.delete_table(TableName=table_name)
+        try:
+            self.dynamodb.delete_table(TableName=table_name)
+        except:
+            logging.warning("Unable to delete table.")

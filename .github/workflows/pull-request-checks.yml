@@ -1,9 +1,6 @@
 name: 'Pull Request Checks'
 on: [pull_request]
 
-permissions:
-  contents: read
-
 jobs:
   pull-request-checks:
     runs-on: ubuntu-latest
@@ -37,21 +34,21 @@ jobs:
           docker pull amazon/dynamodb-local
           docker pull minio/minio
           docker pull stevenkrawczyk/reviewers-like-you
-      # - name: Generate coverage report
-      #   env:
-      #     AWS_ACCESS_KEY_ID: fakeKeyId
-      #     AWS_SECRET_ACCESS_KEY: fakeAccessKey
-      #     AWS_DEFAULT_REGION: us-west-2
-      #   run: |
-      #     pytest . --cov --cov-branch > data/metrics/pytest/coverage_report.txt
-      # - name: Pytest coverage comment
-      #   uses: MishaKav/pytest-coverage-comment@main
-      #   with:
-      #     pytest-coverage-path: data/metrics/pytest/coverage_report.txt
-      # - name: Generate performance statistics
-      #   env:
-      #     AWS_ACCESS_KEY_ID: fakeKeyId
-      #     AWS_SECRET_ACCESS_KEY: fakeAccessKey
-      #     AWS_DEFAULT_REGION: us-west-2
-      #   run: |
-      #     locust -f tests/locustfile.py -u 10 -r 1 -t 60 --headless --only-summary -H http://localhost:5000 --csv data/metrics/locust/perf
+      - name: Generate coverage report
+        env:
+          AWS_ACCESS_KEY_ID: fakeKeyId
+          AWS_SECRET_ACCESS_KEY: fakeAccessKey
+          AWS_DEFAULT_REGION: us-west-2
+        run: |
+          ./tests/get_coverage.sh
+      - name: Pytest coverage comment
+        uses: MishaKav/pytest-coverage-comment@main
+        with:
+          pytest-coverage-path: data/metrics/pytest/coverage_report.txt
+      - name: Generate performance statistics
+        env:
+          AWS_ACCESS_KEY_ID: fakeKeyId
+          AWS_SECRET_ACCESS_KEY: fakeAccessKey
+          AWS_DEFAULT_REGION: us-west-2
+        run: |
+          ./tests/load_test.sh

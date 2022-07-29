@@ -129,6 +129,7 @@ dmypy.json
 .pyre/
 
 # Project specific
-data/metrics/locust/*.csv
+data/metrics/locust/*
+data/metrics/pytest/*
 reviewers-like-you-venv/*
 docker/*

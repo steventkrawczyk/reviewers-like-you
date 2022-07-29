@@ -46,10 +46,10 @@ jobs:
         AWS_DEFAULT_REGION: us-west-2
       run: |
         ./tests/run_tests.sh
-    # - name: Check test coverage
-    #   env:
-    #     AWS_ACCESS_KEY_ID: fakeKeyId
-    #     AWS_SECRET_ACCESS_KEY: fakeAccessKey
-    #     AWS_DEFAULT_REGION: us-west-2
-    #   run: |
-    #     pytest . --cov --cov-branch --cov-fail-under=80
+    - name: Check test coverage
+      env:
+        AWS_ACCESS_KEY_ID: fakeKeyId
+        AWS_SECRET_ACCESS_KEY: fakeAccessKey
+        AWS_DEFAULT_REGION: us-west-2
+      run: |
+        ./tests/get_coverage.sh

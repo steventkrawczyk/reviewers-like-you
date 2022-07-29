@@ -19,7 +19,7 @@ CREATE_API = "/create"
 MOVIES_API = "/movies"
 MATCH_API = "/match?"
 
-database_manager = DatabaseManager()
+database_manager = DatabaseManager("http://dynamodb-local:8000")
 review = Review("steven", "bladerunner", 0.8).to_dict()
 
 

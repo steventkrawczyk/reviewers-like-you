@@ -54,7 +54,6 @@ class DatabaseManager:
                 return 'ALREADY_EXISTS'
             else:
                 raise error
-        
 
     def delete_table(self, table_name: str):
         self.dynamodb.delete_table(TableName=table_name)

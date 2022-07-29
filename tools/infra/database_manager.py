@@ -1,11 +1,22 @@
 import logging
+import time
 import boto3
+from botocore.exceptions import ClientError
 
 
 class DatabaseManager:
     def __init__(self, endpoint_url: str = "http://localhost:8000", region_name: str = "us-west-2"):
         self.dynamodb = boto3.client(
             'dynamodb', endpoint_url=endpoint_url, region_name=region_name)
+
+    def _wait_on_table_activation(self, table_name):
+        while True:
+            response = self.dynamodb.describe_table(TableName=table_name)
+            if response['Table']['TableStatus'] == 'ACTIVE':
+                return response['Table']['TableStatus']
+
+            # TODO optimize this somehow: we can tolerate long sleep times for CI, but not local dev
+            time.sleep(1)
 
     def create_reviews_table(self, table_name: str):
         try:
@@ -36,17 +47,14 @@ class DatabaseManager:
                     'WriteCapacityUnits': 10
                 }
             )
-            if 'TableDescription' not in table:
-                raise KeyError('TableDescription')
-            if 'TableStatus' not in table['TableDescription']:
-                raise KeyError('TableStatus')
-            return table['TableDescription']['TableStatus']
-        except:
-            logging.warning("Unable to create table.")
-            return "ALREADY_EXISTS"
+            return self._wait_on_table_activation(table_name)
+        except ClientError as error:
+            if error.response['Error']['Code'] == 'ResourceInUseException':
+                logging.warning('')
+                return 'ALREADY_EXISTS'
+            else:
+                raise error
+        
 
     def delete_table(self, table_name: str):
-        try:
-            self.dynamodb.delete_table(TableName=table_name)
-        except:
-            logging.warning("Unable to delete table.")
+        self.dynamodb.delete_table(TableName=table_name)

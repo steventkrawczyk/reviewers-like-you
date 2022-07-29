@@ -23,7 +23,7 @@ def main():
     logging.info("Uploading from file: " + file_name)
     ingestion_query_parameters = parse.urlencode({"filepath": file_name})
     ingestion_request_url = "http://localhost:5001/batch?" + ingestion_query_parameters
-    ingestion_request =  request.Request(ingestion_request_url, method="PUT")
+    ingestion_request = request.Request(ingestion_request_url, method="PUT")
     ingestion_response = request.urlopen(ingestion_request)
     logging.info("Status: " + str(ingestion_response.status))
 

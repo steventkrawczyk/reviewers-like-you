@@ -35,7 +35,7 @@ class InMemoryTests(unittest.TestCase):
 
     def test_pipeline(self):
         self._do_ingestion()
-        
+
         self._do_projection()
 
         test_user_input = {'bladerunner': 0.4}

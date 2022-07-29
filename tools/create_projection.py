@@ -13,7 +13,7 @@ from urllib import request
 def main():
     logging.info("Creating projection...")
     create_request_url = "http://localhost:5002/create"
-    create_request =  request.Request(create_request_url, method="PUT")
+    create_request = request.Request(create_request_url, method="PUT")
     create_response = request.urlopen(create_request)
     logging.info("Status: " + str(create_response.status))
 

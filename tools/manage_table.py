@@ -18,12 +18,13 @@ if __name__ == '__main__':
     if len(command_line_args) == 2:
         action = command_line_args[0]
         table_name = command_line_args[1]
-    
+
     status = "UNKNOWN"
     if action == 'create':
-        status = DatabaseManager().create_reviews_table(table_name)
+        status = DatabaseManager(
+            "http://localhost:8000").create_reviews_table(table_name)
     elif action == 'delete':
         DatabaseManager().delete_table(table_name)
         status = 'DELETED'
-    
+
     logging.info("Table status:", status)

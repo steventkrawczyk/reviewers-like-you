@@ -2,12 +2,12 @@
 
 protected_branch='main'
 
-policy="\n\n[Policy] Never push code directly to the "$protected_branch" branch! (Prevented with pre-push hook.)\n\n"
+policy="[Policy] Never push code directly to the "$protected_branch" branch! (Prevented with pre-push hook.)"
 
 current_branch=$(git rev-parse --abbrev-ref HEAD)
 
 do_exit(){
-  echo -e $policy
+  echo $policy
   exit 1
 }
 

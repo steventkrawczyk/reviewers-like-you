@@ -58,7 +58,7 @@ Check out `notebooks/DataPipelineDemo.ipynb` for an overview and demonstration o
 
 ### Submitting changes
 
-1. Before you get started, run either `cp -R hooks/ .git/hooks` or `git config core.hooksPath hooks/` to set up the `pre-push` git hook, which will make sure all tests are passing locally before pushing your changes to remote.
+1. Before you get started, run either  `git config core.hooksPath hooks/` (recommended) or `cp -R hooks/ .git/hooks` or to set up the `pre-push` git hook, which will make sure all tests are passing locally before pushing your changes to remote.
 2. Make your changes and test locally, using `./tests/run_tests.sh`, as well as load testing and manual testing with the local website.
 3. Commit your changes to a feature branch (not `main`) and push it.
 4. Follow the steps below to create a github PR from your branch:  

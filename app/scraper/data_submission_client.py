@@ -4,6 +4,7 @@ from pandas import DataFrame
 
 from app.ingestion.main_datastore_factory import MainDatastoreFactory
 from app.ingestion.dataframe_ingestion_client import DataframeIngestionClient
+from app.ingestion.main_datastore_proxy import MainDatastoreProxy
 from app.model.review import Review
 
 
@@ -14,11 +15,11 @@ class DataSubmissionClient:
     upload at a later time.
     '''
 
-    def __init__(self, filepath: str = "data/scraped_data.csv"):
+    def __init__(self, database: MainDatastoreProxy = None, filepath: str = ""):
         if filepath != "":
             self.filepath = filepath
         else:
-            self.database = MainDatastoreFactory().build()
+            self.database = database
             self.client = DataframeIngestionClient(self.database)
 
     def submit_dataframe(self, data: DataFrame) -> None:

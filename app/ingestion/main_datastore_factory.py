@@ -12,16 +12,18 @@ class MainDatastoreFactory:
     ingested from web scrapers, manual uploads, and user input.
     '''
 
-    def __init__(self, endpoint_url: str = "http://dynamodb-local:8000", in_memory: bool = False):
+    def __init__(self, endpoint_url: str = "http://dynamodb-local:8000", table_name: str = "movie_reviews", in_memory: bool = False):
         if not in_memory:
-            self.dynamodb = boto3.resource(
-                'dynamodb', endpoint_url=endpoint_url)
+            self.endpoint_url = endpoint_url
+            self.table_name = table_name
         self.in_memory = in_memory
 
-    def build(self, table_name: str = "movie_reviews") -> MainDatastoreProxy:
+    def build(self) -> MainDatastoreProxy:
         if self.in_memory:
             logging.info("Using in memory mode for main datastore.")
             return InMemoryDatastore()
         else:
             logging.info("Connecting to dynamodb as main datastore.")
-            return DynamoDbDatastore(self.dynamodb, table_name)
+            self.dynamodb = boto3.resource(
+                'dynamodb', endpoint_url=self.endpoint_url)
+            return DynamoDbDatastore(self.dynamodb, self.table_name)

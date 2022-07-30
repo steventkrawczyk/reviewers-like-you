@@ -14,6 +14,7 @@ from flask_cors import CORS
 from flask_restful import Resource, Api
 import logging
 
+from app.config.config_loader import ConfigLoader
 from app.ingestion.main_datastore_factory import MainDatastoreFactory
 from app.projection.projection_datastore_factory import ProjectionDatastoreFactory
 from app.recommendation.match_generator_factory import MatchGeneratorFactory
@@ -25,25 +26,37 @@ api = Api(app)
 
 
 class Movies(Resource):
-    def __init__(self, projection_datastore):
+    def __init__(self, movies, reload_for_testing, projection_datastore):
+        self.movies = movies
+        self.reload_for_testing = reload_for_testing
         self.projection_datastore = projection_datastore
 
+    # NOTE This is required for testing, since otherwise we init
+    # an empty projection when we run `docker compose up`.
+    def _reload_movie_list(self):
+        self.movies = list(
+            self.projection_datastore.get_movie_indices().keys())
+
     def get(self):
-        movies = list(self.projection_datastore.get_movie_indices().keys())
+        if self.reload_for_testing:
+            self._reload_movie_list()
         return jsonify({"message": "",
                         "category": "success",
-                        "data": movies,
+                        "data": self.movies,
                         "status": 200})
 
 
 class Match(Resource):
-    def __init__(self, main_datastore, projection_datastore):
+    def __init__(self, match_generator, movies, reload_for_testing, main_datastore, projection_datastore):
+        self.match_generator = match_generator
+        self.movies = movies
+        self.reload_for_testing = reload_for_testing
         self.main_datastore = main_datastore
         self.projection_datastore = projection_datastore
 
     # NOTE This is required for testing, since otherwise we init
     # an empty projection when we run `docker compose up`.
-    def _load_match_generator(self):
+    def _reload_match_generator(self):
         self.movies = list(
             self.projection_datastore.get_movie_indices().keys())
         self.match_generator = MatchGeneratorFactory(
@@ -70,7 +83,8 @@ class Match(Resource):
         return response_data
 
     def post(self):
-        self._load_match_generator()
+        if self.reload_for_testing:
+            self._reload_match_generator()
         user_ratings = self._process_request(request)
         match_data = self._get_match(user_ratings)
         logging.debug("User got matched with reviewer: " + str(match_data[0]))
@@ -81,13 +95,30 @@ class Match(Resource):
                         "status": 200})
 
 
-main_datastore = MainDatastoreFactory().build()
-projection_datastore = ProjectionDatastoreFactory().build()
+config_filepath = "app/config.yml"
+config = ConfigLoader.load(config_filepath)
+main_datastore = MainDatastoreFactory(endpoint_url=config['dynamo_endpoint_url'],
+                                      table_name=config['table_name'],
+                                      in_memory=config['in_memory']).build()
+projection_datastore = ProjectionDatastoreFactory(endpoint_url=config['minio_endpoint_url'],
+                                                  bucket_name=config['bucket_name'],
+                                                  projection_filepath_root=config['projection_filepath_root'],
+                                                  movie_indices_filepath=config['movie_indices_filepath'],
+                                                  in_memory=config['in_memory']).build()
+movies = list(projection_datastore.get_movie_indices().keys())
+match_generator = MatchGeneratorFactory(
+    main_datastore, projection_datastore).build()
 
 api.add_resource(Movies, '/movies',
-                 resource_class_kwargs={'projection_datastore': projection_datastore})
+                 resource_class_kwargs={'movies': movies,
+                                        'reload_for_testing': config['reload_for_testing'],
+                                        'projection_datastore': projection_datastore})
 api.add_resource(Match, '/match',
-                 resource_class_kwargs={'main_datastore': main_datastore, 'projection_datastore': projection_datastore})
+                 resource_class_kwargs={'match_generator': match_generator,
+                                        'movies': movies,
+                                        'reload_for_testing': config['reload_for_testing'],
+                                        'main_datastore': main_datastore,
+                                        'projection_datastore': projection_datastore})
 
 if __name__ == '__main__':
     app.run(debug=True)

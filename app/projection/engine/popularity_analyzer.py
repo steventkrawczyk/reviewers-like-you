@@ -1,4 +1,3 @@
-import math
 from typing import List, Set
 
 from app.ingestion.main_datastore_proxy import MainDatastoreProxy

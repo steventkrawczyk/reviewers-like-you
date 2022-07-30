@@ -7,9 +7,13 @@ class ProjectionDatastoreFactory:
     Factory class for ProjectionDatastoreProxy.
     '''
 
-    def __init__(self, projection_filepath_root: str = f'data/projection_',
+    def __init__(self, endpoint_url: str = "minio:9000", 
+                 bucket_name: str = "projections",
+                 projection_filepath_root: str = f'data/projection_',
                  movie_indices_filepath: str = f'data/movie_indices.json',
                  in_memory: bool = False):
+        self.endpoint_url = endpoint_url
+        self.bucket_name = bucket_name
         self.projection_filepath_root = projection_filepath_root
         self.movie_indices_filepath = movie_indices_filepath
         self.in_memory = in_memory
@@ -17,7 +21,7 @@ class ProjectionDatastoreFactory:
     def build(self) -> ProjectionDatastoreProxy:
         file_store = None
         if not self.in_memory:
-            file_store = ProjectionFileStore()
+            file_store = ProjectionFileStore(self.endpoint_url, self.bucket_name)
             file_store.make_projections_bucket()
 
         datastore = ProjectionDatastoreProxy(file_store,

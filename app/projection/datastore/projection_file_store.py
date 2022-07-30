@@ -2,7 +2,6 @@ import io
 import json
 import logging
 from minio import Minio
-from typing import Dict, List
 
 
 class ProjectionFileStore:
@@ -11,11 +10,11 @@ class ProjectionFileStore:
     projection datastore layer.
     '''
 
-    def __init__(self, bucket_name: str = "projections"):
+    def __init__(self, endpoint_url: str, bucket_name: str):
         self.bucket_name = bucket_name
         # TODO Move these keys to env variables
         self.client = \
-            Minio("minio:9000", access_key="minioadmin",
+            Minio(endpoint_url, access_key="minioadmin",
                   secret_key="minioadmin", secure=False)
 
     # TODO setup versioning

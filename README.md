@@ -50,11 +50,7 @@ Check out `notebooks/DataPipelineDemo.ipynb` for an overview and demonstration o
 
 ### Running the local website
 
-1. Launch docker containers with our databases and web APIs by running `docker compose up -d`
-2. Create a dynamodb table with `python -m tools.manage_table create movie_reviews`
-3. Populate the DynamoDb table with data using `python -m tools.upload_data tests/test_data.csv`
-4. Create a projection to use with `python -m tools.create_projection`
-5. To run the react app: with the docker containers running, `cd` into the `app/frontend` dir and run `yarn start`. It will open a web page. For troubleshooting with the frontend, look at the `README.md` in that dir.
+If you have your python virtual environment and docker setup as above, all you need to do is run `./scripts/start_local_website.sh`.
 
 ### Submitting changes
 

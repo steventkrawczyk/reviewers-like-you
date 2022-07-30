@@ -10,7 +10,6 @@ match:
 from flask import Flask
 from flask import jsonify
 from flask import request
-from flask_cors import CORS
 from flask_restful import Resource, Api
 import logging
 
@@ -18,11 +17,6 @@ from app.config.config_loader import ConfigLoader
 from app.ingestion.main_datastore_factory import MainDatastoreFactory
 from app.projection.projection_datastore_factory import ProjectionDatastoreFactory
 from app.recommendation.match_generator_factory import MatchGeneratorFactory
-
-
-app = Flask(__name__)
-CORS(app)
-api = Api(app)
 
 
 class Movies(Resource):
@@ -108,6 +102,9 @@ projection_datastore = ProjectionDatastoreFactory(endpoint_url=config['minio_end
 movies = list(projection_datastore.get_movie_indices().keys())
 match_generator = MatchGeneratorFactory(
     main_datastore, projection_datastore).build()
+
+app = Flask(__name__)
+api = Api(app)
 
 api.add_resource(Movies, '/movies',
                  resource_class_kwargs={'movies': movies,

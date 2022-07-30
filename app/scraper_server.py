@@ -10,19 +10,11 @@ from app.scraper.scraper_driver import ScraperDriver
 from app.metrics.scraper_metrics_helper import ScraperMetricsHelper
 from app.scraper.web_scraper_engine import WebScraperEngine
 
-app = Flask(__name__)
-CORS(app)
-api = Api(app)
-
-data_submission_client = DataSubmissionClient()
-web_scraper_engine = WebScraperEngine()
-metrics_helper = ScraperMetricsHelper()
-
-scraper_driver = ScraperDriver(
-    data_submission_client, web_scraper_engine, metrics_helper)
-
 
 class Scrape(Resource):
+    def __init__(self, scraper_driver: ScraperDriver):
+        self.scraper_driver = scraper_driver
+
     def put(self):
         count = 0
         async_execution = False
@@ -35,7 +27,7 @@ class Scrape(Resource):
 
         logging.info("Attempting to scrape " +
                      str(count) + " entries overall.")
-        scraper_driver.run(count)
+        self.scraper_driver.run(count)
         logging.info("Done scraping.")
 
         return jsonify({"message": "",
@@ -43,7 +35,18 @@ class Scrape(Resource):
                         "status": 200})
 
 
-api.add_resource(Scrape, '/scrape')
+data_submission_client = DataSubmissionClient()
+web_scraper_engine = WebScraperEngine()
+metrics_helper = ScraperMetricsHelper()
+scraper_driver = ScraperDriver(
+    data_submission_client, web_scraper_engine, metrics_helper)
+
+app = Flask(__name__)
+CORS(app)
+api = Api(app)
+
+api.add_resource(Scrape, '/scrape',
+                 resource_class_kwargs={'scraper_driver': scraper_driver})
 
 if __name__ == '__main__':
     app.run(debug=True)

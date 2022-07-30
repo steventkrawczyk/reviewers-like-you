@@ -3,6 +3,8 @@ from flask import Flask, request
 from flask import jsonify
 from flask_cors import CORS
 from flask_restful import Resource, Api
+
+from app.config.config_loader import ConfigLoader
 from app.ingestion.main_datastore_factory import MainDatastoreFactory
 from app.projection.engine.projection_engine import ProjectionEngine
 from app.projection.projection_datastore_factory import ProjectionDatastoreFactory
@@ -29,10 +31,17 @@ class Create(Resource):
                         "status": 200})
 
 
-main_datastore_proxy = MainDatastoreFactory().build()
-projection_datastore_proxy = ProjectionDatastoreFactory().build()
+config = ConfigLoader.load("app/config.yml")
+main_datastore = MainDatastoreFactory(endpoint_url=config['dynamo_endpoint_url'],
+                                      table_name=config['table_name'],
+                                      in_memory=config['in_memory']).build()
+projection_datastore = ProjectionDatastoreFactory(endpoint_url=config['minio_endpoint_url'],
+                                                  bucket_name=config['bucket_name'],
+                                                  projection_filepath_root=config['projection_filepath_root'],
+                                                  movie_indices_filepath=config['movie_indices_filepath'],
+                                                  in_memory=config['in_memory']).build()
 projection_engine = ProjectionEngineFactory(
-    main_datastore_proxy, projection_datastore_proxy).build()
+    main_datastore, projection_datastore).build()
 
 app = Flask(__name__)
 CORS(app)

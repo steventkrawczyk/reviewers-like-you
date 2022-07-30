@@ -5,6 +5,8 @@ from flask import request
 from flask_cors import CORS
 from flask_restful import Resource, Api
 
+from app.config.config_loader import ConfigLoader
+from app.ingestion.main_datastore_factory import MainDatastoreFactory
 from app.scraper.data_submission_client import DataSubmissionClient
 from app.scraper.scraper_driver import ScraperDriver
 from app.metrics.scraper_metrics_helper import ScraperMetricsHelper
@@ -35,7 +37,12 @@ class Scrape(Resource):
                         "status": 200})
 
 
-data_submission_client = DataSubmissionClient()
+# TODO some props need to migrated to config (e.g. metrics)
+config = ConfigLoader.load("app/config.yml")
+main_datastore = MainDatastoreFactory(endpoint_url=config['dynamo_endpoint_url'],
+                                      table_name=config['table_name'],
+                                      in_memory=config['in_memory']).build()
+data_submission_client = DataSubmissionClient(main_datastore)
 web_scraper_engine = WebScraperEngine()
 metrics_helper = ScraperMetricsHelper()
 scraper_driver = ScraperDriver(

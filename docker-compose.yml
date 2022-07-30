@@ -21,6 +21,35 @@ services:
       - "9001:9001"
     volumes:
       - "./docker/minio/data:/data"
+  nginx:
+    image: "nginx:latest"
+    container_name: nginx
+    ports: 
+      - "5000:5000"
+    volumes:
+      - "./config/nginx/nginx.conf:/etc/nginx/nginx.conf:ro"
+      - "./app/frontend/build:/reviewers-like-you:ro"
+    depends_on:
+      - recommendation1
+      - recommendation2
+    links:
+      - "recommendation1"
+      - "recommendation2"
+  scraper:
+    container_name: scraper
+    environment:
+      AWS_ACCESS_KEY_ID: fakeKeyId
+      AWS_SECRET_ACCESS_KEY: fakeAccessKey
+      AWS_DEFAULT_REGION: us-west-2
+    depends_on:
+      - dynamodb-local
+    links:
+      - "dynamodb-local"
+    build: config/scraper
+    volumes:
+      - .:/reviewers-like-you
+    ports:
+      - "5001:5000"
   ingestion:
     container_name: ingestion
     environment:
@@ -35,7 +64,7 @@ services:
     volumes:
       - .:/reviewers-like-you
     ports:
-      - "5001:5001"
+      - "5002:5000"
   projection:
     container_name: projection
     environment:
@@ -52,9 +81,9 @@ services:
     volumes:
       - .:/reviewers-like-you
     ports:
-      - "5002:5002" 
-  recommendation:
-    container_name: recommendation
+      - "5003:5000" 
+  recommendation1:
+    container_name: recommendation1
     environment:
       AWS_ACCESS_KEY_ID: fakeKeyId
       AWS_SECRET_ACCESS_KEY: fakeAccessKey
@@ -68,21 +97,19 @@ services:
     build: config/recommendation
     volumes:
       - .:/reviewers-like-you
-    ports:
-      - "5000:5000"
-  scraper:
-    container_name: scraper
+  recommendation2:
+    container_name: recommendation2
     environment:
       AWS_ACCESS_KEY_ID: fakeKeyId
       AWS_SECRET_ACCESS_KEY: fakeAccessKey
       AWS_DEFAULT_REGION: us-west-2
     depends_on:
       - dynamodb-local
+      - minio
     links:
       - "dynamodb-local"
-    build: config/scraper
+      - "minio"
+    build: config/recommendation
     volumes:
       - .:/reviewers-like-you
-    ports:
-      - "5003:5003"
     

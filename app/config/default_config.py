@@ -1,4 +1,8 @@
 class DefaultConfig(dict):
+    '''
+    Configuration used when no file is provided.
+    '''
+
     default_values: dict = {
         "dynamo_endpoint_url": "http://dynamodb-local:8000",
         "minio_endpoint_url": "minio:9000",

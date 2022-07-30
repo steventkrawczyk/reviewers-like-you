@@ -1,5 +1,3 @@
-
-
 import logging
 import os
 import yaml
@@ -7,6 +5,10 @@ from app.config.default_config import DefaultConfig
 
 
 class ConfigLoader:
+    '''
+    Used to load in configuration for Flask apps.
+    '''
+
     @staticmethod
     def load(filepath: str):
         if os.path.isfile(filepath):

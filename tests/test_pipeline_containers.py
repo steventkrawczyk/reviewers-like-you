@@ -1,5 +1,4 @@
 import json
-import logging
 import unittest
 from urllib import request, parse
 import warnings
@@ -25,13 +24,11 @@ MATCH_API = "/match"
 class IntegrationTests(unittest.TestCase):
     def setUp(self):
         warnings.simplefilter("ignore", ResourceWarning)
-        logging.info("Initializing...")
         self.table_name = TABLE_NAME
         self.database_manager = DatabaseManager("http://dynamodb-local:8000")
         self.database_manager.create_reviews_table(self.table_name)
 
     def tearDown(self):
-        logging.info("Tearing down...")
         self.database_manager.delete_table(self.table_name)
 
     def _do_ingestion_batch(self, filename):
@@ -79,15 +76,12 @@ class IntegrationTests(unittest.TestCase):
         return (match_data["data"]["author"], match_data["data"]["reviews"])
 
     def test_pipeline(self):
-        logging.info("Doing ingestion...")
         review = Review("steven", "bladerunner", 0.8)
         self._do_ingestion_batch(TEST_DATA_FILE)
         self._do_ingestion_single_review(review)
 
-        logging.info("Doing projection...")
         self._do_projection()
 
-        logging.info("Doing recommendation...")
         self._get_movies()
         test_user_input = {'bladerunner': 0.4}
         match = self._get_match(test_user_input)
@@ -100,5 +94,3 @@ class IntegrationTests(unittest.TestCase):
         test_user_input = {'bladerunner': -1.0}
         match = self._get_match(test_user_input)
         self.assertNotEqual(match[0], "steven")
-
-        logging.info("Success!")

@@ -2,7 +2,6 @@ import logging
 from flask import Flask
 from flask import jsonify
 from flask import request
-from flask_cors import CORS
 from flask_restful import Resource, Api
 
 from app.config.config_loader import ConfigLoader
@@ -27,10 +26,10 @@ class Scrape(Resource):
             if key == "async":
                 async_execution = bool(arg)
 
-        logging.info("Attempting to scrape " +
+        logging.debug("Attempting to scrape " +
                      str(count) + " entries overall.")
         self.scraper_driver.run(count)
-        logging.info("Done scraping.")
+        logging.debug("Done scraping.")
 
         return jsonify({"message": "",
                         "category": "success",
@@ -50,11 +49,10 @@ scraper_driver = ScraperDriver(
     data_submission_client, web_scraper_engine, metrics_helper)
 
 app = Flask(__name__)
-CORS(app)
 api = Api(app)
 
 api.add_resource(Scrape, '/scrape',
-                resource_class_kwargs={'scraper_driver': scraper_driver})
+                 resource_class_kwargs={'scraper_driver': scraper_driver})
 
 if __name__ == '__main__':
     app.run(debug=True)

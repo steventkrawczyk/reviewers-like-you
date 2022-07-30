@@ -5,3 +5,4 @@ bucket_name: projections
 projection_filepath_root: data/projection_
 movie_indices_filepath: data/movie_indices.json
 in_memory: false
+reload_for_testing: true

@@ -10,7 +10,8 @@ class DefaultConfig(dict):
         "bucket_name": "projections",
         "projection_filepath_root": "data/projection_",
         "movie_indices_filepath": "data/movie_indices.json",
-        "in_memory": False
+        "in_memory": False,
+        "reload_for_testing": True
     }
 
     def __getitem__(self, key):

@@ -1,6 +1,7 @@
 import logging
 from flask import Flask, request
 from flask import jsonify
+from flask_cors import CORS
 from flask_restful import Resource, Api
 
 from app.config.config_loader import ConfigLoader
@@ -44,6 +45,7 @@ projection_engine = ProjectionEngineFactory(
     main_datastore, projection_datastore).build()
 
 app = Flask(__name__)
+CORS(app)
 api = Api(app)
 
 api.add_resource(Create, '/create',

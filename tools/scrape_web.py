@@ -14,7 +14,7 @@ from app.scraper.web_scraper_engine import WebScraperEngine
 
 
 def main():
-    logging.info("Initializing...")
+    print("Initializing...")
     data_submission_client = DataSubmissionClient()
     web_scraper_engine = WebScraperEngine()
     metrics_helper = ScraperMetricsHelper()
@@ -24,10 +24,10 @@ def main():
 
     total_entries = int(sys.argv[1:][0])
 
-    logging.info("Attempting to scrape " +
+    print("Attempting to scrape " +
                  str(total_entries) + " entries overall.")
     scraper_driver.run(total_entries)
-    logging.info("Done scraping.")
+    print("Done scraping.")
 
 
 if __name__ == "__main__":

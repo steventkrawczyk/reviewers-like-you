@@ -22,9 +22,9 @@ class Create(Resource):
             if key == "async":
                 async_execution = bool(arg)
 
-        logging.info("Creating projection...")
+        logging.debug("Creating projection...")
         self.projection_engine.create_projection()
-        logging.info("Done!")
+        logging.debug("Done!")
 
         return jsonify({"message": "",
                         "category": "success",

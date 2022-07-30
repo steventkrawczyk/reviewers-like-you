@@ -27,4 +27,4 @@ if __name__ == '__main__':
         DatabaseManager().delete_table(table_name)
         status = 'DELETED'
 
-    logging.info("Table status:", status)
+    print("Table status:", status)

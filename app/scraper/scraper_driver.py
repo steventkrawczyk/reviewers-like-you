@@ -22,11 +22,11 @@ class ScraperDriver:
     def run(self, entries_to_scrape: int):
         while entries_to_scrape > 0:
             batch_size = min(MAX_BATCH_SIZE, entries_to_scrape)
-            logging.info("Attempting to scrape a batch of " +
+            logging.debug("Attempting to scrape a batch of " +
                          str(batch_size) + " entries...")
             self.metrics_helper.start_timer()
             scraped = self.web_scraper.scrape_many_entires(batch_size)
             self.self.metrics_helper.end_timer()
             self.metrics_helper.record_scraper_performance(scraped, batch_size)
-            logging.info("Scraped " + str(scraped) + " entries!")
+            logging.debug("Scraped " + str(scraped) + " entries!")
             entries_to_scrape -= scraped

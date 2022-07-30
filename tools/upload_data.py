@@ -20,12 +20,12 @@ def main():
     if len(command_line_args) == 1:
         file_name = command_line_args[0]
 
-    logging.info("Uploading from file: " + file_name)
+    print("Uploading from file: " + file_name)
     ingestion_query_parameters = parse.urlencode({"filepath": file_name})
     ingestion_request_url = "http://localhost:5002/batch?" + ingestion_query_parameters
     ingestion_request = request.Request(ingestion_request_url, method="PUT")
     ingestion_response = request.urlopen(ingestion_request)
-    logging.info("Status: " + str(ingestion_response.status))
+    print("Status: " + str(ingestion_response.status))
 
 
 if __name__ == "__main__":

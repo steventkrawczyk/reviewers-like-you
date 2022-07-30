@@ -20,10 +20,10 @@ class MainDatastoreFactory:
 
     def build(self) -> MainDatastoreProxy:
         if self.in_memory:
-            logging.info("Using in memory mode for main datastore.")
+            logging.debug("Using in memory mode for main datastore.")
             return InMemoryDatastore()
         else:
-            logging.info("Connecting to dynamodb as main datastore.")
+            logging.debug("Connecting to dynamodb as main datastore.")
             self.dynamodb = boto3.resource(
                 'dynamodb', endpoint_url=self.endpoint_url)
             return DynamoDbDatastore(self.dynamodb, self.table_name)

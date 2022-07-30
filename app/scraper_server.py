@@ -2,6 +2,7 @@ import logging
 from flask import Flask
 from flask import jsonify
 from flask import request
+from flask_cors import CORS
 from flask_restful import Resource, Api
 
 from app.config.config_loader import ConfigLoader
@@ -49,6 +50,7 @@ scraper_driver = ScraperDriver(
     data_submission_client, web_scraper_engine, metrics_helper)
 
 app = Flask(__name__)
+CORS(app)
 api = Api(app)
 
 api.add_resource(Scrape, '/scrape',

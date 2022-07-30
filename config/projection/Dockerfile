@@ -3,5 +3,5 @@ FROM stevenkrawczyk/reviewers-like-you:latest
 WORKDIR /reviewers-like-you
 ENV FLASK_APP=app/projection_server.py
 ENV FLASK_RUN_HOST=0.0.0.0
-EXPOSE 5002
-CMD ["python", "-m", "flask", "run", "-p", "5002"]
+EXPOSE 5000
+CMD ["python", "-m", "flask", "run", "-p", "5000"]

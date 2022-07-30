@@ -9,9 +9,9 @@ from app.model.review import Review
 TEST_DATA_FILE = "tests/test_data.csv"
 TABLE_NAME = 'movie_reviews'
 
-INGESTION_SERVER = "http://ingestion:5001"
-PROJECTION_SERVER = "http://projection:5002"
-RECOMMENDATION_SERVER = "http://recommendation:5000"
+INGESTION_SERVER = "http://ingestion:5000"
+PROJECTION_SERVER = "http://projection:5000"
+RECOMMENDATION_SERVER = "http://nginx:5000"
 
 UPLOAD_API = "/upload?"
 BATCH_API = "/batch?"

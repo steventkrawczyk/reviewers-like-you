@@ -11,9 +11,9 @@ from tools.infra.database_manager import DatabaseManager
 TEST_DATA_FILE = "tests/test_data.csv"
 TABLE_NAME = 'movie_reviews'
 
-INGESTION_SERVER = "http://ingestion:5001"
-PROJECTION_SERVER = "http://projection:5002"
-RECOMMENDATION_SERVER = "http://recommendation:5000"
+INGESTION_SERVER = "http://ingestion:5000"
+PROJECTION_SERVER = "http://projection:5000"
+RECOMMENDATION_PROXY_SERVER = "http://nginx:5000"
 
 UPLOAD_API = "/upload?"
 BATCH_API = "/batch?"
@@ -59,13 +59,13 @@ class IntegrationTests(unittest.TestCase):
         self.assertEqual(create_response.status, 200)
 
     def _get_movies(self):
-        movies_request_url = RECOMMENDATION_SERVER + MOVIES_API
+        movies_request_url = RECOMMENDATION_PROXY_SERVER + MOVIES_API
         movies_request = request.Request(movies_request_url, method="GET")
         movies_response = request.urlopen(movies_request)
         self.assertEqual(movies_response.status, 200)
 
     def _get_match(self, test_user_input):
-        match_request_url = RECOMMENDATION_SERVER + MATCH_API
+        match_request_url = RECOMMENDATION_PROXY_SERVER + MATCH_API
         data = json.dumps(test_user_input).encode("utf-8")
         match_request = request.Request(
             match_request_url, data=data, method="POST")

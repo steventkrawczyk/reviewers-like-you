@@ -26,25 +26,37 @@ api = Api(app)
 
 
 class Movies(Resource):
-    def __init__(self, projection_datastore):
+    def __init__(self, movies, reload_for_testing, projection_datastore):
+        self.movies = movies
+        self.reload_for_testing = reload_for_testing
         self.projection_datastore = projection_datastore
 
+    # NOTE This is required for testing, since otherwise we init
+    # an empty projection when we run `docker compose up`.
+    def _reload_movie_list(self):
+        self.movies = list(
+            self.projection_datastore.get_movie_indices().keys())
+
     def get(self):
-        movies = list(self.projection_datastore.get_movie_indices().keys())
+        if self.reload_for_testing:
+            self._reload_movie_list()
         return jsonify({"message": "",
                         "category": "success",
-                        "data": movies,
+                        "data": self.movies,
                         "status": 200})
 
 
 class Match(Resource):
-    def __init__(self, main_datastore, projection_datastore):
+    def __init__(self, match_generator, movies, reload_for_testing, main_datastore, projection_datastore):
+        self.match_generator = match_generator
+        self.movies = movies
+        self.reload_for_testing = reload_for_testing
         self.main_datastore = main_datastore
         self.projection_datastore = projection_datastore
 
     # NOTE This is required for testing, since otherwise we init
     # an empty projection when we run `docker compose up`.
-    def _load_match_generator(self):
+    def _reload_match_generator(self):
         self.movies = list(
             self.projection_datastore.get_movie_indices().keys())
         self.match_generator = MatchGeneratorFactory(
@@ -71,7 +83,8 @@ class Match(Resource):
         return response_data
 
     def post(self):
-        self._load_match_generator()
+        if self.reload_for_testing:
+            self._reload_match_generator()
         user_ratings = self._process_request(request)
         match_data = self._get_match(user_ratings)
         logging.debug("User got matched with reviewer: " + str(match_data[0]))
@@ -91,11 +104,20 @@ projection_datastore = ProjectionDatastoreFactory(endpoint_url=config['minio_end
                                                   projection_filepath_root=config['projection_filepath_root'],
                                                   movie_indices_filepath=config['movie_indices_filepath'],
                                                   in_memory=config['in_memory']).build()
+movies = list(projection_datastore.get_movie_indices().keys())
+match_generator = MatchGeneratorFactory(
+    main_datastore, projection_datastore).build()
 
 api.add_resource(Movies, '/movies',
-                 resource_class_kwargs={'projection_datastore': projection_datastore})
+                 resource_class_kwargs={'movies': movies,
+                                        'reload_for_testing': config['reload_for_testing'],
+                                        'projection_datastore': projection_datastore})
 api.add_resource(Match, '/match',
-                 resource_class_kwargs={'main_datastore': main_datastore, 'projection_datastore': projection_datastore})
+                 resource_class_kwargs={'match_generator': match_generator,
+                                        'movies': movies,
+                                        'reload_for_testing': config['reload_for_testing'],
+                                        'main_datastore': main_datastore,
+                                        'projection_datastore': projection_datastore})
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -30,16 +30,17 @@ class Create(Resource):
                         "category": "success",
                         "status": 200})
 
+
 config_filepath = "app/config.yml"
 config = ConfigLoader.load(config_filepath)
 main_datastore = MainDatastoreFactory(endpoint_url=config['dynamo_endpoint_url'],
-                                    table_name=config['table_name'],
-                                    in_memory=config['in_memory']).build()
+                                      table_name=config['table_name'],
+                                      in_memory=config['in_memory']).build()
 projection_datastore = ProjectionDatastoreFactory(endpoint_url=config['minio_endpoint_url'],
-                                                bucket_name=config['bucket_name'],
-                                                projection_filepath_root=config['projection_filepath_root'],
-                                                movie_indices_filepath=config['movie_indices_filepath'],
-                                                in_memory=config['in_memory']).build()
+                                                  bucket_name=config['bucket_name'],
+                                                  projection_filepath_root=config['projection_filepath_root'],
+                                                  movie_indices_filepath=config['movie_indices_filepath'],
+                                                  in_memory=config['in_memory']).build()
 projection_engine = ProjectionEngineFactory(
     main_datastore, projection_datastore).build()
 
@@ -48,7 +49,7 @@ CORS(app)
 api = Api(app)
 
 api.add_resource(Create, '/create',
-                resource_class_kwargs={'projection_engine': projection_engine})
+                 resource_class_kwargs={'projection_engine': projection_engine})
 
 if __name__ == '__main__':
     app.run(debug=True)

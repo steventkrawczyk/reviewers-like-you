@@ -65,8 +65,8 @@ class Batch(Resource):
 config_filepath = "app/config.yml"
 config = ConfigLoader.load(config_filepath)
 main_datastore = MainDatastoreFactory(endpoint_url=config['dynamo_endpoint_url'],
-                                    table_name=config['table_name'],
-                                    in_memory=config['in_memory']).build()
+                                      table_name=config['table_name'],
+                                      in_memory=config['in_memory']).build()
 client = DataframeIngestionClient(main_datastore)
 
 app = Flask(__name__)

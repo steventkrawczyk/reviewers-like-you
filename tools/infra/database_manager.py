@@ -50,7 +50,7 @@ class DatabaseManager:
             return self._wait_on_table_activation(table_name)
         except ClientError as error:
             if error.response['Error']['Code'] == 'ResourceInUseException':
-                logging.warning(str(error.response))
+                logging.warning(str(error.response['Error']['Message']))
                 return 'ALREADY_EXISTS'
             else:
                 raise error

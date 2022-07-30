@@ -95,25 +95,26 @@ class Match(Resource):
                         "status": 200})
 
 
-config = ConfigLoader.load("app/config.yml")
+config_filepath = "app/config.yml"
+config = ConfigLoader.load(config_filepath)
 main_datastore = MainDatastoreFactory(endpoint_url=config['dynamo_endpoint_url'],
-                                      table_name=config['table_name'],
-                                      in_memory=config['in_memory']).build()
+                                    table_name=config['table_name'],
+                                    in_memory=config['in_memory']).build()
 projection_datastore = ProjectionDatastoreFactory(endpoint_url=config['minio_endpoint_url'],
-                                                  bucket_name=config['bucket_name'],
-                                                  projection_filepath_root=config['projection_filepath_root'],
-                                                  movie_indices_filepath=config['movie_indices_filepath'],
-                                                  in_memory=config['in_memory']).build()
+                                                bucket_name=config['bucket_name'],
+                                                projection_filepath_root=config['projection_filepath_root'],
+                                                movie_indices_filepath=config['movie_indices_filepath'],
+                                                in_memory=config['in_memory']).build()
 movies = list(projection_datastore.get_movie_indices().keys())
 match_generator = MatchGeneratorFactory(
     main_datastore, projection_datastore).build()
 
 api.add_resource(Movies, '/movies',
-                 resource_class_kwargs={'movies': movies,
+                resource_class_kwargs={'movies': movies,
                                         'reload_for_testing': config['reload_for_testing'],
                                         'projection_datastore': projection_datastore})
 api.add_resource(Match, '/match',
-                 resource_class_kwargs={'match_generator': match_generator,
+                resource_class_kwargs={'match_generator': match_generator,
                                         'movies': movies,
                                         'reload_for_testing': config['reload_for_testing'],
                                         'main_datastore': main_datastore,

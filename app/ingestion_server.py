@@ -10,6 +10,7 @@ batch:
     * filepath
 '''
 import logging
+import sys
 from flask import Flask
 from flask import jsonify
 from flask import request
@@ -62,10 +63,11 @@ class Batch(Resource):
                         "status": 200})
 
 
-config = ConfigLoader.load("app/config.yml")
+config_filepath = "app/config.yml"
+config = ConfigLoader.load(config_filepath)
 main_datastore = MainDatastoreFactory(endpoint_url=config['dynamo_endpoint_url'],
-                                      table_name=config['table_name'],
-                                      in_memory=config['in_memory']).build()
+                                    table_name=config['table_name'],
+                                    in_memory=config['in_memory']).build()
 client = DataframeIngestionClient(main_datastore)
 
 app = Flask(__name__)
@@ -73,7 +75,7 @@ CORS(app)
 api = Api(app)
 
 api.add_resource(Upload, '/upload',
-                 resource_class_kwargs={'database': main_datastore})
+                resource_class_kwargs={'database': main_datastore})
 api.add_resource(Batch, '/batch', resource_class_kwargs={'client': client})
 
 if __name__ == '__main__':

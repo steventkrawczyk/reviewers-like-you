@@ -38,10 +38,11 @@ class Scrape(Resource):
 
 
 # TODO some props need to migrated to config (e.g. metrics)
-config = ConfigLoader.load("app/config.yml")
+config_filepath = "app/config.yml"
+config = ConfigLoader.load(config_filepath)
 main_datastore = MainDatastoreFactory(endpoint_url=config['dynamo_endpoint_url'],
-                                      table_name=config['table_name'],
-                                      in_memory=config['in_memory']).build()
+                                    table_name=config['table_name'],
+                                    in_memory=config['in_memory']).build()
 data_submission_client = DataSubmissionClient(main_datastore)
 web_scraper_engine = WebScraperEngine()
 metrics_helper = ScraperMetricsHelper()
@@ -53,7 +54,7 @@ CORS(app)
 api = Api(app)
 
 api.add_resource(Scrape, '/scrape',
-                 resource_class_kwargs={'scraper_driver': scraper_driver})
+                resource_class_kwargs={'scraper_driver': scraper_driver})
 
 if __name__ == '__main__':
     app.run(debug=True)

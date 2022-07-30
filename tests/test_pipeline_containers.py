@@ -2,6 +2,7 @@ import json
 import logging
 import unittest
 from urllib import request, parse
+import warnings
 
 from app.model.review import Review
 from tools.infra.database_manager import DatabaseManager
@@ -23,6 +24,7 @@ MATCH_API = "/match"
 
 class IntegrationTests(unittest.TestCase):
     def setUp(self):
+        warnings.simplefilter("ignore", ResourceWarning)
         logging.info("Initializing...")
         self.table_name = TABLE_NAME
         self.database_manager = DatabaseManager("http://dynamodb-local:8000")

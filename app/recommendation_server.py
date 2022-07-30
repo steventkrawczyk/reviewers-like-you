@@ -14,6 +14,7 @@ from flask_cors import CORS
 from flask_restful import Resource, Api
 import logging
 
+from app.config.config_loader import ConfigLoader
 from app.ingestion.main_datastore_factory import MainDatastoreFactory
 from app.projection.projection_datastore_factory import ProjectionDatastoreFactory
 from app.recommendation.match_generator_factory import MatchGeneratorFactory
@@ -81,8 +82,15 @@ class Match(Resource):
                         "status": 200})
 
 
-main_datastore = MainDatastoreFactory().build()
-projection_datastore = ProjectionDatastoreFactory().build()
+config = ConfigLoader.load("app/config.yml")
+main_datastore = MainDatastoreFactory(endpoint_url=config['dynamo_endpoint_url'],
+                                      table_name=config['table_name'],
+                                      in_memory=config['in_memory']).build()
+projection_datastore = ProjectionDatastoreFactory(endpoint_url=config['minio_endpoint_url'],
+                                                  bucket_name=config['bucket_name'],
+                                                  projection_filepath_root=config['projection_filepath_root'],
+                                                  movie_indices_filepath=config['movie_indices_filepath'],
+                                                  in_memory=config['in_memory']).build()
 
 api.add_resource(Movies, '/movies',
                  resource_class_kwargs={'projection_datastore': projection_datastore})

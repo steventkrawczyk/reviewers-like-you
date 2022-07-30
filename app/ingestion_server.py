@@ -17,6 +17,7 @@ from flask_cors import CORS
 from flask_restful import Resource, Api
 import pandas as pd
 
+from app.config.config_loader import ConfigLoader
 from app.ingestion.main_datastore_factory import MainDatastoreFactory
 from app.ingestion.dataframe_ingestion_client import DataframeIngestionClient
 from app.ingestion.main_datastore_proxy import MainDatastoreProxy
@@ -61,15 +62,18 @@ class Batch(Resource):
                         "status": 200})
 
 
-database = MainDatastoreFactory().build()
-client = DataframeIngestionClient(database)
+config = ConfigLoader.load("app/config.yml")
+main_datastore = MainDatastoreFactory(endpoint_url=config['dynamo_endpoint_url'],
+                                      table_name=config['table_name'],
+                                      in_memory=config['in_memory']).build()
+client = DataframeIngestionClient(main_datastore)
 
 app = Flask(__name__)
 CORS(app)
 api = Api(app)
 
 api.add_resource(Upload, '/upload',
-                 resource_class_kwargs={'database': database})
+                 resource_class_kwargs={'database': main_datastore})
 api.add_resource(Batch, '/batch', resource_class_kwargs={'client': client})
 
 if __name__ == '__main__':

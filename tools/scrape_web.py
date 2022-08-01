@@ -5,7 +5,6 @@ This tool takes one command line argument, a number of entries to
 scrape. To run it, try something like this:
     `python -m tools.scrape_web 25`
 '''
-import logging
 import sys
 from app.scraper.data_submission_client import DataSubmissionClient
 from app.scraper.scraper_driver import ScraperDriver

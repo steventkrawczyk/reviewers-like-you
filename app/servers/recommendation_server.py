@@ -1,8 +1,5 @@
 '''
-This flask app exposes APIs for recommendation. It offers two APIs:
-
-movies:
-    no query parameters
+This flask app exposes APIs for recommendation. It offers one APIs:
 
 match:
     query parameters are of the form "MOVIE=RATING"
@@ -18,27 +15,6 @@ from app.config.config_loader import ConfigLoader
 from app.ingestion.main_datastore_factory import MainDatastoreFactory
 from app.projection.projection_datastore_factory import ProjectionDatastoreFactory
 from app.recommendation.match_generator_factory import MatchGeneratorFactory
-
-
-class Movies(Resource):
-    def __init__(self, movies, reload_for_testing, projection_datastore):
-        self.movies = movies
-        self.reload_for_testing = reload_for_testing
-        self.projection_datastore = projection_datastore
-
-    # NOTE This is required for testing, since otherwise we init
-    # an empty projection when we run `docker compose up`.
-    def _reload_movie_list(self):
-        self.movies = list(
-            self.projection_datastore.get_movie_indices().keys())
-
-    def get(self):
-        if self.reload_for_testing:
-            self._reload_movie_list()
-        return jsonify({"message": "",
-                        "category": "success",
-                        "data": self.movies,
-                        "status": 200})
 
 
 class Match(Resource):
@@ -108,10 +84,6 @@ app = Flask(__name__)
 CORS(app)
 api = Api(app)
 
-api.add_resource(Movies, '/movies',
-                 resource_class_kwargs={'movies': movies,
-                                        'reload_for_testing': config['reload_for_testing'],
-                                        'projection_datastore': projection_datastore})
 api.add_resource(Match, '/match',
                  resource_class_kwargs={'match_generator': match_generator,
                                         'movies': movies,

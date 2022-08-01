@@ -6,7 +6,6 @@ that defaults to 'create' and a table name that defaults to
 'movie_reviews'. To run it, try something like this:
     `python -m tools.manage_table create movie_reviews_test`
 '''
-import logging
 import sys
 
 from tools.infra.database_manager import DatabaseManager

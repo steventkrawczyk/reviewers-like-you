@@ -9,8 +9,7 @@ from urllib import parse, request
 import pandas as pd
 import sys
 
-from app.ingestion.dataframe_ingestion_client import DataframeIngestionClient
-from app.ingestion.main_datastore_factory import MainDatastoreFactory
+from app.model.review import Review
 
 
 def main():
@@ -20,11 +19,13 @@ def main():
         file_name = command_line_args[0]
 
     print("Uploading from file: " + file_name)
-    ingestion_query_parameters = parse.urlencode({"filepath": file_name})
-    ingestion_request_url = "http://localhost:5001/batch?" + ingestion_query_parameters
-    ingestion_request = request.Request(ingestion_request_url, method="PUT")
-    ingestion_response = request.urlopen(ingestion_request)
-    print("Status: " + str(ingestion_response.status))
+    for _, row in pd.read_csv(file_name).iterrows():
+        ingestion_query_parameters = parse.urlencode(Review(row['author'], row['movie'], row['rating']).to_dict())
+        ingestion_request_url = "http://localhost:5001/upload?" + ingestion_query_parameters
+        ingestion_request = request.Request(ingestion_request_url, method="PUT")
+        ingestion_response = request.urlopen(ingestion_request)
+        print("Status: " + str(ingestion_response.status))
+    print("Done")
 
 
 if __name__ == "__main__":

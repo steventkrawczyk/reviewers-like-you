@@ -42,5 +42,7 @@ class MatchGenerator:
     def get_match(self, user_input: Dict[str, float]) -> Tuple[str, List[Review]]:
         vector = self._compute_preferences_vector(user_input)
         author_match = self.similarity_engine.get_closest_neighbor(vector)
+        logging.debug("author_match: " + str(author_match))
         author_reviews = self.main_datastore.get(author_match)
+        logging.debug("author_reviews: " + str(author_reviews))
         return (author_match, author_reviews)

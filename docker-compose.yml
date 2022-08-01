@@ -54,7 +54,7 @@ services:
   frontend:
     build:
       context: .
-      dockerfile: config/frontend
+      dockerfile: config/frontend/Dockerfile
     container_name: frontend
     volumes:
       - ./app/frontend:/reviewers-like-you
@@ -76,7 +76,7 @@ services:
       - "dynamodb-local"
     build:
       context: .
-      dockerfile: config/scraper
+      dockerfile: config/scraper/Dockerfile
     volumes:
       - .:/reviewers-like-you
   ingestion1:
@@ -91,7 +91,7 @@ services:
       - "dynamodb-local"
     build:
       context: .
-      dockerfile: config/ingestion
+      dockerfile: config/ingestion/Dockerfile
   ingestion2:
     container_name: ingestion2
     environment:
@@ -104,7 +104,7 @@ services:
       - "dynamodb-local"
     build:
       context: .
-      dockerfile: config/ingestion
+      dockerfile: config/ingestion/Dockerfile
   projection:
     container_name: projection
     environment:
@@ -119,7 +119,7 @@ services:
       - "minio"
     build:
       context: .
-      dockerfile: config/projection
+      dockerfile: config/projection/Dockerfile
     volumes:
       - .:/reviewers-like-you'
   movies:
@@ -134,7 +134,7 @@ services:
       - "minio"
     build:
       context: .
-      dockerfile: config/movies
+      dockerfile: config/movies/Dockerfile
     volumes:
       - .:/reviewers-like-you
   recommendation1:
@@ -151,7 +151,7 @@ services:
       - "minio"
     build:
       context: .
-      dockerfile: config/recommendation
+      dockerfile: config/recommendation/Dockerfile
     volumes:
       - .:/reviewers-like-you
   recommendation2:
@@ -168,7 +168,7 @@ services:
       - "minio"
     build:
       context: .
-      dockerfile: config/recommendation
+      dockerfile: config/recommendation/Dockerfile
     volumes:
       - .:/reviewers-like-you
     

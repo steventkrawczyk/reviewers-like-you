@@ -50,7 +50,7 @@ Check out `notebooks/DataPipelineDemo.ipynb` for an overview and demonstration o
 
 ### Running the local website
 
-If you have your python virtual environment and docker setup as above, all you need to do is run `./scripts/start_local_website.sh`.
+If you have your python virtual environment and docker setup as above, all you need to do is run `./scripts/start_local_website.sh`. After you're done, run `./scripts/cleanup.sh`, otherwise some threads will continue running in the background.
 
 ### Submitting changes
 

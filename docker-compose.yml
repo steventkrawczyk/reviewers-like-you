@@ -28,7 +28,19 @@ services:
       - "5000:5000"
     volumes:
       - "./config/nginx/nginx.conf:/etc/nginx/nginx.conf:ro"
-      - "./app/frontend/build:/reviewers-like-you:ro"
+    depends_on:
+      - frontend
+      - recommendation1
+      - recommendation2
+    links:
+      - "frontend"
+      - "recommendation1"
+      - "recommendation2"
+  frontend:
+    build: config/frontend
+    container_name: frontend
+    volumes:
+      - ./app/frontend:/reviewers-like-you
     depends_on:
       - recommendation1
       - recommendation2

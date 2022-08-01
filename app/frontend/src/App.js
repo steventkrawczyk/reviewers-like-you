@@ -79,7 +79,7 @@ function App() {
 
   const handleSubmit = (evnt) => {
     var userMovieRatings = {}
-    Object.keys(movieRatings).map(function(movie, review) {
+    Object.keys(movieRatings).forEach(function(movie) {
       if (movieRatings[movie].haveSeen === "True") {
         userMovieRatings[movie] = movieRatings[movie].rating.toFixed(3) / 100.0
       } else {

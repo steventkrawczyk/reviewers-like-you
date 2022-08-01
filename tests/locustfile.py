@@ -9,9 +9,8 @@ from app.model.review import Review
 TEST_DATA_FILE = "tests/test_data.csv"
 TABLE_NAME = 'movie_reviews'
 
-INGESTION_SERVER = "http://ingestion:5000"
-PROJECTION_SERVER = "http://projection:5000"
-RECOMMENDATION_SERVER = "http://nginx:5000"
+EXTERNAL_PROXY = "http://externalproxy:5000"
+INTERNAL_PROXY = "http://internalproxy:5000"
 
 UPLOAD_API = "/upload?"
 BATCH_API = "/batch?"
@@ -45,7 +44,7 @@ class ReviewersLikeYouUser(HttpUser):
     @task
     def upload(self):
         query_parameters = urllib.parse.urlencode(review)
-        request = INGESTION_SERVER + UPLOAD_API + query_parameters
+        request = INTERNAL_PROXY + UPLOAD_API + query_parameters
         self.client.put(request, name=UPLOAD_API)
 
     @tag('ingestion', 'batch')
@@ -53,19 +52,19 @@ class ReviewersLikeYouUser(HttpUser):
     def batch(self):
         query_parameters = urllib.parse.urlencode(
             {"filepath": TEST_DATA_FILE})
-        request = INGESTION_SERVER + BATCH_API + query_parameters
+        request = INTERNAL_PROXY + BATCH_API + query_parameters
         self.client.put(request, name=BATCH_API)
 
     @tag('projection', 'create')
     @task
     def create(self):
-        request = PROJECTION_SERVER + CREATE_API
+        request = INTERNAL_PROXY + CREATE_API
         self.client.put(request, name=CREATE_API)
 
     @tag('recommendation', 'movies')
     @task
     def movies(self):
-        request = RECOMMENDATION_SERVER + MOVIES_API
+        request = EXTERNAL_PROXY + MOVIES_API
         self.client.get(request, name=MOVIES_API)
 
     @tag('recommendation', 'match')
@@ -73,6 +72,6 @@ class ReviewersLikeYouUser(HttpUser):
     def match(self):
         test_user_input = {'bladerunner': 0.4}
         data = json.dumps(test_user_input).encode("utf-8")
-        request = RECOMMENDATION_SERVER + MATCH_API
+        request = EXTERNAL_PROXY + MATCH_API
         self.client.post(request, data=data, headers={
                          "Content-Type": "application/json"}, name=MATCH_API)

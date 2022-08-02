@@ -14,24 +14,23 @@ import logging
 from app.config.config_loader import ConfigLoader
 from app.ingestion.main_datastore_factory import MainDatastoreFactory
 from app.projection.projection_datastore_factory import ProjectionDatastoreFactory
-from app.recommendation.match_generator_factory import MatchGeneratorFactory
+from app.recommendation.generatory_factory_facade import GeneratorFactoryFacade
+from app.recommendation.movies_client import MoviesClient
 
 
 class Match(Resource):
-    def __init__(self, match_generator, movies, reload_for_testing, main_datastore, projection_datastore):
+    def __init__(self, match_generator, movies, reload_for_testing, main_datastore):
         self.match_generator = match_generator
         self.movies = movies
         self.reload_for_testing = reload_for_testing
         self.main_datastore = main_datastore
-        self.projection_datastore = projection_datastore
 
     # NOTE This is required for testing, since otherwise we init
     # an empty projection when we run `docker compose up`.
     def _reload_match_generator(self):
-        self.movies = list(
-            self.projection_datastore.get_movie_indices().keys())
-        self.match_generator = MatchGeneratorFactory(
-            self.main_datastore, self.projection_datastore).build()
+        self.movies = MoviesClient().get_movie_indices(include_indices=False)
+        self.match_generator = GeneratorFactoryFacade(
+            self.main_datastore).build()
 
     def _process_request(self, request):
         user_ratings = {}
@@ -71,14 +70,18 @@ config = ConfigLoader.load(config_filepath)
 main_datastore = MainDatastoreFactory(endpoint_url=config['dynamo_endpoint_url'],
                                       table_name=config['table_name'],
                                       in_memory=config['in_memory']).build()
-projection_datastore = ProjectionDatastoreFactory(endpoint_url=config['minio_endpoint_url'],
-                                                  bucket_name=config['bucket_name'],
-                                                  projection_filepath_root=config['projection_filepath_root'],
-                                                  movie_indices_filepath=config['movie_indices_filepath'],
-                                                  in_memory=config['in_memory']).build()
-movies = list(projection_datastore.get_movie_indices().keys())
-match_generator = MatchGeneratorFactory(
-    main_datastore, projection_datastore).build()
+movies = MoviesClient().get_movie_indices(include_indices=False)
+match_generator = None
+if config['in_memory']:
+    projection_datastore = ProjectionDatastoreFactory(endpoint_url=config['minio_endpoint_url'],
+                                                      bucket_name=config['bucket_name'],
+                                                      projection_filepath_root=config['projection_filepath_root'],
+                                                      movie_indices_filepath=config['movie_indices_filepath'],
+                                                      in_memory=config['in_memory']).build()
+    match_generator = GeneratorFactoryFacade(
+        main_datastore, projection_datastore, True).build()
+else:
+    match_generator = GeneratorFactoryFacade(main_datastore).build()
 
 app = Flask(__name__)
 CORS(app)
@@ -88,8 +91,7 @@ api.add_resource(Match, '/match',
                  resource_class_kwargs={'match_generator': match_generator,
                                         'movies': movies,
                                         'reload_for_testing': config['reload_for_testing'],
-                                        'main_datastore': main_datastore,
-                                        'projection_datastore': projection_datastore})
+                                        'main_datastore': main_datastore})
 
 if __name__ == '__main__':
     app.run(debug=True)

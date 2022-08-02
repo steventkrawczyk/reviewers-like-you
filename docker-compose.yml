@@ -21,41 +21,57 @@ services:
       - "9001:9001"
     volumes:
       - "./docker/minio/data:/data"
-  externalproxy:
+  frontendproxy:
     image: "nginx:latest"
-    container_name: externalproxy
+    container_name: frontendproxy
     ports: 
       - "5000:5000"
     volumes:
-      - "./config/nginx/externalproxy/nginx.conf:/etc/nginx/nginx.conf:ro"
+      - "./config/nginx/frontendproxy/nginx.conf:/etc/nginx/nginx.conf:ro"
     depends_on:
       - frontend
-      - recommendation
     links:
       - "frontend"
+      - "backendproxy"
+  backendproxy:
+    image: "nginx:latest"
+    container_name: backendproxy
+    ports: 
+      - "5001:5000"
+    volumes:
+      - "./config/nginx/backendproxy/nginx.conf:/etc/nginx/nginx.conf:ro"
+    depends_on:
+      - recommendation
+      - movies
+      - similarity
+    links:
       - "recommendation"
+      - "movies"
+      - "similarity"
   internalproxy:
     image: "nginx:latest"
     container_name: internalproxy
     ports: 
-      - "5001:5000"
+      - "5002:5000"
     volumes:
       - "./config/nginx/internalproxy/nginx.conf:/etc/nginx/nginx.conf:ro"
     depends_on:
       - projection
       - ingestion
+      - upload
     links:
       - "projection"
       - "ingestion"
+      - "upload"
   frontend:
     build:
       context: .
       dockerfile: config/frontend/Dockerfile
     container_name: frontend
     depends_on:
-      - recommendation
+      - backendproxy
     links:
-      - "recommendation"
+      - "backendproxy"
   scraper:
     container_name: scraper
     environment:
@@ -118,11 +134,38 @@ services:
       AWS_DEFAULT_REGION: us-west-2
     depends_on:
       - dynamodb-local
-      - minio
+      - movies
+      - similarity
     links:
       - "dynamodb-local"
-      - "minio"
+      - "movies"
+      - "similarity"
     build:
       context: .
       dockerfile: config/recommendation/Dockerfile
-    
+  similarity:
+    container_name: similarity
+    environment:
+      AWS_ACCESS_KEY_ID: fakeKeyId
+      AWS_SECRET_ACCESS_KEY: fakeAccessKey
+      AWS_DEFAULT_REGION: us-west-2
+    build:
+      context: .
+      dockerfile: config/similarity/Dockerfile
+    depends_on:
+      - minio
+    links:
+      - "minio"
+  upload:
+    container_name: upload
+    environment:
+      AWS_ACCESS_KEY_ID: fakeKeyId
+      AWS_SECRET_ACCESS_KEY: fakeAccessKey
+      AWS_DEFAULT_REGION: us-west-2
+    build:
+      context: .
+      dockerfile: config/upload/Dockerfile
+    depends_on:
+      - minio
+    links:
+      - "minio"

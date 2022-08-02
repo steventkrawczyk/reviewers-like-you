@@ -1,14 +1,27 @@
 #!/bin/sh
 
-docker compose up -d
-echo "Waiting 10 seconds for services to startup..."
-sleep 10
-echo "Setting up data..."
+docker compose up dynamodb-local -d
+docker compose up minio -d
+echo "Waiting for databases to startup..."
+for i in 2 1
+do
+    echo "$((i*5)) more seconds..."
+    sleep 5
+done
 python -m tools.manage_table create movie_reviews
+docker compose up internalproxy -d
+echo "Waiting for internal services to startup..."
+for i in 2 1
+do
+    echo "$((i*5)) more seconds..."
+    sleep 5
+done
+echo "Setting up data..."
 python -m tools.upload_data tests/test_data.csv
 python -m tools.create_projection
-echo "Waiting for React to start..."
-for i in 2 1
+docker compose up -d
+echo "Waiting for website to start..."
+for i in 4 3 2 1
 do
     echo "$((i*5)) more seconds..."
     sleep 5

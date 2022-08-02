@@ -37,7 +37,7 @@ main_datastore = MainDatastoreFactory(endpoint_url=config['dynamo_endpoint_url']
                                       table_name=config['table_name'],
                                       in_memory=config['in_memory']).build()
 projection_datastore = ProjectionDatastoreFactory(endpoint_url=config['minio_endpoint_url'],
-                                                  bucket_name=config['bucket_name'],
+                                                  bucket_name=config['projection_bucket_name'],
                                                   projection_filepath_root=config['projection_filepath_root'],
                                                   movie_indices_filepath=config['movie_indices_filepath'],
                                                   in_memory=config['in_memory']).build()

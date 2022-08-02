@@ -11,7 +11,7 @@ from urllib import request
 
 def main():
     print("Creating projection...")
-    create_request_url = "http://localhost:5001/create"
+    create_request_url = "http://localhost:5002/create"
     create_request = request.Request(create_request_url, method="PUT")
     create_response = request.urlopen(create_request)
     print("Status: " + str(create_response.status))

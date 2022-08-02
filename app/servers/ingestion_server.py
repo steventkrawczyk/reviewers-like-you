@@ -18,9 +18,11 @@ from flask_restful import Resource, Api
 import pandas as pd
 
 from app.config.config_loader import ConfigLoader
+from app.ingestion.datastore.upload_client import UploadClient
 from app.ingestion.main_datastore_factory import MainDatastoreFactory
 from app.ingestion.dataframe_ingestion_client import DataframeIngestionClient
 from app.ingestion.main_datastore_proxy import MainDatastoreProxy
+from app.ingestion.upload_client_factory import UploadClientFactory
 from app.model.review import Review
 
 
@@ -38,12 +40,13 @@ class Upload(Resource):
 
 
 class Batch(Resource):
-    def __init__(self, client: DataframeIngestionClient):
-        self.client = client
+    def __init__(self, dataframe_client: DataframeIngestionClient, file_client: UploadClient):
+        self.dataframe_client = dataframe_client
+        self.file_client = file_client
 
     def _extract_and_upload(self, filepath: str):
-        data = pd.read_csv(filepath, header=0)
-        self.client.upload(data)
+        data = self.file_client.download_dataframe(filepath)
+        self.dataframe_client.upload(data)
 
     def put(self):
         filepath = ""
@@ -67,7 +70,9 @@ config = ConfigLoader.load(config_filepath)
 main_datastore = MainDatastoreFactory(endpoint_url=config['dynamo_endpoint_url'],
                                       table_name=config['table_name'],
                                       in_memory=config['in_memory']).build()
-client = DataframeIngestionClient(main_datastore)
+dataframe_client = DataframeIngestionClient(main_datastore)
+file_client = UploadClientFactory(endpoint_url=config["minio_endpoint_url"],
+                                  bucket_name=config["upload_bucket_name"]).build()
 
 app = Flask(__name__)
 CORS(app)
@@ -75,7 +80,9 @@ api = Api(app)
 
 api.add_resource(Upload, '/upload',
                  resource_class_kwargs={'database': main_datastore})
-api.add_resource(Batch, '/batch', resource_class_kwargs={'client': client})
+api.add_resource(
+    Batch, '/batch', resource_class_kwargs={'dataframe_client': dataframe_client,
+                                            'file_client': file_client})
 
 if __name__ == '__main__':
     app.run(debug=True)

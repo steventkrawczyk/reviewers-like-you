@@ -4,6 +4,7 @@ on:
     paths:
       - 'Dockerfile'
       - 'requirements.txt'
+      - 'docker-compose.yml'
 
 jobs:
   docker:

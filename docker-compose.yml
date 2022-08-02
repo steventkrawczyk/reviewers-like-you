@@ -30,12 +30,10 @@ services:
       - "./config/nginx/externalproxy/nginx.conf:/etc/nginx/nginx.conf:ro"
     depends_on:
       - frontend
-      - recommendation1
-      - recommendation2
+      - recommendation
     links:
       - "frontend"
-      - "recommendation1"
-      - "recommendation2"
+      - "recommendation"
   internalproxy:
     image: "nginx:latest"
     container_name: internalproxy
@@ -45,25 +43,19 @@ services:
       - "./config/nginx/internalproxy/nginx.conf:/etc/nginx/nginx.conf:ro"
     depends_on:
       - projection
-      - ingestion1
-      - ingestion2
+      - ingestion
     links:
       - "projection"
-      - "ingestion1"
-      - "ingestion2"
+      - "ingestion"
   frontend:
     build:
       context: .
       dockerfile: config/frontend/Dockerfile
     container_name: frontend
-    volumes:
-      - ./app/frontend:/reviewers-like-you
     depends_on:
-      - recommendation1
-      - recommendation2
+      - recommendation
     links:
-      - "recommendation1"
-      - "recommendation2"
+      - "recommendation"
   scraper:
     container_name: scraper
     environment:
@@ -77,23 +69,8 @@ services:
     build:
       context: .
       dockerfile: config/scraper/Dockerfile
-    volumes:
-      - .:/reviewers-like-you
-  ingestion1:
-    container_name: ingestion1
-    environment:
-      AWS_ACCESS_KEY_ID: fakeKeyId
-      AWS_SECRET_ACCESS_KEY: fakeAccessKey
-      AWS_DEFAULT_REGION: us-west-2
-    depends_on:
-      - dynamodb-local
-    links:
-      - "dynamodb-local"
-    build:
-      context: .
-      dockerfile: config/ingestion/Dockerfile
-  ingestion2:
-    container_name: ingestion2
+  ingestion:
+    container_name: ingestion
     environment:
       AWS_ACCESS_KEY_ID: fakeKeyId
       AWS_SECRET_ACCESS_KEY: fakeAccessKey
@@ -120,8 +97,6 @@ services:
     build:
       context: .
       dockerfile: config/projection/Dockerfile
-    volumes:
-      - .:/reviewers-like-you'
   movies:
     container_name: movies
     environment:
@@ -135,10 +110,8 @@ services:
     build:
       context: .
       dockerfile: config/movies/Dockerfile
-    volumes:
-      - .:/reviewers-like-you
-  recommendation1:
-    container_name: recommendation1
+  recommendation:
+    container_name: recommendation
     environment:
       AWS_ACCESS_KEY_ID: fakeKeyId
       AWS_SECRET_ACCESS_KEY: fakeAccessKey
@@ -152,23 +125,4 @@ services:
     build:
       context: .
       dockerfile: config/recommendation/Dockerfile
-    volumes:
-      - .:/reviewers-like-you
-  recommendation2:
-    container_name: recommendation2
-    environment:
-      AWS_ACCESS_KEY_ID: fakeKeyId
-      AWS_SECRET_ACCESS_KEY: fakeAccessKey
-      AWS_DEFAULT_REGION: us-west-2
-    depends_on:
-      - dynamodb-local
-      - minio
-    links:
-      - "dynamodb-local"
-      - "minio"
-    build:
-      context: .
-      dockerfile: config/recommendation/Dockerfile
-    volumes:
-      - .:/reviewers-like-you
     

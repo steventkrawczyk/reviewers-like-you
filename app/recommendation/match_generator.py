@@ -3,7 +3,7 @@ from typing import Dict, List, Tuple
 
 from app.ingestion.main_datastore_proxy import MainDatastoreProxy
 from app.model.review import Review
-from app.recommendation.similarity.similarity_engine import SimilarityEngine
+from app.recommendation.similarity.similarity_client import SimilarityClient
 
 
 class MatchGenerator:
@@ -14,11 +14,11 @@ class MatchGenerator:
     '''
 
     def __init__(self, main_datastore: MainDatastoreProxy,
-                 similarity_engine: SimilarityEngine,
+                 similarity_client: SimilarityClient,
                  movie_indices: Dict[str, int],
                  average_vec: List[float]):
         self.main_datastore = main_datastore
-        self.similarity_engine = similarity_engine
+        self.similarity_client = similarity_client
         self.movie_indices = movie_indices
         self.average_vec = average_vec
         self.dim = len(self.movie_indices)
@@ -41,8 +41,6 @@ class MatchGenerator:
 
     def get_match(self, user_input: Dict[str, float]) -> Tuple[str, List[Review]]:
         vector = self._compute_preferences_vector(user_input)
-        author_match = self.similarity_engine.get_closest_neighbor(vector)
-        logging.debug("author_match: " + str(author_match))
+        author_match = self.similarity_client.get_closest_neighbor(vector)
         author_reviews = self.main_datastore.get(author_match)
-        logging.debug("author_reviews: " + str(author_reviews))
         return (author_match, author_reviews)

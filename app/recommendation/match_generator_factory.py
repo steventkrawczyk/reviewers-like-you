@@ -1,7 +1,7 @@
 from app.ingestion.main_datastore_proxy import MainDatastoreProxy
-from app.projection.datastore.projection_datastore_proxy import ProjectionDatastoreProxy
 from app.recommendation.match_generator import MatchGenerator
-from app.recommendation.similarity.similarity_engine_factory import SimilarityEngineFactory
+from app.recommendation.movies_client import MoviesClient
+from app.recommendation.similarity.similarity_client import SimilarityClient
 
 
 class MatchGeneratorFactory:
@@ -9,13 +9,12 @@ class MatchGeneratorFactory:
     Factory class for MatchGenerator.
     '''
 
-    def __init__(self, main_datastore: MainDatastoreProxy, projection_datastore: ProjectionDatastoreProxy):
+    def __init__(self, main_datastore: MainDatastoreProxy):
         self.main_datastore = main_datastore
-        self.projection_datastore = projection_datastore
+        self.similarity_client = SimilarityClient()
+        self.movies_client = MoviesClient()
 
     def build(self) -> MatchGenerator:
-        similarity_engine = SimilarityEngineFactory(
-            self.projection_datastore).build()
-        average_vec = similarity_engine.find_average_vector()
-        return MatchGenerator(self.main_datastore, similarity_engine,
-                              self.projection_datastore.get_movie_indices(), average_vec)
+        average_vec = self.similarity_client.find_average_vector()
+        return MatchGenerator(self.main_datastore, self.similarity_client,
+                              self.movies_client.get_movie_indices(), average_vec)

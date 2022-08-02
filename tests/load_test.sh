@@ -1,5 +1,24 @@
 #!/bin/sh
 
+docker compose up dynamodb-local -d
+docker compose up minio -d
+echo "Waiting for databases to startup..."
+for i in 2 1
+do
+    echo "$((i*5)) more seconds..."
+    sleep 5
+done
+python -m tools.manage_table create movie_reviews
+docker compose up internalproxy -d
+echo "Waiting for internal services to startup..."
+for i in 2 1
+do
+    echo "$((i*5)) more seconds..."
+    sleep 5
+done
+echo "Setting up data..."
+python -m tools.upload_data tests/test_data.csv
+python -m tools.create_projection
 docker compose up -d
 echo "Running load tests..."
 docker run --rm -v ${PWD}:/reviewers-like-you \
@@ -7,4 +26,14 @@ docker run --rm -v ${PWD}:/reviewers-like-you \
     --network reviewers-like-you_default stevenkrawczyk/reviewers-like-you \
     locust -f tests/locustfile.py -u 10 -r 1 -t 60 --headless --only-summary -H http://localhost:5000 --csv data/metrics/locust/perf
 echo "Done."
-docker compose down
+
+trap cleanup 0
+
+cleanup()
+{
+  echo "Caught Signal ... cleaning up."
+  python -m tools.manage_table delete movie_reviews
+  docker compose down
+  echo "Done cleanup ... quitting."
+  exit 1
+}

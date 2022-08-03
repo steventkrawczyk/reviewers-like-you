@@ -96,7 +96,7 @@ function App() {
       data: JSON.stringify(userMovieRatings)
     };
 
-    var requestUrl = 'http://127.0.0.1:5001/match'
+    var requestUrl = 'http://127.0.0.1:5000/match'
     axios.post(requestUrl, requestOptions).then(response => {
       console.log("SUCCESS", response)
       var responseData = response.data.data
@@ -113,7 +113,7 @@ function App() {
 
   // First server call to get movies for rating
   useEffect(() => {
-    axios.get('http://127.0.0.1:5001/movies').then(response => {
+    axios.get('http://127.0.0.1:5000/movies').then(response => {
       console.log("SUCCESS", response)
       setMovies(response.data.data)
     }).catch(error => {

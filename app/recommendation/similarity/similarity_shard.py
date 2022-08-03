@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import Dict, List, Tuple
 from app.recommendation.similarity.similarity_computation import SimilarityComputation
 
 
@@ -12,7 +12,7 @@ class SimilarityShard:
         self.author_index = author_index
         self.average_vector = average_vector
 
-    def get_closest_neighbor(self, input_vector: List[float]) -> int:
+    def get_closest_neighbor(self, input_vector: List[float]) -> Tuple[int, float]:
         return SimilarityComputation.shard_computation(input_vector, self.vectors)
 
     def decode_match(self, index_of_match: int):

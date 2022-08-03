@@ -1,18 +1,6 @@
 #!/bin/sh
 
-docker compose up dynamodb-local -d
-docker compose up minio -d
-echo "Waiting for databases to startup..."
-while ! echo exit | nc localhost 8000; do sleep 5; done
-while ! echo exit | nc localhost 9000; do sleep 5; done
-python -m tools.manage_table create movie_reviews
-docker compose up internalproxy -d
-echo "Waiting for internal services to startup..."
-while ! echo exit | nc localhost 5002; do sleep 5; done
-echo "Setting up data..."
-python -m tools.upload_data tests/test_data.csv
-python -m tools.create_projection
-docker compose up -d
+./scripts/start_containers.sh
 echo "Running load tests..."
 docker run --rm -v ${PWD}:/reviewers-like-you \
     --env AWS_ACCESS_KEY_ID=fakeKeyId --env AWS_SECRET_ACCESS_KEY=fakeAccessKey --env AWS_DEFAULT_REGION=us-west-2 \

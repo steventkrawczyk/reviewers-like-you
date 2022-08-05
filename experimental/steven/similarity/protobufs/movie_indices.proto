@@ -1,0 +1,13 @@
+syntax = "proto2";
+
+package reviewers;
+
+message MovieIndices {
+  optional string version = 1;
+  repeated MovieIndicesEntry entries = 2;
+}
+
+message MovieIndicesEntry {
+  optional string movie = 1;
+  optional int32 index = 2;
+}

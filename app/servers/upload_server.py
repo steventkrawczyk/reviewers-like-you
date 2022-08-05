@@ -3,6 +3,7 @@ from flask import jsonify
 from flask import request
 from flask_cors import CORS
 from flask_restful import Resource, Api
+from healthcheck import HealthCheck
 import logging
 
 from app.config.config_loader import ConfigLoader
@@ -21,6 +22,8 @@ class File(Resource):
     def allowed_file(self, filename):
         return '.' in filename and \
             filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+    # def post(self):
 
     def post(self):
         file = None
@@ -45,8 +48,10 @@ config = ConfigLoader.load(config_filepath)
 client = UploadClientFactory(endpoint_url=config["minio_endpoint_url"],
                              bucket_name=config["upload_bucket_name"]).build()
 
-
 app = Flask(__name__)
+health = HealthCheck()
+app.add_url_rule("/uploadhealth", "healthcheck",
+                 view_func=lambda: health.check())
 CORS(app)
 api = Api(app)
 

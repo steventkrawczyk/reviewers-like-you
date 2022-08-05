@@ -3,7 +3,7 @@ from typing import Dict, List, Tuple
 
 from app.ingestion.main_datastore_proxy import MainDatastoreProxy
 from app.model.review import Review
-from app.recommendation.similarity.similarity_client import SimilarityClient
+from app.recommendation.similarity_client import SimilarityClient
 
 
 class MatchGenerator:

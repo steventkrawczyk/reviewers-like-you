@@ -15,7 +15,7 @@ from flask import jsonify
 from flask import request
 from flask_cors import CORS
 from flask_restful import Resource, Api
-import pandas as pd
+from healthcheck import HealthCheck
 
 from app.config.config_loader import ConfigLoader
 from app.ingestion.datastore.upload_client import UploadClient
@@ -75,6 +75,9 @@ file_client = UploadClientFactory(endpoint_url=config["minio_endpoint_url"],
                                   bucket_name=config["upload_bucket_name"]).build()
 
 app = Flask(__name__)
+health = HealthCheck()
+app.add_url_rule("/ingestionhealth", "healthcheck",
+                 view_func=lambda: health.check())
 CORS(app)
 api = Api(app)
 

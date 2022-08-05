@@ -6,7 +6,7 @@ from app.ingestion.main_datastore_factory import MainDatastoreFactory
 from app.ingestion.dataframe_ingestion_client import DataframeIngestionClient
 from app.projection.projection_datastore_factory import ProjectionDatastoreFactory
 from app.projection.projection_engine_factory import ProjectionEngineFactory
-from app.recommendation.generatory_factory_facade import GeneratorFactoryFacade
+from app.recommendation.generator_factory_facade import GeneratorFactoryFacade
 
 
 TEST_DATA_FILE = Path(__file__).parent / "test_data.csv"

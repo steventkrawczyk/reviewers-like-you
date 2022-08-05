@@ -1,7 +1,7 @@
 from app.ingestion.main_datastore_proxy import MainDatastoreProxy
 from app.recommendation.match_generator import MatchGenerator
 from app.recommendation.movies_client import MoviesClient
-from app.recommendation.similarity.similarity_client import SimilarityClient
+from app.recommendation.similarity_client import SimilarityClient
 
 
 class MatchGeneratorFactory:

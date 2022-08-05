@@ -14,9 +14,6 @@ class DynamoDbDatastore(MainDatastoreProxy):
     def __init__(self, dynamodb: ServiceResource, table_name: str):
         self.database = dynamodb.Table(table_name)
 
-    def _get_table(self):
-        return
-
     def upload(self, review: Review) -> None:
         reviewData = review.to_dict()
         self.database.put_item(Item=reviewData)
@@ -35,8 +32,3 @@ class DynamoDbDatastore(MainDatastoreProxy):
     def get_keys(self) -> Set[str]:
         scanResponse = self.database.scan(ProjectionExpression='author')
         return set([item['author'] for item in scanResponse['Items']])
-
-    # TODO work on paging
-    # def scan(self) -> List[Review]:
-    #     scanResponse = self.database.scan()
-    #     return [Review.from_dict(item) for item in scanResponse['Items']]

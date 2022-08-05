@@ -3,6 +3,7 @@ from flask import Flask, request
 from flask import jsonify
 from flask_cors import CORS
 from flask_restful import Resource, Api
+from healthcheck import HealthCheck
 
 from app.config.config_loader import ConfigLoader
 from app.ingestion.main_datastore_factory import MainDatastoreFactory
@@ -45,6 +46,9 @@ projection_engine = ProjectionEngineFactory(
     main_datastore, projection_datastore).build()
 
 app = Flask(__name__)
+health = HealthCheck()
+app.add_url_rule("/projectionhealth", "healthcheck",
+                 view_func=lambda: health.check())
 CORS(app)
 api = Api(app)
 

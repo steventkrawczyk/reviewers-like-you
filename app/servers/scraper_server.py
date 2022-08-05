@@ -4,6 +4,7 @@ from flask import jsonify
 from flask import request
 from flask_cors import CORS
 from flask_restful import Resource, Api
+from healthcheck import HealthCheck
 
 from app.config.config_loader import ConfigLoader
 from app.ingestion.main_datastore_factory import MainDatastoreFactory
@@ -28,7 +29,7 @@ class Scrape(Resource):
                 async_execution = bool(arg)
 
         logging.debug("Attempting to scrape " +
-                     str(count) + " entries overall.")
+                      str(count) + " entries overall.")
         self.scraper_driver.run(count)
         logging.debug("Done scraping.")
 
@@ -50,6 +51,9 @@ scraper_driver = ScraperDriver(
     data_submission_client, web_scraper_engine, metrics_helper)
 
 app = Flask(__name__)
+health = HealthCheck()
+app.add_url_rule("/scraperhealth", "healthcheck",
+                 view_func=lambda: health.check())
 CORS(app)
 api = Api(app)
 

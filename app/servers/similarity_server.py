@@ -3,6 +3,7 @@ from flask import jsonify
 from flask import request
 from flask_cors import CORS
 from flask_restful import Resource, Api
+from healthcheck import HealthCheck
 
 from app.config.config_loader import ConfigLoader
 from app.projection.projection_datastore_factory import ProjectionDatastoreFactory
@@ -45,6 +46,9 @@ projection_datastore = ProjectionDatastoreFactory(endpoint_url=config['minio_end
 similarity_engine = SimilarityEngineFactory(projection_datastore).build()
 
 app = Flask(__name__)
+health = HealthCheck()
+app.add_url_rule("/similarityhealth", "healthcheck",
+                 view_func=lambda: health.check())
 CORS(app)
 api = Api(app)
 

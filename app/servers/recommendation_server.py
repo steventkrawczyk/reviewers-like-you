@@ -9,12 +9,13 @@ from flask import jsonify
 from flask import request
 from flask_cors import CORS
 from flask_restful import Resource, Api
+from healthcheck import HealthCheck
 import logging
 
 from app.config.config_loader import ConfigLoader
 from app.ingestion.main_datastore_factory import MainDatastoreFactory
 from app.projection.projection_datastore_factory import ProjectionDatastoreFactory
-from app.recommendation.generatory_factory_facade import GeneratorFactoryFacade
+from app.recommendation.generator_factory_facade import GeneratorFactoryFacade
 from app.recommendation.movies_client import MoviesClient
 
 
@@ -84,6 +85,9 @@ else:
     match_generator = GeneratorFactoryFacade(main_datastore).build()
 
 app = Flask(__name__)
+health = HealthCheck()
+app.add_url_rule("/matchhealth", "healthcheck",
+                 view_func=lambda: health.check())
 CORS(app)
 api = Api(app)
 

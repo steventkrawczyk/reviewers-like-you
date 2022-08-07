@@ -1,0 +1,132 @@
+syntax = "proto3";
+
+package proto;
+
+import "common.proto";
+import "data_model.proto";
+
+option go_package = "app/generated/go/proto";
+
+message UploadReviewRequest {
+  optional Review review = 1;
+}
+
+message BatchUploadReviewRequest {
+  optional ReviewList reviewList = 1;
+}
+
+message GetReviewsByAuthorRequest {
+  optional string author = 1;
+}
+
+message GetAuthorsRequest {}
+
+message GetReviewsByAuthorResponse {
+  optional ReviewList reviewList = 1;
+}
+
+message GetAuthorsResponse {
+  repeated string author = 1;
+}
+
+message UploadObjectRequest {
+  optional string bucketName = 1;
+  optional string objectName = 2;
+  optional string serializedObject = 3;
+}
+
+message DownloadObjectRequest {
+  optional string bucketName = 1;
+  optional string objectName = 2;
+}
+
+message UploadFileRequest {
+  optional string name = 1;
+  optional bytes body = 2;
+}
+
+message IngestReviewRequest {
+  optional Review review = 1;
+}
+
+message IngestBatchRequest {
+  optional string filename = 1;
+}
+
+message UploadProjectionRequest {
+  optional Projection projection = 1;
+  optional MovieIndices movieIndices = 2;
+}
+
+message AppendProjectionRequest {
+  optional Projection projection = 1;
+}
+
+message DownloadProjectionRequest {
+  optional int32 shardId = 1;
+}
+
+message DownloadMovieIndicesRequest {}
+
+message DownloadProjectionResponse {
+  optional Projection projection = 1;
+}
+
+message DownloadMovieIndicesResponse {
+  optional MovieIndices movieIndices = 1;
+}
+
+message ManageResourceRequest {
+  optional string name = 1;
+  optional Action action = 2;
+  optional Resource resource = 3;
+}
+
+enum Action {
+  CREATE = 0;
+  DELETE = 1;
+}
+
+enum Resource {
+  TABLE = 0;
+  BUCKET = 1;
+}
+
+service MainDatastoreService {
+  rpc UploadReview(UploadReviewRequest) returns (Payload);
+  rpc BatchUploadReview(BatchUploadReviewRequest) returns (Payload);
+  rpc GetReviewsByAuthor(GetReviewsByAuthorRequest)
+      returns (GetReviewsByAuthorResponse);
+  rpc GetAuthors(GetAuthorsRequest) returns (GetAuthorsResponse);
+}
+
+service FilestoreService {
+  rpc UploadObject(UploadObjectRequest) returns (Payload);
+  rpc DownloadObject(DownloadObjectRequest) returns (Payload);
+}
+
+service DatastoreAdminService {
+  rpc ManageResource(ManageResourceRequest) returns (Payload);
+  rpc CheckHealth(HealthCheckRequest) returns (Payload);
+}
+
+service IngestionService {
+  rpc IngestReview(IngestReviewRequest) returns (Payload);
+  rpc IngestBatch(IngestBatchRequest) returns (Payload);
+  rpc CheckHealth(HealthCheckRequest) returns (Payload);
+}
+
+service UploadService {
+  rpc UploadFile(UploadFileRequest) returns (Payload);
+  rpc CheckHealth(HealthCheckRequest) returns (Payload);
+}
+
+service ProjectionDatastoreService {
+  rpc UploadProjection(UploadProjectionRequest) returns (Payload);
+  rpc AppendProjection(AppendProjectionRequest) returns (Payload);
+  rpc DownloadProjection(DownloadProjectionRequest)
+      returns (DownloadProjectionResponse);
+  rpc DownloadMovieIndices(DownloadMovieIndicesRequest)
+      returns (DownloadMovieIndicesResponse);
+  rpc CheckHealth(HealthCheckRequest) returns (Payload);
+}

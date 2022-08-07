@@ -4,8 +4,8 @@
             "name": "Mac",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/experimental/steven/similarity/protobufs/generated",
-                "${workspaceFolder}/third_party/aws-sdk-cpp"
+                "${workspaceFolder}",
+                "${workspaceFolder}/third_party/protobuf/src",
             ],
             "defines": [],
             "macFrameworkPath": [

@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package proto;
+
+import "common.proto";
+import "data_model.proto";
+
+option go_package = "app/generated/go/proto";
+
+message CreateProjectionRequest {}
+
+message ScrapeRequest {}
+
+service ProjectionEngineService {
+  rpc CreateProjection(CreateProjectionRequest) returns (Payload);
+  rpc CheckHealth(HealthCheckRequest) returns (Payload);
+}
+
+service Scraper {
+  rpc Scrape(ScrapeRequest) returns (Payload);
+  rpc CheckHealth(HealthCheckRequest) returns (Payload);
+}

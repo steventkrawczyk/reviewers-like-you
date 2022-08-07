@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package proto;
+
+option go_package = "app/generated/go/proto";
+
+message Review {
+  optional string version = 1;
+  optional string author = 2;
+  optional string movie = 3;
+  optional float rating = 4;
+}
+
+message ReviewList {
+  repeated Review review = 1;
+}
+
+message MovieIndices {
+  optional string version = 1;
+  repeated MovieIndicesEntry entry = 2;
+}
+
+message MovieIndicesEntry {
+  optional string movie = 1;
+  optional int32 index = 2;
+}
+
+message Projection {
+  optional string version = 1;
+  repeated ProjectionEntry entry = 2;
+}
+
+message ProjectionEntry {
+  optional string author = 1;
+  repeated float rating = 2;
+}

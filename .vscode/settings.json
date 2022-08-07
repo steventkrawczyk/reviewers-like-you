@@ -82,7 +82,16 @@
         "unordered_set": "cpp",
         "valarray": "cpp",
         "variant": "cpp",
-        "*.inc": "cpp"
+        "*.inc": "cpp",
+        "__bits": "cpp",
+        "cfenv": "cpp",
+        "cinttypes": "cpp",
+        "codecvt": "cpp",
+        "compare": "cpp",
+        "concepts": "cpp",
+        "csignal": "cpp",
+        "scoped_allocator": "cpp",
+        "typeindex": "cpp"
     },
     "clang-format.executable": "/usr/local/bin/clang-format",
     "clang-format.style": "google",
@@ -96,5 +105,19 @@
         "editor.wordBasedSuggestions": false,
         "editor.suggest.insertMode": "replace",
         "editor.semanticHighlighting.enabled": true
-    }
+    },
+    "gopls": {
+        "directoryFilters": [
+            "+${workspaceFolder}",
+            "+.",
+        ],
+        "experimentalWorkspaceModule": true,
+    },
+    "[go]": {
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true
+        },
+    },
+    "go.formatTool": "gofmt",
 }

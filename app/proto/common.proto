@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package proto;
+
+option go_package = "app/generated/go/proto";
+
+message HealthCheckRequest {}
+
+message Payload {
+  optional string message = 1;
+  optional string category = 2;
+  optional int32 status = 3;
+  optional string data = 4;
+}

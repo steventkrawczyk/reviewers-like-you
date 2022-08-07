@@ -3,7 +3,9 @@ minio_endpoint_url: minio:9000
 table_name: movie_reviews
 projection_bucket_name: projections
 projection_filepath_root: data/projection_
+projection_filepath_extension: json
 movie_indices_filepath: data/movie_indices.json
 upload_bucket_name: uploads
 in_memory: false
 reload_for_testing: true
+datastore_gateway_url: resourceproxy:5000

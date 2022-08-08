@@ -1,58 +1,31 @@
 #include <map>
 #include <string>
 
-#include "app/common/cpp/datastores/projection_datastore_shard.h"
-#include "app/common/cpp/datastores/projection_file_store.h"
+#include "app/common/cpp/marshaller/data_marshaller.h"
+#include "app/generated/cpp/resource_services.grpc.pb.h"
 
 #define MAX_SHARDS 20
 #define SHARD_SIZE 25
 
-class ProjectionDatastoreHead {
+// This client is used to access the projection datastore
+class ProjectionDatastoreClient {
  public:
-  static std::unique_ptr<ProjectionDatastoreHead> create(
-      std::shared_ptr<ProjectionFileStore> file_store,
-      std::string projection_filepath_root, std::string movie_indices_filepath);
+  ProjectionDatastoreClient(std::string endpoint_url);
 
   void upload(std::map<std::string, std::vector<float>> projection,
               std::map<std::string, int> movie_indices);
 
   void append(std::map<std::string, std::vector<float>> projection);
 
-  std::vector<ProjectionDatastoreShard>& getShards();
+  std::map<std::string, std::vector<float>> getShardProjection(int shard_id);
 
   std::map<std::string, int>& getMovieIndices();
 
+  int getShardCount();
+
  private:
-  std::shared_ptr<ProjectionFileStore> file_store;
-  std::string projection_filepath_root;
-  std::string movie_indices_filepath;
-  int shard_size;
-  std::map<std::string, int> movie_indices;
-  std::atomic<int> shard_count;
-  std::vector<ProjectionDatastoreShard> shards;
-  std::mutex shards_mutex;
-
-  ProjectionDatastoreHead(std::shared_ptr<ProjectionFileStore> file_store,
-                          std::string projection_filepath_root,
-                          std::string movie_indices_filepath, int shard_size);
-
-  void initializeShards();
-
-  void loadMovieIndices();
-
-  void createNewShard();
-
-  void loadData();
-
-  void cacheData(std::map<std::string, int> movie_indices);
-
-  void saveData(std::map<std::string, int> movie_indices);
-
-  void uploadToShards(std::map<std::string, std::vector<float>> projection);
-
-  std::string getShardFilepath(int shard_index);
-
-  int createShardId();
-
-  void resetShards();
+  std::unique_ptr<proto::ProjectionDatastoreService::Stub> stub;
+  std::shared_ptr<grpc::Channel> channel;
+  grpc::ClientContext context;
+  DataMarshaller marshaller;
 };

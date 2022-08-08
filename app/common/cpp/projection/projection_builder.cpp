@@ -2,7 +2,7 @@
 
 ProjectionBuilder::ProjectionBuilder(
     std::shared_ptr<MainDatastoreClient> main_datastore,
-    std::shared_ptr<ProjectionDatastoreHead> projection_datastore)
+    std::shared_ptr<ProjectionDatastoreClient> projection_datastore)
     : main_datastore(main_datastore),
       projection_datastore(projection_datastore) {}
 
@@ -40,7 +40,7 @@ std::map<std::string, std::vector<float>> ProjectionBuilder::buildVectors(
   return projection;
 }
 
-std::vector<float> ProjectionBuilder::buildVectorForAuthor(
+inline std::vector<float> ProjectionBuilder::buildVectorForAuthor(
     std::string author, std::map<std::string, int> movie_indices) {
   std::vector<float> author_vector = std::vector<float>(movie_indices.size());
   proto::ReviewList reviewList = this->main_datastore->get(author);
@@ -58,7 +58,8 @@ void ProjectionBuilder::uploadVectors(
 }
 
 // May have to think about race conditions here...
-void ProjectionBuilder::incrementCumulativeVector(std::vector<float> vec) {
+inline void ProjectionBuilder::incrementCumulativeVector(
+    std::vector<float> vec) {
   for (int i = 0; i < this->cumulative_vector.size(); i++) {
     this->cumulative_vector[i] += vec[i];
   }

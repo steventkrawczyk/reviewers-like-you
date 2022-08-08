@@ -13,6 +13,7 @@ type Filestorer interface {
 	DeleteBucket(string)
 	PutObject(string, string, string)
 	GetObject(string, string) string
+	CheckIfObjectExists(string, string) bool
 	CheckIfBucketExists(string) bool
 	CheckHealth() bool
 }
@@ -60,6 +61,14 @@ func (this Filestore) GetObject(bucketName string, objectName string) string {
 	var objectBytes []byte
 	object.Read(objectBytes)
 	return string(objectBytes)
+}
+
+func (this Filestore) CheckIfObjectExists(bucketName string, objectName string) bool {
+	_, err := this.minioClient.StatObject(bucketName, objectName, minio.StatObjectOptions{})
+	if err != nil {
+		log.Fatalln(err)
+	}
+	return err == nil
 }
 
 func (this Filestore) CheckIfBucketExists(bucketName string) bool {

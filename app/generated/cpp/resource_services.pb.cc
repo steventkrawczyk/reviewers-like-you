@@ -115,6 +115,44 @@ struct DownloadObjectRequestDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT DownloadObjectRequestDefaultTypeInternal _DownloadObjectRequest_default_instance_;
+constexpr DownloadObjectResponse::DownloadObjectResponse(
+  ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
+  : data_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string)
+  , found_(false){}
+struct DownloadObjectResponseDefaultTypeInternal {
+  constexpr DownloadObjectResponseDefaultTypeInternal()
+    : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
+  ~DownloadObjectResponseDefaultTypeInternal() {}
+  union {
+    DownloadObjectResponse _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT DownloadObjectResponseDefaultTypeInternal _DownloadObjectResponse_default_instance_;
+constexpr StatObjectRequest::StatObjectRequest(
+  ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
+  : bucketname_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string)
+  , objectname_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string){}
+struct StatObjectRequestDefaultTypeInternal {
+  constexpr StatObjectRequestDefaultTypeInternal()
+    : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
+  ~StatObjectRequestDefaultTypeInternal() {}
+  union {
+    StatObjectRequest _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT StatObjectRequestDefaultTypeInternal _StatObjectRequest_default_instance_;
+constexpr StatObjectResponse::StatObjectResponse(
+  ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
+  : found_(false){}
+struct StatObjectResponseDefaultTypeInternal {
+  constexpr StatObjectResponseDefaultTypeInternal()
+    : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
+  ~StatObjectResponseDefaultTypeInternal() {}
+  union {
+    StatObjectResponse _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT StatObjectResponseDefaultTypeInternal _StatObjectResponse_default_instance_;
 constexpr UploadFileRequest::UploadFileRequest(
   ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
   : name_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string)
@@ -224,6 +262,29 @@ struct DownloadMovieIndicesResponseDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT DownloadMovieIndicesResponseDefaultTypeInternal _DownloadMovieIndicesResponse_default_instance_;
+constexpr ShardCountRequest::ShardCountRequest(
+  ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized){}
+struct ShardCountRequestDefaultTypeInternal {
+  constexpr ShardCountRequestDefaultTypeInternal()
+    : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
+  ~ShardCountRequestDefaultTypeInternal() {}
+  union {
+    ShardCountRequest _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT ShardCountRequestDefaultTypeInternal _ShardCountRequest_default_instance_;
+constexpr ShardCountResponse::ShardCountResponse(
+  ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
+  : count_(0){}
+struct ShardCountResponseDefaultTypeInternal {
+  constexpr ShardCountResponseDefaultTypeInternal()
+    : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
+  ~ShardCountResponseDefaultTypeInternal() {}
+  union {
+    ShardCountResponse _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT ShardCountResponseDefaultTypeInternal _ShardCountResponse_default_instance_;
 constexpr ManageResourceRequest::ManageResourceRequest(
   ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
   : name_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string)
@@ -241,7 +302,7 @@ struct ManageResourceRequestDefaultTypeInternal {
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT ManageResourceRequestDefaultTypeInternal _ManageResourceRequest_default_instance_;
 }  // namespace proto
-static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_resource_5fservices_2eproto[18];
+static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_resource_5fservices_2eproto[23];
 static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptors_resource_5fservices_2eproto[2];
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_resource_5fservices_2eproto = nullptr;
 
@@ -313,6 +374,34 @@ const uint32_t TableStruct_resource_5fservices_2eproto::offsets[] PROTOBUF_SECTI
   PROTOBUF_FIELD_OFFSET(::proto::DownloadObjectRequest, objectname_),
   0,
   1,
+  PROTOBUF_FIELD_OFFSET(::proto::DownloadObjectResponse, _has_bits_),
+  PROTOBUF_FIELD_OFFSET(::proto::DownloadObjectResponse, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::proto::DownloadObjectResponse, found_),
+  PROTOBUF_FIELD_OFFSET(::proto::DownloadObjectResponse, data_),
+  1,
+  0,
+  PROTOBUF_FIELD_OFFSET(::proto::StatObjectRequest, _has_bits_),
+  PROTOBUF_FIELD_OFFSET(::proto::StatObjectRequest, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::proto::StatObjectRequest, bucketname_),
+  PROTOBUF_FIELD_OFFSET(::proto::StatObjectRequest, objectname_),
+  0,
+  1,
+  PROTOBUF_FIELD_OFFSET(::proto::StatObjectResponse, _has_bits_),
+  PROTOBUF_FIELD_OFFSET(::proto::StatObjectResponse, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::proto::StatObjectResponse, found_),
+  0,
   PROTOBUF_FIELD_OFFSET(::proto::UploadFileRequest, _has_bits_),
   PROTOBUF_FIELD_OFFSET(::proto::UploadFileRequest, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -387,6 +476,20 @@ const uint32_t TableStruct_resource_5fservices_2eproto::offsets[] PROTOBUF_SECTI
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::proto::DownloadMovieIndicesResponse, movieindices_),
   0,
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::proto::ShardCountRequest, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::proto::ShardCountResponse, _has_bits_),
+  PROTOBUF_FIELD_OFFSET(::proto::ShardCountResponse, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::proto::ShardCountResponse, count_),
+  0,
   PROTOBUF_FIELD_OFFSET(::proto::ManageResourceRequest, _has_bits_),
   PROTOBUF_FIELD_OFFSET(::proto::ManageResourceRequest, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -409,16 +512,21 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 38, -1, -1, sizeof(::proto::GetAuthorsResponse)},
   { 45, 54, -1, sizeof(::proto::UploadObjectRequest)},
   { 57, 65, -1, sizeof(::proto::DownloadObjectRequest)},
-  { 67, 75, -1, sizeof(::proto::UploadFileRequest)},
-  { 77, 84, -1, sizeof(::proto::IngestReviewRequest)},
-  { 85, 92, -1, sizeof(::proto::IngestBatchRequest)},
-  { 93, 101, -1, sizeof(::proto::UploadProjectionRequest)},
-  { 103, 110, -1, sizeof(::proto::AppendProjectionRequest)},
-  { 111, 118, -1, sizeof(::proto::DownloadProjectionRequest)},
-  { 119, -1, -1, sizeof(::proto::DownloadMovieIndicesRequest)},
-  { 125, 132, -1, sizeof(::proto::DownloadProjectionResponse)},
-  { 133, 140, -1, sizeof(::proto::DownloadMovieIndicesResponse)},
-  { 141, 150, -1, sizeof(::proto::ManageResourceRequest)},
+  { 67, 75, -1, sizeof(::proto::DownloadObjectResponse)},
+  { 77, 85, -1, sizeof(::proto::StatObjectRequest)},
+  { 87, 94, -1, sizeof(::proto::StatObjectResponse)},
+  { 95, 103, -1, sizeof(::proto::UploadFileRequest)},
+  { 105, 112, -1, sizeof(::proto::IngestReviewRequest)},
+  { 113, 120, -1, sizeof(::proto::IngestBatchRequest)},
+  { 121, 129, -1, sizeof(::proto::UploadProjectionRequest)},
+  { 131, 138, -1, sizeof(::proto::AppendProjectionRequest)},
+  { 139, 146, -1, sizeof(::proto::DownloadProjectionRequest)},
+  { 147, -1, -1, sizeof(::proto::DownloadMovieIndicesRequest)},
+  { 153, 160, -1, sizeof(::proto::DownloadProjectionResponse)},
+  { 161, 168, -1, sizeof(::proto::DownloadMovieIndicesResponse)},
+  { 169, -1, -1, sizeof(::proto::ShardCountRequest)},
+  { 175, 182, -1, sizeof(::proto::ShardCountResponse)},
+  { 183, 192, -1, sizeof(::proto::ManageResourceRequest)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -430,6 +538,9 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::proto::_GetAuthorsResponse_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::proto::_UploadObjectRequest_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::proto::_DownloadObjectRequest_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::proto::_DownloadObjectResponse_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::proto::_StatObjectRequest_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::proto::_StatObjectResponse_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::proto::_UploadFileRequest_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::proto::_IngestReviewRequest_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::proto::_IngestBatchRequest_default_instance_),
@@ -439,6 +550,8 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::proto::_DownloadMovieIndicesRequest_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::proto::_DownloadProjectionResponse_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::proto::_DownloadMovieIndicesResponse_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::proto::_ShardCountRequest_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::proto::_ShardCountResponse_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::proto::_ManageResourceRequest_default_instance_),
 };
 
@@ -460,65 +573,76 @@ const char descriptor_table_protodef_resource_5fservices_2eproto[] PROTOBUF_SECT
   "tNameB\023\n\021_serializedObject\"g\n\025DownloadOb"
   "jectRequest\022\027\n\nbucketName\030\001 \001(\tH\000\210\001\001\022\027\n\n"
   "objectName\030\002 \001(\tH\001\210\001\001B\r\n\013_bucketNameB\r\n\013"
-  "_objectName\"K\n\021UploadFileRequest\022\021\n\004name"
-  "\030\001 \001(\tH\000\210\001\001\022\021\n\004body\030\002 \001(\014H\001\210\001\001B\007\n\005_nameB"
-  "\007\n\005_body\"D\n\023IngestReviewRequest\022\"\n\006revie"
-  "w\030\001 \001(\0132\r.proto.ReviewH\000\210\001\001B\t\n\007_review\"8"
-  "\n\022IngestBatchRequest\022\025\n\010filename\030\001 \001(\tH\000"
-  "\210\001\001B\013\n\t_filename\"\225\001\n\027UploadProjectionReq"
-  "uest\022*\n\nprojection\030\001 \001(\0132\021.proto.Project"
-  "ionH\000\210\001\001\022.\n\014movieIndices\030\002 \001(\0132\023.proto.M"
-  "ovieIndicesH\001\210\001\001B\r\n\013_projectionB\017\n\r_movi"
-  "eIndices\"T\n\027AppendProjectionRequest\022*\n\np"
-  "rojection\030\001 \001(\0132\021.proto.ProjectionH\000\210\001\001B"
-  "\r\n\013_projection\"=\n\031DownloadProjectionRequ"
-  "est\022\024\n\007shardId\030\001 \001(\005H\000\210\001\001B\n\n\010_shardId\"\035\n"
-  "\033DownloadMovieIndicesRequest\"W\n\032Download"
-  "ProjectionResponse\022*\n\nprojection\030\001 \001(\0132\021"
-  ".proto.ProjectionH\000\210\001\001B\r\n\013_projection\"_\n"
-  "\034DownloadMovieIndicesResponse\022.\n\014movieIn"
-  "dices\030\001 \001(\0132\023.proto.MovieIndicesH\000\210\001\001B\017\n"
-  "\r_movieIndices\"\227\001\n\025ManageResourceRequest"
-  "\022\021\n\004name\030\001 \001(\tH\000\210\001\001\022\"\n\006action\030\002 \001(\0162\r.pr"
-  "oto.ActionH\001\210\001\001\022&\n\010resource\030\003 \001(\0162\017.prot"
-  "o.ResourceH\002\210\001\001B\007\n\005_nameB\t\n\007_actionB\013\n\t_"
-  "resource* \n\006Action\022\n\n\006CREATE\020\000\022\n\n\006DELETE"
-  "\020\001*!\n\010Resource\022\t\n\005TABLE\020\000\022\n\n\006BUCKET\020\0012\266\002"
-  "\n\024MainDatastoreService\022:\n\014UploadReview\022\032"
-  ".proto.UploadReviewRequest\032\016.proto.Paylo"
-  "ad\022D\n\021BatchUploadReview\022\037.proto.BatchUpl"
-  "oadReviewRequest\032\016.proto.Payload\022Y\n\022GetR"
-  "eviewsByAuthor\022 .proto.GetReviewsByAutho"
-  "rRequest\032!.proto.GetReviewsByAuthorRespo"
-  "nse\022A\n\nGetAuthors\022\030.proto.GetAuthorsRequ"
-  "est\032\031.proto.GetAuthorsResponse2\216\001\n\020Files"
-  "toreService\022:\n\014UploadObject\022\032.proto.Uplo"
-  "adObjectRequest\032\016.proto.Payload\022>\n\016Downl"
-  "oadObject\022\034.proto.DownloadObjectRequest\032"
-  "\016.proto.Payload2\221\001\n\025DatastoreAdminServic"
-  "e\022>\n\016ManageResource\022\034.proto.ManageResour"
-  "ceRequest\032\016.proto.Payload\0228\n\013CheckHealth"
-  "\022\031.proto.HealthCheckRequest\032\016.proto.Payl"
-  "oad2\302\001\n\020IngestionService\022:\n\014IngestReview"
-  "\022\032.proto.IngestReviewRequest\032\016.proto.Pay"
-  "load\0228\n\013IngestBatch\022\031.proto.IngestBatchR"
-  "equest\032\016.proto.Payload\0228\n\013CheckHealth\022\031."
-  "proto.HealthCheckRequest\032\016.proto.Payload"
-  "2\201\001\n\rUploadService\0226\n\nUploadFile\022\030.proto"
-  ".UploadFileRequest\032\016.proto.Payload\0228\n\013Ch"
-  "eckHealth\022\031.proto.HealthCheckRequest\032\016.p"
-  "roto.Payload2\232\003\n\032ProjectionDatastoreServ"
-  "ice\022B\n\020UploadProjection\022\036.proto.UploadPr"
-  "ojectionRequest\032\016.proto.Payload\022B\n\020Appen"
-  "dProjection\022\036.proto.AppendProjectionRequ"
-  "est\032\016.proto.Payload\022Y\n\022DownloadProjectio"
-  "n\022 .proto.DownloadProjectionRequest\032!.pr"
-  "oto.DownloadProjectionResponse\022_\n\024Downlo"
-  "adMovieIndices\022\".proto.DownloadMovieIndi"
-  "cesRequest\032#.proto.DownloadMovieIndicesR"
-  "esponse\0228\n\013CheckHealth\022\031.proto.HealthChe"
-  "ckRequest\032\016.proto.PayloadB\030Z\026app/generat"
-  "ed/go/protob\006proto3"
+  "_objectName\"R\n\026DownloadObjectResponse\022\022\n"
+  "\005found\030\001 \001(\010H\000\210\001\001\022\021\n\004data\030\002 \001(\tH\001\210\001\001B\010\n\006"
+  "_foundB\007\n\005_data\"c\n\021StatObjectRequest\022\027\n\n"
+  "bucketName\030\001 \001(\tH\000\210\001\001\022\027\n\nobjectName\030\002 \001("
+  "\tH\001\210\001\001B\r\n\013_bucketNameB\r\n\013_objectName\"2\n\022"
+  "StatObjectResponse\022\022\n\005found\030\001 \001(\010H\000\210\001\001B\010"
+  "\n\006_found\"K\n\021UploadFileRequest\022\021\n\004name\030\001 "
+  "\001(\tH\000\210\001\001\022\021\n\004body\030\002 \001(\014H\001\210\001\001B\007\n\005_nameB\007\n\005"
+  "_body\"D\n\023IngestReviewRequest\022\"\n\006review\030\001"
+  " \001(\0132\r.proto.ReviewH\000\210\001\001B\t\n\007_review\"8\n\022I"
+  "ngestBatchRequest\022\025\n\010filename\030\001 \001(\tH\000\210\001\001"
+  "B\013\n\t_filename\"\225\001\n\027UploadProjectionReques"
+  "t\022*\n\nprojection\030\001 \001(\0132\021.proto.Projection"
+  "H\000\210\001\001\022.\n\014movieIndices\030\002 \001(\0132\023.proto.Movi"
+  "eIndicesH\001\210\001\001B\r\n\013_projectionB\017\n\r_movieIn"
+  "dices\"T\n\027AppendProjectionRequest\022*\n\nproj"
+  "ection\030\001 \001(\0132\021.proto.ProjectionH\000\210\001\001B\r\n\013"
+  "_projection\"=\n\031DownloadProjectionRequest"
+  "\022\024\n\007shardId\030\001 \001(\005H\000\210\001\001B\n\n\010_shardId\"\035\n\033Do"
+  "wnloadMovieIndicesRequest\"W\n\032DownloadPro"
+  "jectionResponse\022*\n\nprojection\030\001 \001(\0132\021.pr"
+  "oto.ProjectionH\000\210\001\001B\r\n\013_projection\"_\n\034Do"
+  "wnloadMovieIndicesResponse\022.\n\014movieIndic"
+  "es\030\001 \001(\0132\023.proto.MovieIndicesH\000\210\001\001B\017\n\r_m"
+  "ovieIndices\"\023\n\021ShardCountRequest\"2\n\022Shar"
+  "dCountResponse\022\022\n\005count\030\001 \001(\005H\000\210\001\001B\010\n\006_c"
+  "ount\"\227\001\n\025ManageResourceRequest\022\021\n\004name\030\001"
+  " \001(\tH\000\210\001\001\022\"\n\006action\030\002 \001(\0162\r.proto.Action"
+  "H\001\210\001\001\022&\n\010resource\030\003 \001(\0162\017.proto.Resource"
+  "H\002\210\001\001B\007\n\005_nameB\t\n\007_actionB\013\n\t_resource* "
+  "\n\006Action\022\n\n\006CREATE\020\000\022\n\n\006DELETE\020\001*!\n\010Reso"
+  "urce\022\t\n\005TABLE\020\000\022\n\n\006BUCKET\020\0012\266\002\n\024MainData"
+  "storeService\022:\n\014UploadReview\022\032.proto.Upl"
+  "oadReviewRequest\032\016.proto.Payload\022D\n\021Batc"
+  "hUploadReview\022\037.proto.BatchUploadReviewR"
+  "equest\032\016.proto.Payload\022Y\n\022GetReviewsByAu"
+  "thor\022 .proto.GetReviewsByAuthorRequest\032!"
+  ".proto.GetReviewsByAuthorResponse\022A\n\nGet"
+  "Authors\022\030.proto.GetAuthorsRequest\032\031.prot"
+  "o.GetAuthorsResponse2\340\001\n\020FilestoreServic"
+  "e\022:\n\014UploadObject\022\032.proto.UploadObjectRe"
+  "quest\032\016.proto.Payload\022M\n\016DownloadObject\022"
+  "\034.proto.DownloadObjectRequest\032\035.proto.Do"
+  "wnloadObjectResponse\022A\n\nStatObject\022\030.pro"
+  "to.StatObjectRequest\032\031.proto.StatObjectR"
+  "esponse2\221\001\n\025DatastoreAdminService\022>\n\016Man"
+  "ageResource\022\034.proto.ManageResourceReques"
+  "t\032\016.proto.Payload\0228\n\013CheckHealth\022\031.proto"
+  ".HealthCheckRequest\032\016.proto.Payload2\302\001\n\020"
+  "IngestionService\022:\n\014IngestReview\022\032.proto"
+  ".IngestReviewRequest\032\016.proto.Payload\0228\n\013"
+  "IngestBatch\022\031.proto.IngestBatchRequest\032\016"
+  ".proto.Payload\0228\n\013CheckHealth\022\031.proto.He"
+  "althCheckRequest\032\016.proto.Payload2\201\001\n\rUpl"
+  "oadService\0226\n\nUploadFile\022\030.proto.UploadF"
+  "ileRequest\032\016.proto.Payload\0228\n\013CheckHealt"
+  "h\022\031.proto.HealthCheckRequest\032\016.proto.Pay"
+  "load2\335\003\n\032ProjectionDatastoreService\022B\n\020U"
+  "ploadProjection\022\036.proto.UploadProjection"
+  "Request\032\016.proto.Payload\022B\n\020AppendProject"
+  "ion\022\036.proto.AppendProjectionRequest\032\016.pr"
+  "oto.Payload\022Y\n\022DownloadProjection\022 .prot"
+  "o.DownloadProjectionRequest\032!.proto.Down"
+  "loadProjectionResponse\022_\n\024DownloadMovieI"
+  "ndices\022\".proto.DownloadMovieIndicesReque"
+  "st\032#.proto.DownloadMovieIndicesResponse\022"
+  "A\n\nShardCount\022\030.proto.ShardCountRequest\032"
+  "\031.proto.ShardCountResponse\0228\n\013CheckHealt"
+  "h\022\031.proto.HealthCheckRequest\032\016.proto.Pay"
+  "loadB\030Z\026app/generated/go/protob\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_resource_5fservices_2eproto_deps[2] = {
   &::descriptor_table_common_2eproto,
@@ -526,8 +650,8 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_resource_5fservices_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_resource_5fservices_2eproto = {
-  false, false, 3019, descriptor_table_protodef_resource_5fservices_2eproto, "resource_services.proto", 
-  &descriptor_table_resource_5fservices_2eproto_once, descriptor_table_resource_5fservices_2eproto_deps, 2, 18,
+  false, false, 3478, descriptor_table_protodef_resource_5fservices_2eproto, "resource_services.proto", 
+  &descriptor_table_resource_5fservices_2eproto_once, descriptor_table_resource_5fservices_2eproto_deps, 2, 23,
   schemas, file_default_instances, TableStruct_resource_5fservices_2eproto::offsets,
   file_level_metadata_resource_5fservices_2eproto, file_level_enum_descriptors_resource_5fservices_2eproto, file_level_service_descriptors_resource_5fservices_2eproto,
 };
@@ -2252,6 +2376,724 @@ void DownloadObjectRequest::InternalSwap(DownloadObjectRequest* other) {
 
 // ===================================================================
 
+class DownloadObjectResponse::_Internal {
+ public:
+  using HasBits = decltype(std::declval<DownloadObjectResponse>()._has_bits_);
+  static void set_has_found(HasBits* has_bits) {
+    (*has_bits)[0] |= 2u;
+  }
+  static void set_has_data(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
+};
+
+DownloadObjectResponse::DownloadObjectResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor();
+  if (!is_message_owned) {
+    RegisterArenaDtor(arena);
+  }
+  // @@protoc_insertion_point(arena_constructor:proto.DownloadObjectResponse)
+}
+DownloadObjectResponse::DownloadObjectResponse(const DownloadObjectResponse& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      _has_bits_(from._has_bits_) {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  data_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    data_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (from._internal_has_data()) {
+    data_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_data(), 
+      GetArenaForAllocation());
+  }
+  found_ = from.found_;
+  // @@protoc_insertion_point(copy_constructor:proto.DownloadObjectResponse)
+}
+
+inline void DownloadObjectResponse::SharedCtor() {
+data_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  data_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+found_ = false;
+}
+
+DownloadObjectResponse::~DownloadObjectResponse() {
+  // @@protoc_insertion_point(destructor:proto.DownloadObjectResponse)
+  if (GetArenaForAllocation() != nullptr) return;
+  SharedDtor();
+  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+inline void DownloadObjectResponse::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  data_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+void DownloadObjectResponse::ArenaDtor(void* object) {
+  DownloadObjectResponse* _this = reinterpret_cast< DownloadObjectResponse* >(object);
+  (void)_this;
+}
+void DownloadObjectResponse::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+}
+void DownloadObjectResponse::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+
+void DownloadObjectResponse::Clear() {
+// @@protoc_insertion_point(message_clear_start:proto.DownloadObjectResponse)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    data_.ClearNonDefaultToEmpty();
+  }
+  found_ = false;
+  _has_bits_.Clear();
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* DownloadObjectResponse::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  _Internal::HasBits has_bits{};
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // optional bool found = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          _Internal::set_has_found(&has_bits);
+          found_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // optional string data = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+          auto str = _internal_mutable_data();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "proto.DownloadObjectResponse.data"));
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  _has_bits_.Or(has_bits);
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* DownloadObjectResponse::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:proto.DownloadObjectResponse)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // optional bool found = 1;
+  if (_internal_has_found()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(1, this->_internal_found(), target);
+  }
+
+  // optional string data = 2;
+  if (_internal_has_data()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_data().data(), static_cast<int>(this->_internal_data().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "proto.DownloadObjectResponse.data");
+    target = stream->WriteStringMaybeAliased(
+        2, this->_internal_data(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:proto.DownloadObjectResponse)
+  return target;
+}
+
+size_t DownloadObjectResponse::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:proto.DownloadObjectResponse)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000003u) {
+    // optional string data = 2;
+    if (cached_has_bits & 0x00000001u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+          this->_internal_data());
+    }
+
+    // optional bool found = 1;
+    if (cached_has_bits & 0x00000002u) {
+      total_size += 1 + 1;
+    }
+
+  }
+  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData DownloadObjectResponse::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+    DownloadObjectResponse::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*DownloadObjectResponse::GetClassData() const { return &_class_data_; }
+
+void DownloadObjectResponse::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
+                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+  static_cast<DownloadObjectResponse *>(to)->MergeFrom(
+      static_cast<const DownloadObjectResponse &>(from));
+}
+
+
+void DownloadObjectResponse::MergeFrom(const DownloadObjectResponse& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:proto.DownloadObjectResponse)
+  GOOGLE_DCHECK_NE(&from, this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = from._has_bits_[0];
+  if (cached_has_bits & 0x00000003u) {
+    if (cached_has_bits & 0x00000001u) {
+      _internal_set_data(from._internal_data());
+    }
+    if (cached_has_bits & 0x00000002u) {
+      found_ = from.found_;
+    }
+    _has_bits_[0] |= cached_has_bits;
+  }
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void DownloadObjectResponse::CopyFrom(const DownloadObjectResponse& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:proto.DownloadObjectResponse)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool DownloadObjectResponse::IsInitialized() const {
+  return true;
+}
+
+void DownloadObjectResponse::InternalSwap(DownloadObjectResponse* other) {
+  using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      &data_, lhs_arena,
+      &other->data_, rhs_arena
+  );
+  swap(found_, other->found_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata DownloadObjectResponse::GetMetadata() const {
+  return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
+      &descriptor_table_resource_5fservices_2eproto_getter, &descriptor_table_resource_5fservices_2eproto_once,
+      file_level_metadata_resource_5fservices_2eproto[8]);
+}
+
+// ===================================================================
+
+class StatObjectRequest::_Internal {
+ public:
+  using HasBits = decltype(std::declval<StatObjectRequest>()._has_bits_);
+  static void set_has_bucketname(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
+  static void set_has_objectname(HasBits* has_bits) {
+    (*has_bits)[0] |= 2u;
+  }
+};
+
+StatObjectRequest::StatObjectRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor();
+  if (!is_message_owned) {
+    RegisterArenaDtor(arena);
+  }
+  // @@protoc_insertion_point(arena_constructor:proto.StatObjectRequest)
+}
+StatObjectRequest::StatObjectRequest(const StatObjectRequest& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      _has_bits_(from._has_bits_) {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  bucketname_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    bucketname_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (from._internal_has_bucketname()) {
+    bucketname_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_bucketname(), 
+      GetArenaForAllocation());
+  }
+  objectname_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    objectname_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (from._internal_has_objectname()) {
+    objectname_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_objectname(), 
+      GetArenaForAllocation());
+  }
+  // @@protoc_insertion_point(copy_constructor:proto.StatObjectRequest)
+}
+
+inline void StatObjectRequest::SharedCtor() {
+bucketname_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  bucketname_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+objectname_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  objectname_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+}
+
+StatObjectRequest::~StatObjectRequest() {
+  // @@protoc_insertion_point(destructor:proto.StatObjectRequest)
+  if (GetArenaForAllocation() != nullptr) return;
+  SharedDtor();
+  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+inline void StatObjectRequest::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  bucketname_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  objectname_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+void StatObjectRequest::ArenaDtor(void* object) {
+  StatObjectRequest* _this = reinterpret_cast< StatObjectRequest* >(object);
+  (void)_this;
+}
+void StatObjectRequest::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+}
+void StatObjectRequest::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+
+void StatObjectRequest::Clear() {
+// @@protoc_insertion_point(message_clear_start:proto.StatObjectRequest)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000003u) {
+    if (cached_has_bits & 0x00000001u) {
+      bucketname_.ClearNonDefaultToEmpty();
+    }
+    if (cached_has_bits & 0x00000002u) {
+      objectname_.ClearNonDefaultToEmpty();
+    }
+  }
+  _has_bits_.Clear();
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* StatObjectRequest::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  _Internal::HasBits has_bits{};
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // optional string bucketName = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
+          auto str = _internal_mutable_bucketname();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "proto.StatObjectRequest.bucketName"));
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // optional string objectName = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+          auto str = _internal_mutable_objectname();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "proto.StatObjectRequest.objectName"));
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  _has_bits_.Or(has_bits);
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* StatObjectRequest::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:proto.StatObjectRequest)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // optional string bucketName = 1;
+  if (_internal_has_bucketname()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_bucketname().data(), static_cast<int>(this->_internal_bucketname().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "proto.StatObjectRequest.bucketName");
+    target = stream->WriteStringMaybeAliased(
+        1, this->_internal_bucketname(), target);
+  }
+
+  // optional string objectName = 2;
+  if (_internal_has_objectname()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_objectname().data(), static_cast<int>(this->_internal_objectname().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "proto.StatObjectRequest.objectName");
+    target = stream->WriteStringMaybeAliased(
+        2, this->_internal_objectname(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:proto.StatObjectRequest)
+  return target;
+}
+
+size_t StatObjectRequest::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:proto.StatObjectRequest)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000003u) {
+    // optional string bucketName = 1;
+    if (cached_has_bits & 0x00000001u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+          this->_internal_bucketname());
+    }
+
+    // optional string objectName = 2;
+    if (cached_has_bits & 0x00000002u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+          this->_internal_objectname());
+    }
+
+  }
+  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData StatObjectRequest::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+    StatObjectRequest::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*StatObjectRequest::GetClassData() const { return &_class_data_; }
+
+void StatObjectRequest::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
+                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+  static_cast<StatObjectRequest *>(to)->MergeFrom(
+      static_cast<const StatObjectRequest &>(from));
+}
+
+
+void StatObjectRequest::MergeFrom(const StatObjectRequest& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:proto.StatObjectRequest)
+  GOOGLE_DCHECK_NE(&from, this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = from._has_bits_[0];
+  if (cached_has_bits & 0x00000003u) {
+    if (cached_has_bits & 0x00000001u) {
+      _internal_set_bucketname(from._internal_bucketname());
+    }
+    if (cached_has_bits & 0x00000002u) {
+      _internal_set_objectname(from._internal_objectname());
+    }
+  }
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void StatObjectRequest::CopyFrom(const StatObjectRequest& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:proto.StatObjectRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool StatObjectRequest::IsInitialized() const {
+  return true;
+}
+
+void StatObjectRequest::InternalSwap(StatObjectRequest* other) {
+  using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      &bucketname_, lhs_arena,
+      &other->bucketname_, rhs_arena
+  );
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      &objectname_, lhs_arena,
+      &other->objectname_, rhs_arena
+  );
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata StatObjectRequest::GetMetadata() const {
+  return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
+      &descriptor_table_resource_5fservices_2eproto_getter, &descriptor_table_resource_5fservices_2eproto_once,
+      file_level_metadata_resource_5fservices_2eproto[9]);
+}
+
+// ===================================================================
+
+class StatObjectResponse::_Internal {
+ public:
+  using HasBits = decltype(std::declval<StatObjectResponse>()._has_bits_);
+  static void set_has_found(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
+};
+
+StatObjectResponse::StatObjectResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor();
+  if (!is_message_owned) {
+    RegisterArenaDtor(arena);
+  }
+  // @@protoc_insertion_point(arena_constructor:proto.StatObjectResponse)
+}
+StatObjectResponse::StatObjectResponse(const StatObjectResponse& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      _has_bits_(from._has_bits_) {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  found_ = from.found_;
+  // @@protoc_insertion_point(copy_constructor:proto.StatObjectResponse)
+}
+
+inline void StatObjectResponse::SharedCtor() {
+found_ = false;
+}
+
+StatObjectResponse::~StatObjectResponse() {
+  // @@protoc_insertion_point(destructor:proto.StatObjectResponse)
+  if (GetArenaForAllocation() != nullptr) return;
+  SharedDtor();
+  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+inline void StatObjectResponse::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+}
+
+void StatObjectResponse::ArenaDtor(void* object) {
+  StatObjectResponse* _this = reinterpret_cast< StatObjectResponse* >(object);
+  (void)_this;
+}
+void StatObjectResponse::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+}
+void StatObjectResponse::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+
+void StatObjectResponse::Clear() {
+// @@protoc_insertion_point(message_clear_start:proto.StatObjectResponse)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  found_ = false;
+  _has_bits_.Clear();
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* StatObjectResponse::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  _Internal::HasBits has_bits{};
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // optional bool found = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          _Internal::set_has_found(&has_bits);
+          found_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  _has_bits_.Or(has_bits);
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* StatObjectResponse::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:proto.StatObjectResponse)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // optional bool found = 1;
+  if (_internal_has_found()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(1, this->_internal_found(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:proto.StatObjectResponse)
+  return target;
+}
+
+size_t StatObjectResponse::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:proto.StatObjectResponse)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // optional bool found = 1;
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    total_size += 1 + 1;
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData StatObjectResponse::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+    StatObjectResponse::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*StatObjectResponse::GetClassData() const { return &_class_data_; }
+
+void StatObjectResponse::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
+                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+  static_cast<StatObjectResponse *>(to)->MergeFrom(
+      static_cast<const StatObjectResponse &>(from));
+}
+
+
+void StatObjectResponse::MergeFrom(const StatObjectResponse& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:proto.StatObjectResponse)
+  GOOGLE_DCHECK_NE(&from, this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from._internal_has_found()) {
+    _internal_set_found(from._internal_found());
+  }
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void StatObjectResponse::CopyFrom(const StatObjectResponse& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:proto.StatObjectResponse)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool StatObjectResponse::IsInitialized() const {
+  return true;
+}
+
+void StatObjectResponse::InternalSwap(StatObjectResponse* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
+  swap(found_, other->found_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata StatObjectResponse::GetMetadata() const {
+  return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
+      &descriptor_table_resource_5fservices_2eproto_getter, &descriptor_table_resource_5fservices_2eproto_once,
+      file_level_metadata_resource_5fservices_2eproto[10]);
+}
+
+// ===================================================================
+
 class UploadFileRequest::_Internal {
  public:
   using HasBits = decltype(std::declval<UploadFileRequest>()._has_bits_);
@@ -2519,7 +3361,7 @@ void UploadFileRequest::InternalSwap(UploadFileRequest* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata UploadFileRequest::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_resource_5fservices_2eproto_getter, &descriptor_table_resource_5fservices_2eproto_once,
-      file_level_metadata_resource_5fservices_2eproto[8]);
+      file_level_metadata_resource_5fservices_2eproto[11]);
 }
 
 // ===================================================================
@@ -2729,7 +3571,7 @@ void IngestReviewRequest::InternalSwap(IngestReviewRequest* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata IngestReviewRequest::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_resource_5fservices_2eproto_getter, &descriptor_table_resource_5fservices_2eproto_once,
-      file_level_metadata_resource_5fservices_2eproto[9]);
+      file_level_metadata_resource_5fservices_2eproto[12]);
 }
 
 // ===================================================================
@@ -2945,7 +3787,7 @@ void IngestBatchRequest::InternalSwap(IngestBatchRequest* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata IngestBatchRequest::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_resource_5fservices_2eproto_getter, &descriptor_table_resource_5fservices_2eproto_once,
-      file_level_metadata_resource_5fservices_2eproto[10]);
+      file_level_metadata_resource_5fservices_2eproto[13]);
 }
 
 // ===================================================================
@@ -3218,7 +4060,7 @@ void UploadProjectionRequest::InternalSwap(UploadProjectionRequest* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata UploadProjectionRequest::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_resource_5fservices_2eproto_getter, &descriptor_table_resource_5fservices_2eproto_once,
-      file_level_metadata_resource_5fservices_2eproto[11]);
+      file_level_metadata_resource_5fservices_2eproto[14]);
 }
 
 // ===================================================================
@@ -3428,7 +4270,7 @@ void AppendProjectionRequest::InternalSwap(AppendProjectionRequest* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata AppendProjectionRequest::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_resource_5fservices_2eproto_getter, &descriptor_table_resource_5fservices_2eproto_once,
-      file_level_metadata_resource_5fservices_2eproto[12]);
+      file_level_metadata_resource_5fservices_2eproto[15]);
 }
 
 // ===================================================================
@@ -3617,7 +4459,7 @@ void DownloadProjectionRequest::InternalSwap(DownloadProjectionRequest* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata DownloadProjectionRequest::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_resource_5fservices_2eproto_getter, &descriptor_table_resource_5fservices_2eproto_once,
-      file_level_metadata_resource_5fservices_2eproto[13]);
+      file_level_metadata_resource_5fservices_2eproto[16]);
 }
 
 // ===================================================================
@@ -3656,7 +4498,7 @@ const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*DownloadMovieIndicesRequest::G
 ::PROTOBUF_NAMESPACE_ID::Metadata DownloadMovieIndicesRequest::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_resource_5fservices_2eproto_getter, &descriptor_table_resource_5fservices_2eproto_once,
-      file_level_metadata_resource_5fservices_2eproto[14]);
+      file_level_metadata_resource_5fservices_2eproto[17]);
 }
 
 // ===================================================================
@@ -3866,7 +4708,7 @@ void DownloadProjectionResponse::InternalSwap(DownloadProjectionResponse* other)
 ::PROTOBUF_NAMESPACE_ID::Metadata DownloadProjectionResponse::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_resource_5fservices_2eproto_getter, &descriptor_table_resource_5fservices_2eproto_once,
-      file_level_metadata_resource_5fservices_2eproto[15]);
+      file_level_metadata_resource_5fservices_2eproto[18]);
 }
 
 // ===================================================================
@@ -4076,7 +4918,235 @@ void DownloadMovieIndicesResponse::InternalSwap(DownloadMovieIndicesResponse* ot
 ::PROTOBUF_NAMESPACE_ID::Metadata DownloadMovieIndicesResponse::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_resource_5fservices_2eproto_getter, &descriptor_table_resource_5fservices_2eproto_once,
-      file_level_metadata_resource_5fservices_2eproto[16]);
+      file_level_metadata_resource_5fservices_2eproto[19]);
+}
+
+// ===================================================================
+
+class ShardCountRequest::_Internal {
+ public:
+};
+
+ShardCountRequest::ShardCountRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase(arena, is_message_owned) {
+  // @@protoc_insertion_point(arena_constructor:proto.ShardCountRequest)
+}
+ShardCountRequest::ShardCountRequest(const ShardCountRequest& from)
+  : ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase() {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  // @@protoc_insertion_point(copy_constructor:proto.ShardCountRequest)
+}
+
+
+
+
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData ShardCountRequest::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyImpl,
+    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeImpl,
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*ShardCountRequest::GetClassData() const { return &_class_data_; }
+
+
+
+
+
+
+
+::PROTOBUF_NAMESPACE_ID::Metadata ShardCountRequest::GetMetadata() const {
+  return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
+      &descriptor_table_resource_5fservices_2eproto_getter, &descriptor_table_resource_5fservices_2eproto_once,
+      file_level_metadata_resource_5fservices_2eproto[20]);
+}
+
+// ===================================================================
+
+class ShardCountResponse::_Internal {
+ public:
+  using HasBits = decltype(std::declval<ShardCountResponse>()._has_bits_);
+  static void set_has_count(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
+};
+
+ShardCountResponse::ShardCountResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor();
+  if (!is_message_owned) {
+    RegisterArenaDtor(arena);
+  }
+  // @@protoc_insertion_point(arena_constructor:proto.ShardCountResponse)
+}
+ShardCountResponse::ShardCountResponse(const ShardCountResponse& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      _has_bits_(from._has_bits_) {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  count_ = from.count_;
+  // @@protoc_insertion_point(copy_constructor:proto.ShardCountResponse)
+}
+
+inline void ShardCountResponse::SharedCtor() {
+count_ = 0;
+}
+
+ShardCountResponse::~ShardCountResponse() {
+  // @@protoc_insertion_point(destructor:proto.ShardCountResponse)
+  if (GetArenaForAllocation() != nullptr) return;
+  SharedDtor();
+  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+inline void ShardCountResponse::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+}
+
+void ShardCountResponse::ArenaDtor(void* object) {
+  ShardCountResponse* _this = reinterpret_cast< ShardCountResponse* >(object);
+  (void)_this;
+}
+void ShardCountResponse::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+}
+void ShardCountResponse::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+
+void ShardCountResponse::Clear() {
+// @@protoc_insertion_point(message_clear_start:proto.ShardCountResponse)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  count_ = 0;
+  _has_bits_.Clear();
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* ShardCountResponse::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  _Internal::HasBits has_bits{};
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // optional int32 count = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          _Internal::set_has_count(&has_bits);
+          count_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  _has_bits_.Or(has_bits);
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* ShardCountResponse::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:proto.ShardCountResponse)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // optional int32 count = 1;
+  if (_internal_has_count()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(1, this->_internal_count(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:proto.ShardCountResponse)
+  return target;
+}
+
+size_t ShardCountResponse::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:proto.ShardCountResponse)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // optional int32 count = 1;
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32SizePlusOne(this->_internal_count());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData ShardCountResponse::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+    ShardCountResponse::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*ShardCountResponse::GetClassData() const { return &_class_data_; }
+
+void ShardCountResponse::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
+                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+  static_cast<ShardCountResponse *>(to)->MergeFrom(
+      static_cast<const ShardCountResponse &>(from));
+}
+
+
+void ShardCountResponse::MergeFrom(const ShardCountResponse& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:proto.ShardCountResponse)
+  GOOGLE_DCHECK_NE(&from, this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from._internal_has_count()) {
+    _internal_set_count(from._internal_count());
+  }
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void ShardCountResponse::CopyFrom(const ShardCountResponse& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:proto.ShardCountResponse)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool ShardCountResponse::IsInitialized() const {
+  return true;
+}
+
+void ShardCountResponse::InternalSwap(ShardCountResponse* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
+  swap(count_, other->count_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata ShardCountResponse::GetMetadata() const {
+  return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
+      &descriptor_table_resource_5fservices_2eproto_getter, &descriptor_table_resource_5fservices_2eproto_once,
+      file_level_metadata_resource_5fservices_2eproto[21]);
 }
 
 // ===================================================================
@@ -4372,7 +5442,7 @@ void ManageResourceRequest::InternalSwap(ManageResourceRequest* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata ManageResourceRequest::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_resource_5fservices_2eproto_getter, &descriptor_table_resource_5fservices_2eproto_once,
-      file_level_metadata_resource_5fservices_2eproto[17]);
+      file_level_metadata_resource_5fservices_2eproto[22]);
 }
 
 // @@protoc_insertion_point(namespace_scope)
@@ -4402,6 +5472,15 @@ template<> PROTOBUF_NOINLINE ::proto::UploadObjectRequest* Arena::CreateMaybeMes
 template<> PROTOBUF_NOINLINE ::proto::DownloadObjectRequest* Arena::CreateMaybeMessage< ::proto::DownloadObjectRequest >(Arena* arena) {
   return Arena::CreateMessageInternal< ::proto::DownloadObjectRequest >(arena);
 }
+template<> PROTOBUF_NOINLINE ::proto::DownloadObjectResponse* Arena::CreateMaybeMessage< ::proto::DownloadObjectResponse >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::proto::DownloadObjectResponse >(arena);
+}
+template<> PROTOBUF_NOINLINE ::proto::StatObjectRequest* Arena::CreateMaybeMessage< ::proto::StatObjectRequest >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::proto::StatObjectRequest >(arena);
+}
+template<> PROTOBUF_NOINLINE ::proto::StatObjectResponse* Arena::CreateMaybeMessage< ::proto::StatObjectResponse >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::proto::StatObjectResponse >(arena);
+}
 template<> PROTOBUF_NOINLINE ::proto::UploadFileRequest* Arena::CreateMaybeMessage< ::proto::UploadFileRequest >(Arena* arena) {
   return Arena::CreateMessageInternal< ::proto::UploadFileRequest >(arena);
 }
@@ -4428,6 +5507,12 @@ template<> PROTOBUF_NOINLINE ::proto::DownloadProjectionResponse* Arena::CreateM
 }
 template<> PROTOBUF_NOINLINE ::proto::DownloadMovieIndicesResponse* Arena::CreateMaybeMessage< ::proto::DownloadMovieIndicesResponse >(Arena* arena) {
   return Arena::CreateMessageInternal< ::proto::DownloadMovieIndicesResponse >(arena);
+}
+template<> PROTOBUF_NOINLINE ::proto::ShardCountRequest* Arena::CreateMaybeMessage< ::proto::ShardCountRequest >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::proto::ShardCountRequest >(arena);
+}
+template<> PROTOBUF_NOINLINE ::proto::ShardCountResponse* Arena::CreateMaybeMessage< ::proto::ShardCountResponse >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::proto::ShardCountResponse >(arena);
 }
 template<> PROTOBUF_NOINLINE ::proto::ManageResourceRequest* Arena::CreateMaybeMessage< ::proto::ManageResourceRequest >(Arena* arena) {
   return Arena::CreateMessageInternal< ::proto::ManageResourceRequest >(arena);

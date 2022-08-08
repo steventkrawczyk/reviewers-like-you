@@ -3,7 +3,6 @@ syntax = "proto3";
 package proto;
 
 import "common.proto";
-import "data_model.proto";
 
 option go_package = "app/generated/go/proto";
 

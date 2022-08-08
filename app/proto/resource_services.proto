@@ -40,6 +40,20 @@ message DownloadObjectRequest {
   optional string objectName = 2;
 }
 
+message DownloadObjectResponse {
+  optional bool found = 1;
+  optional string data = 2;
+}
+
+message StatObjectRequest {
+  optional string bucketName = 1;
+  optional string objectName = 2;
+}
+
+message StatObjectResponse {
+  optional bool found = 1;
+}
+
 message UploadFileRequest {
   optional string name = 1;
   optional bytes body = 2;
@@ -75,6 +89,11 @@ message DownloadProjectionResponse {
 message DownloadMovieIndicesResponse {
   optional MovieIndices movieIndices = 1;
 }
+message ShardCountRequest {}
+
+message ShardCountResponse {
+  optional int32 count = 1;
+}
 
 message ManageResourceRequest {
   optional string name = 1;
@@ -102,7 +121,8 @@ service MainDatastoreService {
 
 service FilestoreService {
   rpc UploadObject(UploadObjectRequest) returns (Payload);
-  rpc DownloadObject(DownloadObjectRequest) returns (Payload);
+  rpc DownloadObject(DownloadObjectRequest) returns (DownloadObjectResponse);
+  rpc StatObject(StatObjectRequest) returns (StatObjectResponse);
 }
 
 service DatastoreAdminService {
@@ -128,5 +148,6 @@ service ProjectionDatastoreService {
       returns (DownloadProjectionResponse);
   rpc DownloadMovieIndices(DownloadMovieIndicesRequest)
       returns (DownloadMovieIndicesResponse);
+  rpc ShardCount(ShardCountRequest) returns (ShardCountResponse);
   rpc CheckHealth(HealthCheckRequest) returns (Payload);
 }

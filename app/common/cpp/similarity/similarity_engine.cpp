@@ -1,11 +1,15 @@
-#include "similarity_engine.h"
+#include "app/common/cpp/similarity/similarity_engine.h"
 
-SimilarityEngine SimilarityEngine::create(ProjectionDatastoreHead& datastore) {
+SimilarityEngine SimilarityEngine::create(
+    std::shared_ptr<ProjectionDatastoreClient> datastore) {
   std::vector<SimilarityShard> compute_shards;
-  std::vector<ProjectionDatastoreShard> data_shards = datastore.getShards();
 
-  for (auto& data_shard : data_shards) {
-    auto compute_shard = SimilarityShard::create(data_shard);
+  int shard_count = datastore->getShardCount();
+
+  // TODO we can do this in parallel
+  for (int i = 0; i < shard_count; i++) {
+    auto projection = datastore->getShardProjection(i);
+    auto compute_shard = SimilarityShard::create(projection);
     compute_shards.push_back(compute_shard);
   }
 

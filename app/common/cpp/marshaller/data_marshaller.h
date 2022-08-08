@@ -1,4 +1,6 @@
+#include "app/generated/cpp/data_model.pb.h"
 
+// This class translates data from protobufs to internal representations
 class DataMarshaller {
  public:
   DataMarshaller();

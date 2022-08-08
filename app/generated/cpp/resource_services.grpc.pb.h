@@ -720,20 +720,29 @@ class FilestoreService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::proto::Payload>> PrepareAsyncUploadObject(::grpc::ClientContext* context, const ::proto::UploadObjectRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::proto::Payload>>(PrepareAsyncUploadObjectRaw(context, request, cq));
     }
-    virtual ::grpc::Status DownloadObject(::grpc::ClientContext* context, const ::proto::DownloadObjectRequest& request, ::proto::Payload* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::proto::Payload>> AsyncDownloadObject(::grpc::ClientContext* context, const ::proto::DownloadObjectRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::proto::Payload>>(AsyncDownloadObjectRaw(context, request, cq));
+    virtual ::grpc::Status DownloadObject(::grpc::ClientContext* context, const ::proto::DownloadObjectRequest& request, ::proto::DownloadObjectResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::proto::DownloadObjectResponse>> AsyncDownloadObject(::grpc::ClientContext* context, const ::proto::DownloadObjectRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::proto::DownloadObjectResponse>>(AsyncDownloadObjectRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::proto::Payload>> PrepareAsyncDownloadObject(::grpc::ClientContext* context, const ::proto::DownloadObjectRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::proto::Payload>>(PrepareAsyncDownloadObjectRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::proto::DownloadObjectResponse>> PrepareAsyncDownloadObject(::grpc::ClientContext* context, const ::proto::DownloadObjectRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::proto::DownloadObjectResponse>>(PrepareAsyncDownloadObjectRaw(context, request, cq));
+    }
+    virtual ::grpc::Status StatObject(::grpc::ClientContext* context, const ::proto::StatObjectRequest& request, ::proto::StatObjectResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::proto::StatObjectResponse>> AsyncStatObject(::grpc::ClientContext* context, const ::proto::StatObjectRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::proto::StatObjectResponse>>(AsyncStatObjectRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::proto::StatObjectResponse>> PrepareAsyncStatObject(::grpc::ClientContext* context, const ::proto::StatObjectRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::proto::StatObjectResponse>>(PrepareAsyncStatObjectRaw(context, request, cq));
     }
     class async_interface {
      public:
       virtual ~async_interface() {}
       virtual void UploadObject(::grpc::ClientContext* context, const ::proto::UploadObjectRequest* request, ::proto::Payload* response, std::function<void(::grpc::Status)>) = 0;
       virtual void UploadObject(::grpc::ClientContext* context, const ::proto::UploadObjectRequest* request, ::proto::Payload* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      virtual void DownloadObject(::grpc::ClientContext* context, const ::proto::DownloadObjectRequest* request, ::proto::Payload* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void DownloadObject(::grpc::ClientContext* context, const ::proto::DownloadObjectRequest* request, ::proto::Payload* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void DownloadObject(::grpc::ClientContext* context, const ::proto::DownloadObjectRequest* request, ::proto::DownloadObjectResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void DownloadObject(::grpc::ClientContext* context, const ::proto::DownloadObjectRequest* request, ::proto::DownloadObjectResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void StatObject(::grpc::ClientContext* context, const ::proto::StatObjectRequest* request, ::proto::StatObjectResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void StatObject(::grpc::ClientContext* context, const ::proto::StatObjectRequest* request, ::proto::StatObjectResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
     };
     typedef class async_interface experimental_async_interface;
     virtual class async_interface* async() { return nullptr; }
@@ -741,8 +750,10 @@ class FilestoreService final {
    private:
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::proto::Payload>* AsyncUploadObjectRaw(::grpc::ClientContext* context, const ::proto::UploadObjectRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::proto::Payload>* PrepareAsyncUploadObjectRaw(::grpc::ClientContext* context, const ::proto::UploadObjectRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::proto::Payload>* AsyncDownloadObjectRaw(::grpc::ClientContext* context, const ::proto::DownloadObjectRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::proto::Payload>* PrepareAsyncDownloadObjectRaw(::grpc::ClientContext* context, const ::proto::DownloadObjectRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::proto::DownloadObjectResponse>* AsyncDownloadObjectRaw(::grpc::ClientContext* context, const ::proto::DownloadObjectRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::proto::DownloadObjectResponse>* PrepareAsyncDownloadObjectRaw(::grpc::ClientContext* context, const ::proto::DownloadObjectRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::proto::StatObjectResponse>* AsyncStatObjectRaw(::grpc::ClientContext* context, const ::proto::StatObjectRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::proto::StatObjectResponse>* PrepareAsyncStatObjectRaw(::grpc::ClientContext* context, const ::proto::StatObjectRequest& request, ::grpc::CompletionQueue* cq) = 0;
   };
   class Stub final : public StubInterface {
    public:
@@ -754,20 +765,29 @@ class FilestoreService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::proto::Payload>> PrepareAsyncUploadObject(::grpc::ClientContext* context, const ::proto::UploadObjectRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::proto::Payload>>(PrepareAsyncUploadObjectRaw(context, request, cq));
     }
-    ::grpc::Status DownloadObject(::grpc::ClientContext* context, const ::proto::DownloadObjectRequest& request, ::proto::Payload* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::proto::Payload>> AsyncDownloadObject(::grpc::ClientContext* context, const ::proto::DownloadObjectRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::proto::Payload>>(AsyncDownloadObjectRaw(context, request, cq));
+    ::grpc::Status DownloadObject(::grpc::ClientContext* context, const ::proto::DownloadObjectRequest& request, ::proto::DownloadObjectResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::proto::DownloadObjectResponse>> AsyncDownloadObject(::grpc::ClientContext* context, const ::proto::DownloadObjectRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::proto::DownloadObjectResponse>>(AsyncDownloadObjectRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::proto::Payload>> PrepareAsyncDownloadObject(::grpc::ClientContext* context, const ::proto::DownloadObjectRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::proto::Payload>>(PrepareAsyncDownloadObjectRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::proto::DownloadObjectResponse>> PrepareAsyncDownloadObject(::grpc::ClientContext* context, const ::proto::DownloadObjectRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::proto::DownloadObjectResponse>>(PrepareAsyncDownloadObjectRaw(context, request, cq));
+    }
+    ::grpc::Status StatObject(::grpc::ClientContext* context, const ::proto::StatObjectRequest& request, ::proto::StatObjectResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::proto::StatObjectResponse>> AsyncStatObject(::grpc::ClientContext* context, const ::proto::StatObjectRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::proto::StatObjectResponse>>(AsyncStatObjectRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::proto::StatObjectResponse>> PrepareAsyncStatObject(::grpc::ClientContext* context, const ::proto::StatObjectRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::proto::StatObjectResponse>>(PrepareAsyncStatObjectRaw(context, request, cq));
     }
     class async final :
       public StubInterface::async_interface {
      public:
       void UploadObject(::grpc::ClientContext* context, const ::proto::UploadObjectRequest* request, ::proto::Payload* response, std::function<void(::grpc::Status)>) override;
       void UploadObject(::grpc::ClientContext* context, const ::proto::UploadObjectRequest* request, ::proto::Payload* response, ::grpc::ClientUnaryReactor* reactor) override;
-      void DownloadObject(::grpc::ClientContext* context, const ::proto::DownloadObjectRequest* request, ::proto::Payload* response, std::function<void(::grpc::Status)>) override;
-      void DownloadObject(::grpc::ClientContext* context, const ::proto::DownloadObjectRequest* request, ::proto::Payload* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void DownloadObject(::grpc::ClientContext* context, const ::proto::DownloadObjectRequest* request, ::proto::DownloadObjectResponse* response, std::function<void(::grpc::Status)>) override;
+      void DownloadObject(::grpc::ClientContext* context, const ::proto::DownloadObjectRequest* request, ::proto::DownloadObjectResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void StatObject(::grpc::ClientContext* context, const ::proto::StatObjectRequest* request, ::proto::StatObjectResponse* response, std::function<void(::grpc::Status)>) override;
+      void StatObject(::grpc::ClientContext* context, const ::proto::StatObjectRequest* request, ::proto::StatObjectResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
      private:
       friend class Stub;
       explicit async(Stub* stub): stub_(stub) { }
@@ -781,10 +801,13 @@ class FilestoreService final {
     class async async_stub_{this};
     ::grpc::ClientAsyncResponseReader< ::proto::Payload>* AsyncUploadObjectRaw(::grpc::ClientContext* context, const ::proto::UploadObjectRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::proto::Payload>* PrepareAsyncUploadObjectRaw(::grpc::ClientContext* context, const ::proto::UploadObjectRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::proto::Payload>* AsyncDownloadObjectRaw(::grpc::ClientContext* context, const ::proto::DownloadObjectRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::proto::Payload>* PrepareAsyncDownloadObjectRaw(::grpc::ClientContext* context, const ::proto::DownloadObjectRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::proto::DownloadObjectResponse>* AsyncDownloadObjectRaw(::grpc::ClientContext* context, const ::proto::DownloadObjectRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::proto::DownloadObjectResponse>* PrepareAsyncDownloadObjectRaw(::grpc::ClientContext* context, const ::proto::DownloadObjectRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::proto::StatObjectResponse>* AsyncStatObjectRaw(::grpc::ClientContext* context, const ::proto::StatObjectRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::proto::StatObjectResponse>* PrepareAsyncStatObjectRaw(::grpc::ClientContext* context, const ::proto::StatObjectRequest& request, ::grpc::CompletionQueue* cq) override;
     const ::grpc::internal::RpcMethod rpcmethod_UploadObject_;
     const ::grpc::internal::RpcMethod rpcmethod_DownloadObject_;
+    const ::grpc::internal::RpcMethod rpcmethod_StatObject_;
   };
   static std::unique_ptr<Stub> NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
 
@@ -793,7 +816,8 @@ class FilestoreService final {
     Service();
     virtual ~Service();
     virtual ::grpc::Status UploadObject(::grpc::ServerContext* context, const ::proto::UploadObjectRequest* request, ::proto::Payload* response);
-    virtual ::grpc::Status DownloadObject(::grpc::ServerContext* context, const ::proto::DownloadObjectRequest* request, ::proto::Payload* response);
+    virtual ::grpc::Status DownloadObject(::grpc::ServerContext* context, const ::proto::DownloadObjectRequest* request, ::proto::DownloadObjectResponse* response);
+    virtual ::grpc::Status StatObject(::grpc::ServerContext* context, const ::proto::StatObjectRequest* request, ::proto::StatObjectResponse* response);
   };
   template <class BaseClass>
   class WithAsyncMethod_UploadObject : public BaseClass {
@@ -827,15 +851,35 @@ class FilestoreService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status DownloadObject(::grpc::ServerContext* /*context*/, const ::proto::DownloadObjectRequest* /*request*/, ::proto::Payload* /*response*/) override {
+    ::grpc::Status DownloadObject(::grpc::ServerContext* /*context*/, const ::proto::DownloadObjectRequest* /*request*/, ::proto::DownloadObjectResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestDownloadObject(::grpc::ServerContext* context, ::proto::DownloadObjectRequest* request, ::grpc::ServerAsyncResponseWriter< ::proto::Payload>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestDownloadObject(::grpc::ServerContext* context, ::proto::DownloadObjectRequest* request, ::grpc::ServerAsyncResponseWriter< ::proto::DownloadObjectResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(1, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_UploadObject<WithAsyncMethod_DownloadObject<Service > > AsyncService;
+  template <class BaseClass>
+  class WithAsyncMethod_StatObject : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_StatObject() {
+      ::grpc::Service::MarkMethodAsync(2);
+    }
+    ~WithAsyncMethod_StatObject() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status StatObject(::grpc::ServerContext* /*context*/, const ::proto::StatObjectRequest* /*request*/, ::proto::StatObjectResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestStatObject(::grpc::ServerContext* context, ::proto::StatObjectRequest* request, ::grpc::ServerAsyncResponseWriter< ::proto::StatObjectResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  typedef WithAsyncMethod_UploadObject<WithAsyncMethod_DownloadObject<WithAsyncMethod_StatObject<Service > > > AsyncService;
   template <class BaseClass>
   class WithCallbackMethod_UploadObject : public BaseClass {
    private:
@@ -870,27 +914,54 @@ class FilestoreService final {
    public:
     WithCallbackMethod_DownloadObject() {
       ::grpc::Service::MarkMethodCallback(1,
-          new ::grpc::internal::CallbackUnaryHandler< ::proto::DownloadObjectRequest, ::proto::Payload>(
+          new ::grpc::internal::CallbackUnaryHandler< ::proto::DownloadObjectRequest, ::proto::DownloadObjectResponse>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::proto::DownloadObjectRequest* request, ::proto::Payload* response) { return this->DownloadObject(context, request, response); }));}
+                   ::grpc::CallbackServerContext* context, const ::proto::DownloadObjectRequest* request, ::proto::DownloadObjectResponse* response) { return this->DownloadObject(context, request, response); }));}
     void SetMessageAllocatorFor_DownloadObject(
-        ::grpc::MessageAllocator< ::proto::DownloadObjectRequest, ::proto::Payload>* allocator) {
+        ::grpc::MessageAllocator< ::proto::DownloadObjectRequest, ::proto::DownloadObjectResponse>* allocator) {
       ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(1);
-      static_cast<::grpc::internal::CallbackUnaryHandler< ::proto::DownloadObjectRequest, ::proto::Payload>*>(handler)
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::proto::DownloadObjectRequest, ::proto::DownloadObjectResponse>*>(handler)
               ->SetMessageAllocator(allocator);
     }
     ~WithCallbackMethod_DownloadObject() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status DownloadObject(::grpc::ServerContext* /*context*/, const ::proto::DownloadObjectRequest* /*request*/, ::proto::Payload* /*response*/) override {
+    ::grpc::Status DownloadObject(::grpc::ServerContext* /*context*/, const ::proto::DownloadObjectRequest* /*request*/, ::proto::DownloadObjectResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     virtual ::grpc::ServerUnaryReactor* DownloadObject(
-      ::grpc::CallbackServerContext* /*context*/, const ::proto::DownloadObjectRequest* /*request*/, ::proto::Payload* /*response*/)  { return nullptr; }
+      ::grpc::CallbackServerContext* /*context*/, const ::proto::DownloadObjectRequest* /*request*/, ::proto::DownloadObjectResponse* /*response*/)  { return nullptr; }
   };
-  typedef WithCallbackMethod_UploadObject<WithCallbackMethod_DownloadObject<Service > > CallbackService;
+  template <class BaseClass>
+  class WithCallbackMethod_StatObject : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_StatObject() {
+      ::grpc::Service::MarkMethodCallback(2,
+          new ::grpc::internal::CallbackUnaryHandler< ::proto::StatObjectRequest, ::proto::StatObjectResponse>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::proto::StatObjectRequest* request, ::proto::StatObjectResponse* response) { return this->StatObject(context, request, response); }));}
+    void SetMessageAllocatorFor_StatObject(
+        ::grpc::MessageAllocator< ::proto::StatObjectRequest, ::proto::StatObjectResponse>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(2);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::proto::StatObjectRequest, ::proto::StatObjectResponse>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_StatObject() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status StatObject(::grpc::ServerContext* /*context*/, const ::proto::StatObjectRequest* /*request*/, ::proto::StatObjectResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* StatObject(
+      ::grpc::CallbackServerContext* /*context*/, const ::proto::StatObjectRequest* /*request*/, ::proto::StatObjectResponse* /*response*/)  { return nullptr; }
+  };
+  typedef WithCallbackMethod_UploadObject<WithCallbackMethod_DownloadObject<WithCallbackMethod_StatObject<Service > > > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_UploadObject : public BaseClass {
@@ -921,7 +992,24 @@ class FilestoreService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status DownloadObject(::grpc::ServerContext* /*context*/, const ::proto::DownloadObjectRequest* /*request*/, ::proto::Payload* /*response*/) override {
+    ::grpc::Status DownloadObject(::grpc::ServerContext* /*context*/, const ::proto::DownloadObjectRequest* /*request*/, ::proto::DownloadObjectResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_StatObject : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_StatObject() {
+      ::grpc::Service::MarkMethodGeneric(2);
+    }
+    ~WithGenericMethod_StatObject() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status StatObject(::grpc::ServerContext* /*context*/, const ::proto::StatObjectRequest* /*request*/, ::proto::StatObjectResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -958,12 +1046,32 @@ class FilestoreService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status DownloadObject(::grpc::ServerContext* /*context*/, const ::proto::DownloadObjectRequest* /*request*/, ::proto::Payload* /*response*/) override {
+    ::grpc::Status DownloadObject(::grpc::ServerContext* /*context*/, const ::proto::DownloadObjectRequest* /*request*/, ::proto::DownloadObjectResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestDownloadObject(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(1, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_StatObject : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_StatObject() {
+      ::grpc::Service::MarkMethodRaw(2);
+    }
+    ~WithRawMethod_StatObject() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status StatObject(::grpc::ServerContext* /*context*/, const ::proto::StatObjectRequest* /*request*/, ::proto::StatObjectResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestStatObject(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -1003,11 +1111,33 @@ class FilestoreService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status DownloadObject(::grpc::ServerContext* /*context*/, const ::proto::DownloadObjectRequest* /*request*/, ::proto::Payload* /*response*/) override {
+    ::grpc::Status DownloadObject(::grpc::ServerContext* /*context*/, const ::proto::DownloadObjectRequest* /*request*/, ::proto::DownloadObjectResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     virtual ::grpc::ServerUnaryReactor* DownloadObject(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_StatObject : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_StatObject() {
+      ::grpc::Service::MarkMethodRawCallback(2,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->StatObject(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_StatObject() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status StatObject(::grpc::ServerContext* /*context*/, const ::proto::StatObjectRequest* /*request*/, ::proto::StatObjectResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* StatObject(
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
@@ -1045,10 +1175,10 @@ class FilestoreService final {
     WithStreamedUnaryMethod_DownloadObject() {
       ::grpc::Service::MarkMethodStreamed(1,
         new ::grpc::internal::StreamedUnaryHandler<
-          ::proto::DownloadObjectRequest, ::proto::Payload>(
+          ::proto::DownloadObjectRequest, ::proto::DownloadObjectResponse>(
             [this](::grpc::ServerContext* context,
                    ::grpc::ServerUnaryStreamer<
-                     ::proto::DownloadObjectRequest, ::proto::Payload>* streamer) {
+                     ::proto::DownloadObjectRequest, ::proto::DownloadObjectResponse>* streamer) {
                        return this->StreamedDownloadObject(context,
                          streamer);
                   }));
@@ -1057,16 +1187,43 @@ class FilestoreService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable regular version of this method
-    ::grpc::Status DownloadObject(::grpc::ServerContext* /*context*/, const ::proto::DownloadObjectRequest* /*request*/, ::proto::Payload* /*response*/) override {
+    ::grpc::Status DownloadObject(::grpc::ServerContext* /*context*/, const ::proto::DownloadObjectRequest* /*request*/, ::proto::DownloadObjectResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     // replace default version of method with streamed unary
-    virtual ::grpc::Status StreamedDownloadObject(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::proto::DownloadObjectRequest,::proto::Payload>* server_unary_streamer) = 0;
+    virtual ::grpc::Status StreamedDownloadObject(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::proto::DownloadObjectRequest,::proto::DownloadObjectResponse>* server_unary_streamer) = 0;
   };
-  typedef WithStreamedUnaryMethod_UploadObject<WithStreamedUnaryMethod_DownloadObject<Service > > StreamedUnaryService;
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_StatObject : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_StatObject() {
+      ::grpc::Service::MarkMethodStreamed(2,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::proto::StatObjectRequest, ::proto::StatObjectResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::proto::StatObjectRequest, ::proto::StatObjectResponse>* streamer) {
+                       return this->StreamedStatObject(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_StatObject() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status StatObject(::grpc::ServerContext* /*context*/, const ::proto::StatObjectRequest* /*request*/, ::proto::StatObjectResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedStatObject(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::proto::StatObjectRequest,::proto::StatObjectResponse>* server_unary_streamer) = 0;
+  };
+  typedef WithStreamedUnaryMethod_UploadObject<WithStreamedUnaryMethod_DownloadObject<WithStreamedUnaryMethod_StatObject<Service > > > StreamedUnaryService;
   typedef Service SplitStreamedService;
-  typedef WithStreamedUnaryMethod_UploadObject<WithStreamedUnaryMethod_DownloadObject<Service > > StreamedService;
+  typedef WithStreamedUnaryMethod_UploadObject<WithStreamedUnaryMethod_DownloadObject<WithStreamedUnaryMethod_StatObject<Service > > > StreamedService;
 };
 
 class DatastoreAdminService final {
@@ -2354,6 +2511,13 @@ class ProjectionDatastoreService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::proto::DownloadMovieIndicesResponse>> PrepareAsyncDownloadMovieIndices(::grpc::ClientContext* context, const ::proto::DownloadMovieIndicesRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::proto::DownloadMovieIndicesResponse>>(PrepareAsyncDownloadMovieIndicesRaw(context, request, cq));
     }
+    virtual ::grpc::Status ShardCount(::grpc::ClientContext* context, const ::proto::ShardCountRequest& request, ::proto::ShardCountResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::proto::ShardCountResponse>> AsyncShardCount(::grpc::ClientContext* context, const ::proto::ShardCountRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::proto::ShardCountResponse>>(AsyncShardCountRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::proto::ShardCountResponse>> PrepareAsyncShardCount(::grpc::ClientContext* context, const ::proto::ShardCountRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::proto::ShardCountResponse>>(PrepareAsyncShardCountRaw(context, request, cq));
+    }
     virtual ::grpc::Status CheckHealth(::grpc::ClientContext* context, const ::proto::HealthCheckRequest& request, ::proto::Payload* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::proto::Payload>> AsyncCheckHealth(::grpc::ClientContext* context, const ::proto::HealthCheckRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::proto::Payload>>(AsyncCheckHealthRaw(context, request, cq));
@@ -2372,6 +2536,8 @@ class ProjectionDatastoreService final {
       virtual void DownloadProjection(::grpc::ClientContext* context, const ::proto::DownloadProjectionRequest* request, ::proto::DownloadProjectionResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       virtual void DownloadMovieIndices(::grpc::ClientContext* context, const ::proto::DownloadMovieIndicesRequest* request, ::proto::DownloadMovieIndicesResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void DownloadMovieIndices(::grpc::ClientContext* context, const ::proto::DownloadMovieIndicesRequest* request, ::proto::DownloadMovieIndicesResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void ShardCount(::grpc::ClientContext* context, const ::proto::ShardCountRequest* request, ::proto::ShardCountResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void ShardCount(::grpc::ClientContext* context, const ::proto::ShardCountRequest* request, ::proto::ShardCountResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       virtual void CheckHealth(::grpc::ClientContext* context, const ::proto::HealthCheckRequest* request, ::proto::Payload* response, std::function<void(::grpc::Status)>) = 0;
       virtual void CheckHealth(::grpc::ClientContext* context, const ::proto::HealthCheckRequest* request, ::proto::Payload* response, ::grpc::ClientUnaryReactor* reactor) = 0;
     };
@@ -2387,6 +2553,8 @@ class ProjectionDatastoreService final {
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::proto::DownloadProjectionResponse>* PrepareAsyncDownloadProjectionRaw(::grpc::ClientContext* context, const ::proto::DownloadProjectionRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::proto::DownloadMovieIndicesResponse>* AsyncDownloadMovieIndicesRaw(::grpc::ClientContext* context, const ::proto::DownloadMovieIndicesRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::proto::DownloadMovieIndicesResponse>* PrepareAsyncDownloadMovieIndicesRaw(::grpc::ClientContext* context, const ::proto::DownloadMovieIndicesRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::proto::ShardCountResponse>* AsyncShardCountRaw(::grpc::ClientContext* context, const ::proto::ShardCountRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::proto::ShardCountResponse>* PrepareAsyncShardCountRaw(::grpc::ClientContext* context, const ::proto::ShardCountRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::proto::Payload>* AsyncCheckHealthRaw(::grpc::ClientContext* context, const ::proto::HealthCheckRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::proto::Payload>* PrepareAsyncCheckHealthRaw(::grpc::ClientContext* context, const ::proto::HealthCheckRequest& request, ::grpc::CompletionQueue* cq) = 0;
   };
@@ -2421,6 +2589,13 @@ class ProjectionDatastoreService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::proto::DownloadMovieIndicesResponse>> PrepareAsyncDownloadMovieIndices(::grpc::ClientContext* context, const ::proto::DownloadMovieIndicesRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::proto::DownloadMovieIndicesResponse>>(PrepareAsyncDownloadMovieIndicesRaw(context, request, cq));
     }
+    ::grpc::Status ShardCount(::grpc::ClientContext* context, const ::proto::ShardCountRequest& request, ::proto::ShardCountResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::proto::ShardCountResponse>> AsyncShardCount(::grpc::ClientContext* context, const ::proto::ShardCountRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::proto::ShardCountResponse>>(AsyncShardCountRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::proto::ShardCountResponse>> PrepareAsyncShardCount(::grpc::ClientContext* context, const ::proto::ShardCountRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::proto::ShardCountResponse>>(PrepareAsyncShardCountRaw(context, request, cq));
+    }
     ::grpc::Status CheckHealth(::grpc::ClientContext* context, const ::proto::HealthCheckRequest& request, ::proto::Payload* response) override;
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::proto::Payload>> AsyncCheckHealth(::grpc::ClientContext* context, const ::proto::HealthCheckRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::proto::Payload>>(AsyncCheckHealthRaw(context, request, cq));
@@ -2439,6 +2614,8 @@ class ProjectionDatastoreService final {
       void DownloadProjection(::grpc::ClientContext* context, const ::proto::DownloadProjectionRequest* request, ::proto::DownloadProjectionResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
       void DownloadMovieIndices(::grpc::ClientContext* context, const ::proto::DownloadMovieIndicesRequest* request, ::proto::DownloadMovieIndicesResponse* response, std::function<void(::grpc::Status)>) override;
       void DownloadMovieIndices(::grpc::ClientContext* context, const ::proto::DownloadMovieIndicesRequest* request, ::proto::DownloadMovieIndicesResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void ShardCount(::grpc::ClientContext* context, const ::proto::ShardCountRequest* request, ::proto::ShardCountResponse* response, std::function<void(::grpc::Status)>) override;
+      void ShardCount(::grpc::ClientContext* context, const ::proto::ShardCountRequest* request, ::proto::ShardCountResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
       void CheckHealth(::grpc::ClientContext* context, const ::proto::HealthCheckRequest* request, ::proto::Payload* response, std::function<void(::grpc::Status)>) override;
       void CheckHealth(::grpc::ClientContext* context, const ::proto::HealthCheckRequest* request, ::proto::Payload* response, ::grpc::ClientUnaryReactor* reactor) override;
      private:
@@ -2460,12 +2637,15 @@ class ProjectionDatastoreService final {
     ::grpc::ClientAsyncResponseReader< ::proto::DownloadProjectionResponse>* PrepareAsyncDownloadProjectionRaw(::grpc::ClientContext* context, const ::proto::DownloadProjectionRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::proto::DownloadMovieIndicesResponse>* AsyncDownloadMovieIndicesRaw(::grpc::ClientContext* context, const ::proto::DownloadMovieIndicesRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::proto::DownloadMovieIndicesResponse>* PrepareAsyncDownloadMovieIndicesRaw(::grpc::ClientContext* context, const ::proto::DownloadMovieIndicesRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::proto::ShardCountResponse>* AsyncShardCountRaw(::grpc::ClientContext* context, const ::proto::ShardCountRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::proto::ShardCountResponse>* PrepareAsyncShardCountRaw(::grpc::ClientContext* context, const ::proto::ShardCountRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::proto::Payload>* AsyncCheckHealthRaw(::grpc::ClientContext* context, const ::proto::HealthCheckRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::proto::Payload>* PrepareAsyncCheckHealthRaw(::grpc::ClientContext* context, const ::proto::HealthCheckRequest& request, ::grpc::CompletionQueue* cq) override;
     const ::grpc::internal::RpcMethod rpcmethod_UploadProjection_;
     const ::grpc::internal::RpcMethod rpcmethod_AppendProjection_;
     const ::grpc::internal::RpcMethod rpcmethod_DownloadProjection_;
     const ::grpc::internal::RpcMethod rpcmethod_DownloadMovieIndices_;
+    const ::grpc::internal::RpcMethod rpcmethod_ShardCount_;
     const ::grpc::internal::RpcMethod rpcmethod_CheckHealth_;
   };
   static std::unique_ptr<Stub> NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
@@ -2478,6 +2658,7 @@ class ProjectionDatastoreService final {
     virtual ::grpc::Status AppendProjection(::grpc::ServerContext* context, const ::proto::AppendProjectionRequest* request, ::proto::Payload* response);
     virtual ::grpc::Status DownloadProjection(::grpc::ServerContext* context, const ::proto::DownloadProjectionRequest* request, ::proto::DownloadProjectionResponse* response);
     virtual ::grpc::Status DownloadMovieIndices(::grpc::ServerContext* context, const ::proto::DownloadMovieIndicesRequest* request, ::proto::DownloadMovieIndicesResponse* response);
+    virtual ::grpc::Status ShardCount(::grpc::ServerContext* context, const ::proto::ShardCountRequest* request, ::proto::ShardCountResponse* response);
     virtual ::grpc::Status CheckHealth(::grpc::ServerContext* context, const ::proto::HealthCheckRequest* request, ::proto::Payload* response);
   };
   template <class BaseClass>
@@ -2561,12 +2742,32 @@ class ProjectionDatastoreService final {
     }
   };
   template <class BaseClass>
+  class WithAsyncMethod_ShardCount : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_ShardCount() {
+      ::grpc::Service::MarkMethodAsync(4);
+    }
+    ~WithAsyncMethod_ShardCount() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status ShardCount(::grpc::ServerContext* /*context*/, const ::proto::ShardCountRequest* /*request*/, ::proto::ShardCountResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestShardCount(::grpc::ServerContext* context, ::proto::ShardCountRequest* request, ::grpc::ServerAsyncResponseWriter< ::proto::ShardCountResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(4, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
   class WithAsyncMethod_CheckHealth : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_CheckHealth() {
-      ::grpc::Service::MarkMethodAsync(4);
+      ::grpc::Service::MarkMethodAsync(5);
     }
     ~WithAsyncMethod_CheckHealth() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2577,10 +2778,10 @@ class ProjectionDatastoreService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestCheckHealth(::grpc::ServerContext* context, ::proto::HealthCheckRequest* request, ::grpc::ServerAsyncResponseWriter< ::proto::Payload>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(4, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(5, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_UploadProjection<WithAsyncMethod_AppendProjection<WithAsyncMethod_DownloadProjection<WithAsyncMethod_DownloadMovieIndices<WithAsyncMethod_CheckHealth<Service > > > > > AsyncService;
+  typedef WithAsyncMethod_UploadProjection<WithAsyncMethod_AppendProjection<WithAsyncMethod_DownloadProjection<WithAsyncMethod_DownloadMovieIndices<WithAsyncMethod_ShardCount<WithAsyncMethod_CheckHealth<Service > > > > > > AsyncService;
   template <class BaseClass>
   class WithCallbackMethod_UploadProjection : public BaseClass {
    private:
@@ -2690,18 +2891,45 @@ class ProjectionDatastoreService final {
       ::grpc::CallbackServerContext* /*context*/, const ::proto::DownloadMovieIndicesRequest* /*request*/, ::proto::DownloadMovieIndicesResponse* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
+  class WithCallbackMethod_ShardCount : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_ShardCount() {
+      ::grpc::Service::MarkMethodCallback(4,
+          new ::grpc::internal::CallbackUnaryHandler< ::proto::ShardCountRequest, ::proto::ShardCountResponse>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::proto::ShardCountRequest* request, ::proto::ShardCountResponse* response) { return this->ShardCount(context, request, response); }));}
+    void SetMessageAllocatorFor_ShardCount(
+        ::grpc::MessageAllocator< ::proto::ShardCountRequest, ::proto::ShardCountResponse>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(4);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::proto::ShardCountRequest, ::proto::ShardCountResponse>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_ShardCount() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status ShardCount(::grpc::ServerContext* /*context*/, const ::proto::ShardCountRequest* /*request*/, ::proto::ShardCountResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* ShardCount(
+      ::grpc::CallbackServerContext* /*context*/, const ::proto::ShardCountRequest* /*request*/, ::proto::ShardCountResponse* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
   class WithCallbackMethod_CheckHealth : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_CheckHealth() {
-      ::grpc::Service::MarkMethodCallback(4,
+      ::grpc::Service::MarkMethodCallback(5,
           new ::grpc::internal::CallbackUnaryHandler< ::proto::HealthCheckRequest, ::proto::Payload>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::proto::HealthCheckRequest* request, ::proto::Payload* response) { return this->CheckHealth(context, request, response); }));}
     void SetMessageAllocatorFor_CheckHealth(
         ::grpc::MessageAllocator< ::proto::HealthCheckRequest, ::proto::Payload>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(4);
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(5);
       static_cast<::grpc::internal::CallbackUnaryHandler< ::proto::HealthCheckRequest, ::proto::Payload>*>(handler)
               ->SetMessageAllocator(allocator);
     }
@@ -2716,7 +2944,7 @@ class ProjectionDatastoreService final {
     virtual ::grpc::ServerUnaryReactor* CheckHealth(
       ::grpc::CallbackServerContext* /*context*/, const ::proto::HealthCheckRequest* /*request*/, ::proto::Payload* /*response*/)  { return nullptr; }
   };
-  typedef WithCallbackMethod_UploadProjection<WithCallbackMethod_AppendProjection<WithCallbackMethod_DownloadProjection<WithCallbackMethod_DownloadMovieIndices<WithCallbackMethod_CheckHealth<Service > > > > > CallbackService;
+  typedef WithCallbackMethod_UploadProjection<WithCallbackMethod_AppendProjection<WithCallbackMethod_DownloadProjection<WithCallbackMethod_DownloadMovieIndices<WithCallbackMethod_ShardCount<WithCallbackMethod_CheckHealth<Service > > > > > > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_UploadProjection : public BaseClass {
@@ -2787,12 +3015,29 @@ class ProjectionDatastoreService final {
     }
   };
   template <class BaseClass>
+  class WithGenericMethod_ShardCount : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_ShardCount() {
+      ::grpc::Service::MarkMethodGeneric(4);
+    }
+    ~WithGenericMethod_ShardCount() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status ShardCount(::grpc::ServerContext* /*context*/, const ::proto::ShardCountRequest* /*request*/, ::proto::ShardCountResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
   class WithGenericMethod_CheckHealth : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_CheckHealth() {
-      ::grpc::Service::MarkMethodGeneric(4);
+      ::grpc::Service::MarkMethodGeneric(5);
     }
     ~WithGenericMethod_CheckHealth() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2884,12 +3129,32 @@ class ProjectionDatastoreService final {
     }
   };
   template <class BaseClass>
+  class WithRawMethod_ShardCount : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_ShardCount() {
+      ::grpc::Service::MarkMethodRaw(4);
+    }
+    ~WithRawMethod_ShardCount() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status ShardCount(::grpc::ServerContext* /*context*/, const ::proto::ShardCountRequest* /*request*/, ::proto::ShardCountResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestShardCount(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(4, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
   class WithRawMethod_CheckHealth : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_CheckHealth() {
-      ::grpc::Service::MarkMethodRaw(4);
+      ::grpc::Service::MarkMethodRaw(5);
     }
     ~WithRawMethod_CheckHealth() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2900,7 +3165,7 @@ class ProjectionDatastoreService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestCheckHealth(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(4, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(5, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -2992,12 +3257,34 @@ class ProjectionDatastoreService final {
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
+  class WithRawCallbackMethod_ShardCount : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_ShardCount() {
+      ::grpc::Service::MarkMethodRawCallback(4,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->ShardCount(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_ShardCount() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status ShardCount(::grpc::ServerContext* /*context*/, const ::proto::ShardCountRequest* /*request*/, ::proto::ShardCountResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* ShardCount(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
   class WithRawCallbackMethod_CheckHealth : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_CheckHealth() {
-      ::grpc::Service::MarkMethodRawCallback(4,
+      ::grpc::Service::MarkMethodRawCallback(5,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->CheckHealth(context, request, response); }));
@@ -3122,12 +3409,39 @@ class ProjectionDatastoreService final {
     virtual ::grpc::Status StreamedDownloadMovieIndices(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::proto::DownloadMovieIndicesRequest,::proto::DownloadMovieIndicesResponse>* server_unary_streamer) = 0;
   };
   template <class BaseClass>
+  class WithStreamedUnaryMethod_ShardCount : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_ShardCount() {
+      ::grpc::Service::MarkMethodStreamed(4,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::proto::ShardCountRequest, ::proto::ShardCountResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::proto::ShardCountRequest, ::proto::ShardCountResponse>* streamer) {
+                       return this->StreamedShardCount(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_ShardCount() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status ShardCount(::grpc::ServerContext* /*context*/, const ::proto::ShardCountRequest* /*request*/, ::proto::ShardCountResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedShardCount(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::proto::ShardCountRequest,::proto::ShardCountResponse>* server_unary_streamer) = 0;
+  };
+  template <class BaseClass>
   class WithStreamedUnaryMethod_CheckHealth : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithStreamedUnaryMethod_CheckHealth() {
-      ::grpc::Service::MarkMethodStreamed(4,
+      ::grpc::Service::MarkMethodStreamed(5,
         new ::grpc::internal::StreamedUnaryHandler<
           ::proto::HealthCheckRequest, ::proto::Payload>(
             [this](::grpc::ServerContext* context,
@@ -3148,9 +3462,9 @@ class ProjectionDatastoreService final {
     // replace default version of method with streamed unary
     virtual ::grpc::Status StreamedCheckHealth(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::proto::HealthCheckRequest,::proto::Payload>* server_unary_streamer) = 0;
   };
-  typedef WithStreamedUnaryMethod_UploadProjection<WithStreamedUnaryMethod_AppendProjection<WithStreamedUnaryMethod_DownloadProjection<WithStreamedUnaryMethod_DownloadMovieIndices<WithStreamedUnaryMethod_CheckHealth<Service > > > > > StreamedUnaryService;
+  typedef WithStreamedUnaryMethod_UploadProjection<WithStreamedUnaryMethod_AppendProjection<WithStreamedUnaryMethod_DownloadProjection<WithStreamedUnaryMethod_DownloadMovieIndices<WithStreamedUnaryMethod_ShardCount<WithStreamedUnaryMethod_CheckHealth<Service > > > > > > StreamedUnaryService;
   typedef Service SplitStreamedService;
-  typedef WithStreamedUnaryMethod_UploadProjection<WithStreamedUnaryMethod_AppendProjection<WithStreamedUnaryMethod_DownloadProjection<WithStreamedUnaryMethod_DownloadMovieIndices<WithStreamedUnaryMethod_CheckHealth<Service > > > > > StreamedService;
+  typedef WithStreamedUnaryMethod_UploadProjection<WithStreamedUnaryMethod_AppendProjection<WithStreamedUnaryMethod_DownloadProjection<WithStreamedUnaryMethod_DownloadMovieIndices<WithStreamedUnaryMethod_ShardCount<WithStreamedUnaryMethod_CheckHealth<Service > > > > > > StreamedService;
 };
 
 }  // namespace proto

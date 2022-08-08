@@ -211,6 +211,7 @@ MainDatastoreService::Service::~Service() {
 static const char* FilestoreService_method_names[] = {
   "/proto.FilestoreService/UploadObject",
   "/proto.FilestoreService/DownloadObject",
+  "/proto.FilestoreService/StatObject",
 };
 
 std::unique_ptr< FilestoreService::Stub> FilestoreService::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -222,6 +223,7 @@ std::unique_ptr< FilestoreService::Stub> FilestoreService::NewStub(const std::sh
 FilestoreService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options)
   : channel_(channel), rpcmethod_UploadObject_(FilestoreService_method_names[0], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_DownloadObject_(FilestoreService_method_names[1], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_StatObject_(FilestoreService_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status FilestoreService::Stub::UploadObject(::grpc::ClientContext* context, const ::proto::UploadObjectRequest& request, ::proto::Payload* response) {
@@ -247,25 +249,48 @@ void FilestoreService::Stub::async::UploadObject(::grpc::ClientContext* context,
   return result;
 }
 
-::grpc::Status FilestoreService::Stub::DownloadObject(::grpc::ClientContext* context, const ::proto::DownloadObjectRequest& request, ::proto::Payload* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::proto::DownloadObjectRequest, ::proto::Payload, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_DownloadObject_, context, request, response);
+::grpc::Status FilestoreService::Stub::DownloadObject(::grpc::ClientContext* context, const ::proto::DownloadObjectRequest& request, ::proto::DownloadObjectResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::proto::DownloadObjectRequest, ::proto::DownloadObjectResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_DownloadObject_, context, request, response);
 }
 
-void FilestoreService::Stub::async::DownloadObject(::grpc::ClientContext* context, const ::proto::DownloadObjectRequest* request, ::proto::Payload* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::proto::DownloadObjectRequest, ::proto::Payload, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_DownloadObject_, context, request, response, std::move(f));
+void FilestoreService::Stub::async::DownloadObject(::grpc::ClientContext* context, const ::proto::DownloadObjectRequest* request, ::proto::DownloadObjectResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::proto::DownloadObjectRequest, ::proto::DownloadObjectResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_DownloadObject_, context, request, response, std::move(f));
 }
 
-void FilestoreService::Stub::async::DownloadObject(::grpc::ClientContext* context, const ::proto::DownloadObjectRequest* request, ::proto::Payload* response, ::grpc::ClientUnaryReactor* reactor) {
+void FilestoreService::Stub::async::DownloadObject(::grpc::ClientContext* context, const ::proto::DownloadObjectRequest* request, ::proto::DownloadObjectResponse* response, ::grpc::ClientUnaryReactor* reactor) {
   ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_DownloadObject_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::proto::Payload>* FilestoreService::Stub::PrepareAsyncDownloadObjectRaw(::grpc::ClientContext* context, const ::proto::DownloadObjectRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::proto::Payload, ::proto::DownloadObjectRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_DownloadObject_, context, request);
+::grpc::ClientAsyncResponseReader< ::proto::DownloadObjectResponse>* FilestoreService::Stub::PrepareAsyncDownloadObjectRaw(::grpc::ClientContext* context, const ::proto::DownloadObjectRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::proto::DownloadObjectResponse, ::proto::DownloadObjectRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_DownloadObject_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::proto::Payload>* FilestoreService::Stub::AsyncDownloadObjectRaw(::grpc::ClientContext* context, const ::proto::DownloadObjectRequest& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::proto::DownloadObjectResponse>* FilestoreService::Stub::AsyncDownloadObjectRaw(::grpc::ClientContext* context, const ::proto::DownloadObjectRequest& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncDownloadObjectRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status FilestoreService::Stub::StatObject(::grpc::ClientContext* context, const ::proto::StatObjectRequest& request, ::proto::StatObjectResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::proto::StatObjectRequest, ::proto::StatObjectResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_StatObject_, context, request, response);
+}
+
+void FilestoreService::Stub::async::StatObject(::grpc::ClientContext* context, const ::proto::StatObjectRequest* request, ::proto::StatObjectResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::proto::StatObjectRequest, ::proto::StatObjectResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_StatObject_, context, request, response, std::move(f));
+}
+
+void FilestoreService::Stub::async::StatObject(::grpc::ClientContext* context, const ::proto::StatObjectRequest* request, ::proto::StatObjectResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_StatObject_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::proto::StatObjectResponse>* FilestoreService::Stub::PrepareAsyncStatObjectRaw(::grpc::ClientContext* context, const ::proto::StatObjectRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::proto::StatObjectResponse, ::proto::StatObjectRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_StatObject_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::proto::StatObjectResponse>* FilestoreService::Stub::AsyncStatObjectRaw(::grpc::ClientContext* context, const ::proto::StatObjectRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncStatObjectRaw(context, request, cq);
   result->StartCall();
   return result;
 }
@@ -284,12 +309,22 @@ FilestoreService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       FilestoreService_method_names[1],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< FilestoreService::Service, ::proto::DownloadObjectRequest, ::proto::Payload, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< FilestoreService::Service, ::proto::DownloadObjectRequest, ::proto::DownloadObjectResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](FilestoreService::Service* service,
              ::grpc::ServerContext* ctx,
              const ::proto::DownloadObjectRequest* req,
-             ::proto::Payload* resp) {
+             ::proto::DownloadObjectResponse* resp) {
                return service->DownloadObject(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      FilestoreService_method_names[2],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< FilestoreService::Service, ::proto::StatObjectRequest, ::proto::StatObjectResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](FilestoreService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::proto::StatObjectRequest* req,
+             ::proto::StatObjectResponse* resp) {
+               return service->StatObject(ctx, req, resp);
              }, this)));
 }
 
@@ -303,7 +338,14 @@ FilestoreService::Service::~Service() {
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status FilestoreService::Service::DownloadObject(::grpc::ServerContext* context, const ::proto::DownloadObjectRequest* request, ::proto::Payload* response) {
+::grpc::Status FilestoreService::Service::DownloadObject(::grpc::ServerContext* context, const ::proto::DownloadObjectRequest* request, ::proto::DownloadObjectResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status FilestoreService::Service::StatObject(::grpc::ServerContext* context, const ::proto::StatObjectRequest* request, ::proto::StatObjectResponse* response) {
   (void) context;
   (void) request;
   (void) response;
@@ -667,6 +709,7 @@ static const char* ProjectionDatastoreService_method_names[] = {
   "/proto.ProjectionDatastoreService/AppendProjection",
   "/proto.ProjectionDatastoreService/DownloadProjection",
   "/proto.ProjectionDatastoreService/DownloadMovieIndices",
+  "/proto.ProjectionDatastoreService/ShardCount",
   "/proto.ProjectionDatastoreService/CheckHealth",
 };
 
@@ -681,7 +724,8 @@ ProjectionDatastoreService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInt
   , rpcmethod_AppendProjection_(ProjectionDatastoreService_method_names[1], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_DownloadProjection_(ProjectionDatastoreService_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_DownloadMovieIndices_(ProjectionDatastoreService_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_CheckHealth_(ProjectionDatastoreService_method_names[4], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_ShardCount_(ProjectionDatastoreService_method_names[4], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_CheckHealth_(ProjectionDatastoreService_method_names[5], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status ProjectionDatastoreService::Stub::UploadProjection(::grpc::ClientContext* context, const ::proto::UploadProjectionRequest& request, ::proto::Payload* response) {
@@ -776,6 +820,29 @@ void ProjectionDatastoreService::Stub::async::DownloadMovieIndices(::grpc::Clien
   return result;
 }
 
+::grpc::Status ProjectionDatastoreService::Stub::ShardCount(::grpc::ClientContext* context, const ::proto::ShardCountRequest& request, ::proto::ShardCountResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::proto::ShardCountRequest, ::proto::ShardCountResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_ShardCount_, context, request, response);
+}
+
+void ProjectionDatastoreService::Stub::async::ShardCount(::grpc::ClientContext* context, const ::proto::ShardCountRequest* request, ::proto::ShardCountResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::proto::ShardCountRequest, ::proto::ShardCountResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_ShardCount_, context, request, response, std::move(f));
+}
+
+void ProjectionDatastoreService::Stub::async::ShardCount(::grpc::ClientContext* context, const ::proto::ShardCountRequest* request, ::proto::ShardCountResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_ShardCount_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::proto::ShardCountResponse>* ProjectionDatastoreService::Stub::PrepareAsyncShardCountRaw(::grpc::ClientContext* context, const ::proto::ShardCountRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::proto::ShardCountResponse, ::proto::ShardCountRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_ShardCount_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::proto::ShardCountResponse>* ProjectionDatastoreService::Stub::AsyncShardCountRaw(::grpc::ClientContext* context, const ::proto::ShardCountRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncShardCountRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
 ::grpc::Status ProjectionDatastoreService::Stub::CheckHealth(::grpc::ClientContext* context, const ::proto::HealthCheckRequest& request, ::proto::Payload* response) {
   return ::grpc::internal::BlockingUnaryCall< ::proto::HealthCheckRequest, ::proto::Payload, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_CheckHealth_, context, request, response);
 }
@@ -843,6 +910,16 @@ ProjectionDatastoreService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       ProjectionDatastoreService_method_names[4],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< ProjectionDatastoreService::Service, ::proto::ShardCountRequest, ::proto::ShardCountResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](ProjectionDatastoreService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::proto::ShardCountRequest* req,
+             ::proto::ShardCountResponse* resp) {
+               return service->ShardCount(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      ProjectionDatastoreService_method_names[5],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< ProjectionDatastoreService::Service, ::proto::HealthCheckRequest, ::proto::Payload, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](ProjectionDatastoreService::Service* service,
              ::grpc::ServerContext* ctx,
@@ -877,6 +954,13 @@ ProjectionDatastoreService::Service::~Service() {
 }
 
 ::grpc::Status ProjectionDatastoreService::Service::DownloadMovieIndices(::grpc::ServerContext* context, const ::proto::DownloadMovieIndicesRequest* request, ::proto::DownloadMovieIndicesResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status ProjectionDatastoreService::Service::ShardCount(::grpc::ServerContext* context, const ::proto::ShardCountRequest* request, ::proto::ShardCountResponse* response) {
   (void) context;
   (void) request;
   (void) response;

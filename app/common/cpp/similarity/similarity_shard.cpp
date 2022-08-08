@@ -1,15 +1,15 @@
-#include "similarity_shard.h"
+#include "app/common/cpp/similarity/similarity_shard.h"
 
 #include <math.h>
 
 #include <limits>
 #include <vector>
 
-SimilarityShard SimilarityShard::create(ProjectionDatastoreShard& data_shard) {
+SimilarityShard SimilarityShard::create(
+    std::map<std::string, std::vector<float>> projection) {
   std::vector<std::vector<float>> vectors;
   std::map<int, std::string> author_index;
   std::optional<std::vector<float>> average_vector = std::nullopt;
-  std::map<std::string, std::vector<float>> projection = data_shard.getAll();
 
   int index = 0;
   for (auto projection_iterator = projection.begin();

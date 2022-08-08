@@ -2,8 +2,6 @@
 #include <string>
 #include <vector>
 
-#include "projection_datastore_shard.h"
-
 struct SimilarityShardRepsonse {
   int index;
   float distance;
@@ -13,7 +11,8 @@ struct SimilarityShardRepsonse {
 
 class SimilarityShard {
  public:
-  static SimilarityShard create(ProjectionDatastoreShard& data_shard);
+  static SimilarityShard create(
+      std::map<std::string, std::vector<float>> projection);
 
   SimilarityShardRepsonse getClosestNeighbor(std::vector<float> input_vector);
 

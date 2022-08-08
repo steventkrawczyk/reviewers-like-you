@@ -3,8 +3,8 @@ package reviewers
 import (
 	"context"
 
+	reviewers "github.com/steventkrawczyk/reviewers-like-you/app/common/go/resources"
 	"github.com/steventkrawczyk/reviewers-like-you/app/generated/go/proto"
-	"github.com/steventkrawczyk/reviewers-like-you/app/common/go/resources"
 )
 
 type FilestoreServer struct {
@@ -16,6 +16,7 @@ func (server *FilestoreServer) UploadObject(ctx context.Context, request *proto.
 	bucketName := request.GetBucketName()
 	objectName := request.GetBucketName()
 	serializedObject := request.GetBucketName()
+
 	server.MinioClient.PutObject(bucketName, objectName, serializedObject)
 
 	message := ""
@@ -24,13 +25,24 @@ func (server *FilestoreServer) UploadObject(ctx context.Context, request *proto.
 	return &proto.Payload{Message: &message, Category: &category, Status: &status}, nil
 }
 
-func (server *FilestoreServer) DownloadObject(ctx context.Context, request *proto.DownloadObjectRequest) (*proto.Payload, error) {
+func (server *FilestoreServer) DownloadObject(ctx context.Context, request *proto.DownloadObjectRequest) (*proto.DownloadObjectResponse, error) {
 	bucketName := request.GetBucketName()
 	objectName := request.GetBucketName()
-	serializedObject := server.MinioClient.GetObject(bucketName, objectName)
 
-	message := ""
-	category := ""
-	status := int32(200)
-	return &proto.Payload{Message: &message, Category: &category, Status: &status, Data: &serializedObject}, nil
+	found := false
+	serializedObject := ""
+	if server.MinioClient.CheckIfObjectExists(bucketName, objectName) {
+		found = true
+		serializedObject = server.MinioClient.GetObject(bucketName, objectName)
+	}
+
+	return &proto.DownloadObjectResponse{Found: &found, Data: &serializedObject}, nil
+}
+
+func (server *FilestoreServer) StatObject(ctx context.Context, request *proto.StatObjectRequest) (*proto.StatObjectResponse, error) {
+	bucketName := request.GetBucketName()
+	objectName := request.GetBucketName()
+
+	found := server.MinioClient.CheckIfObjectExists(bucketName, objectName)
+	return &proto.StatObjectResponse{Found: &found}, nil
 }

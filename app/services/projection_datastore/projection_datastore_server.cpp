@@ -49,14 +49,41 @@ class ProjectionDatastoreImpl final
   ::grpc::Status DownloadProjection(
       ::grpc::ServerContext* context,
       const ::proto::DownloadProjectionRequest* request,
-      ::proto::DownloadProjectionResponse* response);
+      ::proto::DownloadProjectionResponse* response) {
+    auto projection = this->datastore->getShardProjection(request->shardid());
+    auto projection_pb = this->marshaller.projectionToProto(projection);
+    response->set_allocated_projection(&projection_pb);
+    return ::grpc::Status();
+  }
+
   ::grpc::Status DownloadMovieIndices(
       ::grpc::ServerContext* context,
       const ::proto::DownloadMovieIndicesRequest* request,
-      ::proto::DownloadMovieIndicesResponse* response);
+      ::proto::DownloadMovieIndicesResponse* response) {
+    auto movie_indices = this->datastore->getMovieIndices();
+    auto movie_indices_pb = this->marshaller.movieIndicesToProto(movie_indices);
+    response->set_allocated_movieindices(&movie_indices_pb);
+    return ::grpc::Status();
+  }
+
+  ::grpc::Status ShardCount(::grpc::ServerContext* context,
+                            const ::proto::ShardCountRequest* request,
+                            ::proto::ShardCountResponse* response) {
+    int shard_count = this->datastore->getShardCount();
+    response->set_count(shard_count);
+    return ::grpc::Status();
+  }
+
   ::grpc::Status CheckHealth(::grpc::ServerContext* context,
                              const ::proto::HealthCheckRequest* request,
-                             ::proto::Payload* response);
+                             ::proto::Payload* response) {
+    // TODO add a more robust health check - forward to data gateway admin
+    // service
+    std::string successCode = "success";
+    response->set_allocated_category(&successCode);
+    response->set_status(200);
+    return ::grpc::Status();
+  }
 
  private:
   DataMarshaller marshaller;

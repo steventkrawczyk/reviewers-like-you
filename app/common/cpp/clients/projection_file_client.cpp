@@ -13,24 +13,35 @@ ProjectionFileClient::ProjectionFileClient(std::string endpoint_url,
   this->bucket_name = bucket_name;
 }
 
-// TODO
-bool ProjectionFileClient::objectExists(std::string name) {}
+bool ProjectionFileClient::objectExists(std::string name) {
+  proto::StatObjectRequest request;
+  proto::StatObjectResponse response;
 
-std::map<std::string, int> ProjectionFileClient::getMovieIndices(
-    std::string name) {
-  proto::DownloadObjectRequest request;
-  proto::Payload payload;
-  auto status = this->stub->DownloadObject(&(this->context), request, &payload);
+  auto status = this->stub->StatObject(&(this->context), request, &response);
   if (!status.ok()) {
     std::cout << status.error_message() << std::endl;
   }
 
-  std::string serialized_response = payload.data();
-  proto::MovieIndices movie_indices_pb;
-  movie_indices_pb.ParseFromString(serialized_response);
+  return response.found();
+}
 
-  std::map<std::string, int> movie_indices =
-      this->marshaller.protoToMovieIndices(movie_indices_pb);
+std::map<std::string, int> ProjectionFileClient::getMovieIndices(
+    std::string name) {
+  proto::DownloadObjectRequest request;
+  proto::DownloadObjectResponse response;
+  auto status =
+      this->stub->DownloadObject(&(this->context), request, &response);
+  if (!status.ok()) {
+    std::cout << status.error_message() << std::endl;
+  }
+
+  std::map<std::string, int> movie_indices;
+  if (response.found()) {
+    std::string serialized_response = response.data();
+    proto::MovieIndices movie_indices_pb;
+    movie_indices_pb.ParseFromString(serialized_response);
+    movie_indices = this->marshaller.protoToMovieIndices(movie_indices_pb);
+  }
 
   return movie_indices;
 }
@@ -38,18 +49,20 @@ std::map<std::string, int> ProjectionFileClient::getMovieIndices(
 std::map<std::string, std::vector<float>> ProjectionFileClient::getProjection(
     std::string name) {
   proto::DownloadObjectRequest request;
-  proto::Payload payload;
-  auto status = this->stub->DownloadObject(&(this->context), request, &payload);
+  proto::DownloadObjectResponse response;
+  auto status =
+      this->stub->DownloadObject(&(this->context), request, &response);
   if (!status.ok()) {
     std::cout << status.error_message() << std::endl;
   }
 
-  std::string serialized_response;
-  proto::Projection projection_pb;
-  projection_pb.ParseFromString(serialized_response);
-
-  std::map<std::string, std::vector<float>> projection =
-      this->marshaller.protoToProjection(projection_pb);
+  std::map<std::string, std::vector<float>> projection;
+  if (response.found()) {
+    std::string serialized_response =
+        response.data() proto::Projection projection_pb;
+    projection_pb.ParseFromString(serialized_response);
+    projection = this->marshaller.protoToProjection(projection_pb);
+  }
 
   return projection;
 }

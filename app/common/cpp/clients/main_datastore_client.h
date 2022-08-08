@@ -1,6 +1,8 @@
 #include "app/generated/cpp/data_model.pb.h"
 #include "app/generated/cpp/resource_services.grpc.pb.h"
 
+// This client is used to access the main datastore, which contains reviews
+// accessible by author name
 class MainDatastoreClient {
  public:
   MainDatastoreClient(std::string endpoint_url);

@@ -7,6 +7,8 @@
 #define MAX_SHARDS 20
 #define SHARD_SIZE 25
 
+// This class is responsible for passthrough to shards, shard management, and
+// for storing the movie indices.
 class ProjectionDatastoreHead {
  public:
   static std::unique_ptr<ProjectionDatastoreHead> create(
@@ -20,7 +22,11 @@ class ProjectionDatastoreHead {
 
   std::vector<ProjectionDatastoreShard>& getShards();
 
+  std::map<std::string, std::vector<float>> getShardProjection(int shard_id);
+
   std::map<std::string, int>& getMovieIndices();
+
+  int getShardCount();
 
  private:
   std::shared_ptr<ProjectionFileClient> file_store;
@@ -46,7 +52,7 @@ class ProjectionDatastoreHead {
 
   void cacheData(std::map<std::string, int> movie_indices);
 
-  void saveData(std::map<std::string, int> movie_indices);
+  void saveData();
 
   void uploadToShards(std::map<std::string, std::vector<float>> projection);
 

@@ -7,8 +7,14 @@ ProjectionDatastoreShard::ProjectionDatastoreShard(
 
 void ProjectionDatastoreShard::upload(
     std::map<std::string, std::vector<float>> projection) {
-  saveData(projection);
   cacheData(projection);
+  saveData();
+}
+
+void ProjectionDatastoreShard::append(
+    std::map<std::string, std::vector<float>> projection) {
+  appendData(projection);
+  saveData();
 }
 
 void ProjectionDatastoreShard::loadData() { this->loadProjection(); }
@@ -28,19 +34,19 @@ void ProjectionDatastoreShard::cacheData(
   this->projection = projection;
 }
 
-void ProjectionDatastoreShard::cacheData(
+void ProjectionDatastoreShard::appendData(
     std::map<std::string, std::vector<float>> projection) {
-  this->projection = projection;
+  this->projection.insert(projection.begin(), projection.end());
 }
 
-void ProjectionDatastoreShard::saveData(
-    std::map<std::string, std::vector<float>> projection) {
-  this->file_store->putProjection(this->projection_filepath, projection);
+void ProjectionDatastoreShard::saveData() {
+  this->file_store->putProjection(this->projection_filepath, this->projection);
 }
 
 void ProjectionDatastoreShard::loadProjection() {
-  if (this->file_store->objectExists(this->projection_filepath)) {
-    this->projection =
-        this->file_store->getProjection(this->projection_filepath);
+  auto new_projection =
+      this->file_store->getProjection(this->projection_filepath);
+  if (new_indices.size() > 0) {
+    this->projection = new_projection;
   }
 }

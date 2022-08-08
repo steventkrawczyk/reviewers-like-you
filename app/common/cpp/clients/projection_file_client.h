@@ -5,6 +5,8 @@
 #include "app/common/cpp/marshaller/data_marshaller.h"
 #include "app/generated/cpp/resource_services.grpc.pb.h"
 
+// This client is used to access the filestore, specifically for projection use
+// cases.
 class ProjectionFileClient {
  public:
   ProjectionFileClient(std::string endpoint_url, std::string bucket_name);

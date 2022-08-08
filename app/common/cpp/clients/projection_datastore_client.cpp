@@ -1,126 +1,84 @@
 #include "app/common/cpp/clients/projection_datastore_client.h"
 
-std::unique_ptr<ProjectionDatastoreHead> ProjectionDatastoreHead::create(
-    std::shared_ptr<ProjectionFileStore> file_store,
-    std::string projection_filepath_root, std::string movie_indices_filepath) {
-  auto datastore = ProjectionDatastoreHead(file_store, projection_filepath_root,
-                                           movie_indices_filepath, SHARD_SIZE);
-  datastore.loadData();
-  return std::make_unique<ProjectionDatastoreHead>(datastore);
+#include <grpcpp/create_channel.h>
+#include <grpcpp/security/credentials.h>
+
+ProjectionDatastoreClient::ProjectionDatastoreClient(std::string endpoint_url) {
+  this->channel =
+      grpc::CreateChannel(endpoint_url, grpc::InsecureChannelCredentials());
+  this->stub = proto::ProjectionDatastoreService::NewStub(this->channel);
 }
 
-ProjectionDatastoreHead::ProjectionDatastoreHead(
-    std::shared_ptr<ProjectionFileStore> file_store,
-    std::string projection_filepath_root, std::string movie_indices_filepath,
-    int shard_size)
-    : file_store(file_store),
-      projection_filepath_root(projection_filepath_root),
-      movie_indices_filepath(movie_indices_filepath),
-      shard_size(shard_size),
-      shard_count(0) {}
-
-std::vector<ProjectionDatastoreShard>& ProjectionDatastoreHead::getShards() {
-  return this->shards;
-}
-
-std::map<std::string, int>& ProjectionDatastoreHead::getMovieIndices() {
-  return this->movie_indices;
-}
-
-void ProjectionDatastoreHead::upload(
+void ProjectionDatastoreClient::upload(
     std::map<std::string, std::vector<float>> projection,
     std::map<std::string, int> movie_indices) {
-  this->saveData(movie_indices);
-  this->cacheData(movie_indices);
-  this->resetShards();
-  this->uploadToShards(projection);
+  proto::UploadProjectionRequest request;
+  proto::Payload payload;
+
+  auto projection_pb = this->marshaller.projectionToProto(projection);
+  auto movie_indices_pb = this->marshaller.movieIndicesToProto(movie_indices);
+  request.set_allocated_projection(&projection_pb);
+  request.set_allocated_movieindices(&movie_indices_pb);
+
+  auto status =
+      this->stub->UploadProjection(&(this->context), request, &payload);
+  if (!status.ok()) {
+    std::cout << status.error_message() << std::endl;
+  }
 }
 
-void ProjectionDatastoreHead::append(
+void ProjectionDatastoreClient::append(
     std::map<std::string, std::vector<float>> projection) {
-  this->uploadToShards(projection);
-}
+  proto::AppendProjectionRequest request;
+  proto::Payload payload;
 
-void ProjectionDatastoreHead::cacheData(
-    std::map<std::string, int> movie_indices) {
-  this->movie_indices = movie_indices;
-}
+  auto projection_pb = this->marshaller.projectionToProto(projection);
+  request.set_allocated_projection(&projection_pb);
 
-std::string ProjectionDatastoreHead::getShardFilepath(int shard_index) {
-  return this->projection_filepath_root + std::to_string(shard_index) +
-         std::string(".json");
-}
-
-void ProjectionDatastoreHead::createNewShard() {
-  int id = this->createShardId();
-  std::string filepath = this->getShardFilepath(id);
-  auto new_shard = ProjectionDatastoreShard(file_store, filepath);
-  this->shards.push_back(new_shard);
-}
-
-int ProjectionDatastoreHead::createShardId() { return shard_count++; }
-
-// TODO this can be multithreaded, createNewShard uses an atomic counter to be
-// thread safe.
-void ProjectionDatastoreHead::initializeShards() {
-  std::lock_guard<std::mutex> guard(this->shards_mutex);
-  this->shard_count = 0;
-  this->shards = std::vector<ProjectionDatastoreShard>();
-  while (this->shard_count < MAX_SHARDS &&
-         this->file_store->objectExists(
-             this->getShardFilepath(this->shard_count))) {
-    this->createNewShard();
+  auto status =
+      this->stub->AppendProjection(&(this->context), request, &payload);
+  if (!status.ok()) {
+    std::cout << status.error_message() << std::endl;
   }
 }
 
-void ProjectionDatastoreHead::loadMovieIndices() {
-  if (this->file_store->objectExists(this->movie_indices_filepath)) {
-    this->movie_indices =
-        this->file_store->getMovieIndices(this->movie_indices_filepath);
+std::map<std::string, std::vector<float>>
+ProjectionDatastoreClient::getShardProjection(int shard_id) {
+  proto::DownloadProjectionRequest request;
+  proto::DownloadProjectionResponse response;
+  request.set_shardid(shard_id);
+
+  auto status =
+      this->stub->DownloadProjection(&(this->context), request, &response);
+  if (!status.ok()) {
+    std::cout << status.error_message() << std::endl;
   }
+
+  auto projection = this->marshaller.protoToProjection(response.projection());
+  return projection;
 }
 
-void ProjectionDatastoreHead::saveData(
-    std::map<std::string, int> movie_indices) {
-  this->file_store->putMovieIndices(this->movie_indices_filepath,
-                                    movie_indices);
-}
+std::map<std::string, int>& ProjectionDatastoreClient::getMovieIndices() {
+  proto::DownloadMovieIndicesRequest request;
+  proto::DownloadMovieIndicesResponse response;
 
-void ProjectionDatastoreHead::loadData() {
-  this->loadMovieIndices();
-  this->initializeShards();
-  std::lock_guard<std::mutex> guard(this->shards_mutex);
-  for (auto& shard : this->shards) {
-    shard.loadData();
+  auto status =
+      this->stub->DownloadMovieIndices(&(this->context), request, &response);
+  if (!status.ok()) {
+    std::cout << status.error_message() << std::endl;
   }
+
+  auto movie_indices =
+      this->marshaller.protoToMovieIndices(response.movieindices());
+  return movie_indices;
 }
 
-void ProjectionDatastoreHead::uploadToShards(
-    std::map<std::string, std::vector<float>> projection) {
-  int projection_size = projection.size();
-  int offset = 0;
-  // TODO this can be done in parallel.
-  std::lock_guard<std::mutex> guard(this->shards_mutex);
-  while (offset < projection_size) {
-    if (this->shard_count == 0 ||
-        this->shards[this->shard_count - 1].size() >= this->shard_size) {
-      this->createNewShard();
-    }
-
-    std::map<std::string, std::vector<float>> projection_for_shard;
-    int batch_size = std::min(this->shard_size, projection_size - offset);
-    for (int batch_index = 0; batch_index < batch_size; batch_index++) {
-      std::string author;
-      std::vector<float> ratings;
-      projection_for_shard[author] = ratings;
-    }
-    this->shards[this->shard_count - 1].upload(projection_for_shard);
-    offset += batch_size;
+int ProjectionDatastoreClient::getShardCount() {
+  proto::ShardCountRequest request;
+  proto::ShardCountResponse response;
+  auto status = this->stub->ShardCount(&(this->context), request, &response);
+  if (!status.ok()) {
+    std::cout << status.error_message() << std::endl;
   }
-}
-
-void ProjectionDatastoreHead::resetShards() {
-  std::lock_guard<std::mutex> guard(this->shards_mutex);
-  this->shards = std::vector<ProjectionDatastoreShard>();
-  this->shard_count = 0;
+  return response.count();
 }

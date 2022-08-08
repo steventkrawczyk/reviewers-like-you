@@ -30,8 +30,8 @@ std::map<std::string, int>& ProjectionDatastoreHead::getMovieIndices() {
 void ProjectionDatastoreHead::upload(
     std::map<std::string, std::vector<float>> projection,
     std::map<std::string, int> movie_indices) {
-  this->saveData(movie_indices);
   this->cacheData(movie_indices);
+  this->saveData();
   this->resetShards();
   this->uploadToShards(projection);
 }
@@ -74,16 +74,16 @@ void ProjectionDatastoreHead::initializeShards() {
 }
 
 void ProjectionDatastoreHead::loadMovieIndices() {
-  if (this->file_store->objectExists(this->movie_indices_filepath)) {
-    this->movie_indices =
-        this->file_store->getMovieIndices(this->movie_indices_filepath);
+  auto new_indices =
+      this->file_store->getMovieIndices(this->movie_indices_filepath);
+  if (new_indices.size() > 0) {
+    this->movie_indices = new_indices;
   }
 }
 
-void ProjectionDatastoreHead::saveData(
-    std::map<std::string, int> movie_indices) {
+void ProjectionDatastoreHead::saveData() {
   this->file_store->putMovieIndices(this->movie_indices_filepath,
-                                    movie_indices);
+                                    this->movie_indices);
 }
 
 void ProjectionDatastoreHead::loadData() {
@@ -114,7 +114,7 @@ void ProjectionDatastoreHead::uploadToShards(
       std::vector<float> ratings;
       projection_for_shard[author] = ratings;
     }
-    this->shards[this->shard_count - 1].upload(projection_for_shard);
+    this->shards[this->shard_count - 1].append(projection_for_shard);
     offset += batch_size;
   }
 }
@@ -124,3 +124,10 @@ void ProjectionDatastoreHead::resetShards() {
   this->shards = std::vector<ProjectionDatastoreShard>();
   this->shard_count = 0;
 }
+
+std::map<std::string, std::vector<float>>
+ProjectionDatastoreHead::getShardProjection(int shard_id) {
+  return this->shards[shard_id].getAll();
+}
+
+int ProjectionDatastoreHead::getShardCount() { return this->shard_count; }

@@ -30,16 +30,18 @@ func (server *IngestionServer) IngestReview(ctx context.Context, req *proto.Inge
 
 func (server *IngestionServer) IngestBatch(ctx context.Context, req *proto.IngestBatchRequest) (*proto.Payload, error) {
 	bucketName := "ingestion"
-	payload, err := server.FileClient.DownloadObject(ctx, &proto.DownloadObjectRequest{BucketName: &bucketName, ObjectName: req.Filename})
+	response, err := server.FileClient.DownloadObject(ctx, &proto.DownloadObjectRequest{BucketName: &bucketName, ObjectName: req.Filename})
 	if err != nil {
 		log.Fatalln(err)
 	}
+
 	var reviewList proto.ReviewList
-	stringObject := payload.GetData()
-	jsonpb.Unmarshal(strings.NewReader(stringObject), &reviewList)
+	if response.GetFound() {
+		stringObject := response.GetData()
+		jsonpb.Unmarshal(strings.NewReader(stringObject), &reviewList)
+	}
 
 	reviewSlice := reviewList.GetReview()
-
 	reviewIndex := 0
 	for reviewIndex < len(reviewSlice) {
 		batchList := proto.ReviewList{}
@@ -51,7 +53,7 @@ func (server *IngestionServer) IngestBatch(ctx context.Context, req *proto.Inges
 			reviewIndex += 1
 			batchIndex += 1
 		}
-		payload, err = server.Client.BatchUploadReview(ctx, &proto.BatchUploadReviewRequest{ReviewList: &batchList})
+		_, err = server.Client.BatchUploadReview(ctx, &proto.BatchUploadReviewRequest{ReviewList: &batchList})
 		if err != nil {
 			log.Fatalln(err)
 		}

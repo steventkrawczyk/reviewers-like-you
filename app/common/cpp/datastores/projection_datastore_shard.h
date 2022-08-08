@@ -4,12 +4,16 @@
 
 #include "app/common/cpp/clients/projection_file_client.h"
 
+// This class is responsible for storing a chunk of projection data. It takes
+// orders from the head.
 class ProjectionDatastoreShard {
  public:
   ProjectionDatastoreShard(std::shared_ptr<ProjectionFileClient> file_store,
                            std::string projection_filepath);
 
   void upload(std::map<std::string, std::vector<float>> projection);
+
+  void append(std::map<std::string, std::vector<float>> projection);
 
   void loadData();
 
@@ -26,7 +30,9 @@ class ProjectionDatastoreShard {
 
   void cacheData(std::map<std::string, std::vector<float>> projection);
 
-  void saveData(std::map<std::string, std::vector<float>> projection);
+  void appendData(std::map<std::string, std::vector<float>> projection);
+
+  void saveData();
 
   void loadProjection();
 };

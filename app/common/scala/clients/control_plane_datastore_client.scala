@@ -1,0 +1,1 @@
+// This will be another service on datastore gateway that exposes some functionality of a DDB table

@@ -13,7 +13,7 @@ ProjectionFileClient::ProjectionFileClient(std::string endpoint_url,
   this->bucket_name = bucket_name;
 }
 
-bool ProjectionFileClient::objectExists(std::string name) {
+bool ProjectionFileClient::objectExists(std::string& name) {
   proto::StatObjectRequest request;
   proto::StatObjectResponse response;
 
@@ -25,8 +25,8 @@ bool ProjectionFileClient::objectExists(std::string name) {
   return response.found();
 }
 
-std::map<std::string, int> ProjectionFileClient::getMovieIndices(
-    std::string name) {
+proto::DownloadObjectResponse ProjectionFileClient::getObject(
+    std::string& name) {
   proto::DownloadObjectRequest request;
   proto::DownloadObjectResponse response;
   auto status =
@@ -35,72 +35,13 @@ std::map<std::string, int> ProjectionFileClient::getMovieIndices(
     std::cout << status.error_message() << std::endl;
   }
 
-  std::map<std::string, int> movie_indices;
-  if (response.found()) {
-    std::string serialized_response = response.data();
-    proto::MovieIndices movie_indices_pb;
-    movie_indices_pb.ParseFromString(serialized_response);
-    movie_indices = this->marshaller.protoToMovieIndices(movie_indices_pb);
-  }
-
-  return movie_indices;
+  return response;
 }
 
-std::map<std::string, std::vector<float>> ProjectionFileClient::getProjection(
-    std::string name) {
-  proto::DownloadObjectRequest request;
-  proto::DownloadObjectResponse response;
-  auto status =
-      this->stub->DownloadObject(&(this->context), request, &response);
-  if (!status.ok()) {
-    std::cout << status.error_message() << std::endl;
-  }
-
-  std::map<std::string, std::vector<float>> projection;
-  if (response.found()) {
-    std::string serialized_response =
-        response.data() proto::Projection projection_pb;
-    projection_pb.ParseFromString(serialized_response);
-    projection = this->marshaller.protoToProjection(projection_pb);
-  }
-
-  return projection;
-}
-
-void ProjectionFileClient::putMovieIndices(
-    std::string name, std::map<std::string, int> movie_indices) {
-  proto::MovieIndices movie_indices_pb =
-      this->marshaller.movieIndicesToProto(movie_indices);
-
-  std::string serialized_movie_indices;
-  movie_indices_pb.SerializeToString(&serialized_movie_indices);
-
-  proto::UploadObjectRequest request;
-  proto::Payload payload;
+void ProjectionFileClient::putObject(proto::UploadObjectRequest& request) {
   request.set_allocated_bucketname(&(this->bucket_name));
-  request.set_allocated_objectname(&name);
-  request.set_allocated_serializedobject(&serialized_movie_indices);
 
-  auto status = this->stub->UploadObject(&(this->context), request, &payload);
-  if (!status.ok()) {
-    std::cout << status.error_message() << std::endl;
-  }
-}
-
-void ProjectionFileClient::putProjection(
-    std::string name, std::map<std::string, std::vector<float>> projection) {
-  proto::Projection projection_pb =
-      this->marshaller.projectionToProto(projection);
-
-  std::string serialized_projection;
-  projection_pb.SerializeToString(&serialized_projection);
-
-  proto::UploadObjectRequest request;
   proto::Payload payload;
-  request.set_allocated_bucketname(&(this->bucket_name));
-  request.set_allocated_objectname(&name);
-  request.set_allocated_serializedobject(&serialized_projection);
-
   auto status = this->stub->UploadObject(&(this->context), request, &payload);
   if (!status.ok()) {
     std::cout << status.error_message() << std::endl;

@@ -2,15 +2,14 @@
 #include <grpcpp/server_builder.h>
 
 #include "app/common/cpp/clients/projection_datastore_client.h"
-#include "app/common/cpp/similarity/similarity_engine.h"
 #include "app/generated/cpp/backend_services.grpc.pb.h"
+#include "app/services/similarity/similarity/similarity_engine.h"
 
 class SimilarityImpl final : public proto::SimilarityEngineService::Service {
  public:
   SimilarityImpl() {
     this->datastore = std::make_shared<ProjectionDatastoreClient>("");
-    this->similarity_engine =
-        std::make_unique<SimilarityEngine>(this->datastore);
+    this->similarity_engine = SimilarityEngine::create(this->datastore);
   }
 
   ::grpc::Status GetClosestNeighbor(

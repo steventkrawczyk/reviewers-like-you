@@ -1,18 +1,18 @@
 #include <grpcpp/security/credentials.h>
 #include <grpcpp/server_builder.h>
 
-#include "app/common/cpp/clients/projection_file_client.h"
-#include "app/common/cpp/datastores/projection_datastore_head.h"
 #include "app/common/cpp/marshaller/data_marshaller.h"
 #include "app/generated/cpp/resource_services.grpc.pb.h"
+#include "app/services/projection_datastore/projection/backend/projection_backend.h"
+#include "app/services/projection_datastore/projection/datastore/projection_datastore_head.h"
 
 class ProjectionDatastoreImpl final
     : public proto::ProjectionDatastoreService::Service {
  public:
   ProjectionDatastoreImpl() {
-    this->filestore = std::make_shared<ProjectionFileClient>("", "");
+    this->backend = std::make_shared<ProjectionBackendImpl>("", "");
     this->datastore =
-        std::move(ProjectionDatastoreHead::create(this->filestore, "", ""));
+        std::move(ProjectionDatastoreHead::create(this->backend, "", ""));
   }
 
   ::grpc::Status UploadProjection(
@@ -87,7 +87,7 @@ class ProjectionDatastoreImpl final
 
  private:
   DataMarshaller marshaller;
-  std::shared_ptr<ProjectionFileClient> filestore;
+  std::shared_ptr<ProjectionBackend> backend;
   std::unique_ptr<ProjectionDatastoreHead> datastore;
 };
 
@@ -103,6 +103,9 @@ void RunServer() {
   server->Wait();
 }
 
+// TODO separate service for (1) standard projection data (2) user projection
+// data and (3) author projection based on old version. For 3, we need to run
+// projection builder on a movie list from an old version.
 int main(int argc, char** argv) {
   RunServer();
 

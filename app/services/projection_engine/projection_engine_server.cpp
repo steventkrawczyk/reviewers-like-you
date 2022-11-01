@@ -3,8 +3,8 @@
 
 #include "app/common/cpp/clients/main_datastore_client.h"
 #include "app/common/cpp/clients/projection_datastore_client.h"
-#include "app/common/cpp/projection/projection_engine.h"
 #include "app/generated/cpp/internal_services.grpc.pb.h"
+#include "app/services/projection_engine/projection/projection_engine.h"
 
 class ProjectionEngineImpl final
     : public proto::ProjectionEngineService::Service {

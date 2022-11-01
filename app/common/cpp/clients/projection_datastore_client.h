@@ -13,9 +13,10 @@ class ProjectionDatastoreClient {
   ProjectionDatastoreClient(std::string endpoint_url);
 
   void upload(std::map<std::string, std::vector<float>> projection,
-              std::map<std::string, int> movie_indices);
+              std::map<std::string, int> movie_indices, std::string version);
 
-  void append(std::map<std::string, std::vector<float>> projection);
+  void append(std::map<std::string, std::vector<float>> projection,
+              std::string version);
 
   std::map<std::string, std::vector<float>> getShardProjection(int shard_id);
 

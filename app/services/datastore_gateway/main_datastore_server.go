@@ -3,13 +3,13 @@ package reviewers
 import (
 	"context"
 
-	reviewers "github.com/steventkrawczyk/reviewers-like-you/app/common/go/resources"
 	"github.com/steventkrawczyk/reviewers-like-you/app/generated/go/proto"
+	resources "github.com/steventkrawczyk/reviewers-like-you/app/services/datastore_gateway/resources"
 )
 
 type MainDatastoreServer struct {
 	proto.UnimplementedMainDatastoreServiceServer
-	DynamodbClient *reviewers.MainDatastore
+	DynamodbClient *resources.MainDatastore
 	authors        []string
 	cacheValid     bool
 	// TODO we need a "new" function to set default values...
@@ -54,6 +54,7 @@ func (server *MainDatastoreServer) BatchUploadReview(ctx context.Context, reques
 	return &proto.Payload{Message: &message, Category: &category, Status: &status}, nil
 }
 
+// TODO Eventually we want to be able to get 1 page at a time...
 func (server *MainDatastoreServer) GetReviewsByAuthor(ctx context.Context, request *proto.GetReviewsByAuthorRequest) (*proto.GetReviewsByAuthorResponse, error) {
 	reviewList := proto.ReviewList{}
 	server.DynamodbClient.Get(request.GetAuthor(), &reviewList)

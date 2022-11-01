@@ -7,9 +7,9 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 
-	resources "github.com/steventkrawczyk/reviewers-like-you/app/common/go/resources"
 	config "github.com/steventkrawczyk/reviewers-like-you/app/common/go/config"
 	proto "github.com/steventkrawczyk/reviewers-like-you/app/generated/go/proto"
+	resources "github.com/steventkrawczyk/reviewers-like-you/app/services/datastore_gateway/resources"
 )
 
 func main() {
@@ -36,7 +36,7 @@ func main() {
 	proto.RegisterFilestoreServiceServer(gatewayServer, &FilestoreServer{UnimplementedFilestoreServiceServer: proto.UnimplementedFilestoreServiceServer{}, MinioClient: &minioClient})
 	proto.RegisterDatastoreAdminServiceServer(gatewayServer, &DatastoreAdminServer{UnimplementedDatastoreAdminServiceServer: proto.UnimplementedDatastoreAdminServiceServer{}, DynamodbClient: &dynamodbClient, MinioClient: &minioClient})
 
-	reflection.Register(gatewayServer)	
+	reflection.Register(gatewayServer)
 
 	err = gatewayServer.Serve(listener)
 	if err != nil {

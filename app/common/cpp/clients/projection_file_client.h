@@ -9,22 +9,15 @@
 // cases.
 class ProjectionFileClient {
  public:
-  ProjectionFileClient(std::string endpoint_url, std::string bucket_name);
+  ProjectionFileClient(std::string& endpoint_url, std::string& bucket_name);
 
-  bool objectExists(std::string name);
+  bool objectExists(std::string& name);
 
-  std::map<std::string, int> getMovieIndices(std::string name);
+  proto::DownloadObjectResponse getObject(std::string& name);
 
-  std::map<std::string, std::vector<float>> getProjection(std::string name);
-
-  void putMovieIndices(std::string name,
-                       std::map<std::string, int> movie_indices);
-
-  void putProjection(std::string name,
-                     std::map<std::string, std::vector<float>> projection);
+  void putObject(proto::UploadObjectRequest& request);
 
  private:
-  DataMarshaller marshaller;
   std::shared_ptr<grpc::Channel> channel;
   std::unique_ptr<proto::FilestoreService::Stub> stub;
   grpc::ClientContext context;

@@ -11,7 +11,8 @@ class DataMarshaller {
       proto::Projection projection_pb);
 
   proto::MovieIndices movieIndicesToProto(
-      std::map<std::string, int> movie_indices);
+      std::map<std::string, int> movie_indices, std::string version);
   proto::Projection projectionToProto(
-      std::map<std::string, std::vector<float>> projection);
+      std::map<std::string, std::vector<float>> projection,
+      std::string version);
 };

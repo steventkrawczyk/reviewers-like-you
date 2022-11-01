@@ -3,13 +3,13 @@ package reviewers
 import (
 	"context"
 
-	reviewers "github.com/steventkrawczyk/reviewers-like-you/app/common/go/resources"
 	"github.com/steventkrawczyk/reviewers-like-you/app/generated/go/proto"
+	resources "github.com/steventkrawczyk/reviewers-like-you/app/services/datastore_gateway/resources"
 )
 
 type FilestoreServer struct {
 	proto.UnimplementedFilestoreServiceServer
-	MinioClient *reviewers.Filestore
+	MinioClient *resources.Filestore
 }
 
 func (server *FilestoreServer) UploadObject(ctx context.Context, request *proto.UploadObjectRequest) (*proto.Payload, error) {

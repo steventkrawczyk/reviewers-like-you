@@ -29,18 +29,19 @@ std::map<std::string, std::vector<float>> DataMarshaller::protoToProjection(
 }
 
 proto::MovieIndices DataMarshaller::movieIndicesToProto(
-    std::map<std::string, int> movie_indices) {
+    std::map<std::string, int> movie_indices, std::string version) {
   proto::MovieIndices movie_indices_pb;
   for (auto const& [movie, index] : movie_indices) {
     proto::MovieIndicesEntry* entry = movie_indices_pb.add_entry();
     entry->set_movie(movie);
     entry->set_index(index);
   }
+  movie_indices_pb.set_version(version);
   return movie_indices_pb;
 }
 
 proto::Projection DataMarshaller::projectionToProto(
-    std::map<std::string, std::vector<float>> projection) {
+    std::map<std::string, std::vector<float>> projection, std::string version) {
   proto::Projection projection_pb;
   for (auto const& [author, ratings] : projection) {
     proto::ProjectionEntry* entry = projection_pb.add_entry();
@@ -50,5 +51,6 @@ proto::Projection DataMarshaller::projectionToProto(
       entry->add_rating(rating);
     }
   }
+  projection_pb.set_version(version);
   return projection_pb;
 }

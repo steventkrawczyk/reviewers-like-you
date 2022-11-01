@@ -11,12 +11,13 @@ ProjectionDatastoreClient::ProjectionDatastoreClient(std::string endpoint_url) {
 
 void ProjectionDatastoreClient::upload(
     std::map<std::string, std::vector<float>> projection,
-    std::map<std::string, int> movie_indices) {
+    std::map<std::string, int> movie_indices, std::string version) {
   proto::UploadProjectionRequest request;
   proto::Payload payload;
 
-  auto projection_pb = this->marshaller.projectionToProto(projection);
-  auto movie_indices_pb = this->marshaller.movieIndicesToProto(movie_indices);
+  auto projection_pb = this->marshaller.projectionToProto(projection, version);
+  auto movie_indices_pb =
+      this->marshaller.movieIndicesToProto(movie_indices, version);
   request.set_allocated_projection(&projection_pb);
   request.set_allocated_movieindices(&movie_indices_pb);
 
@@ -28,11 +29,11 @@ void ProjectionDatastoreClient::upload(
 }
 
 void ProjectionDatastoreClient::append(
-    std::map<std::string, std::vector<float>> projection) {
+    std::map<std::string, std::vector<float>> projection, std::string version) {
   proto::AppendProjectionRequest request;
   proto::Payload payload;
 
-  auto projection_pb = this->marshaller.projectionToProto(projection);
+  auto projection_pb = this->marshaller.projectionToProto(projection, version);
   request.set_allocated_projection(&projection_pb);
 
   auto status =

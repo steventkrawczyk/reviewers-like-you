@@ -12,6 +12,7 @@ require (
 )
 
 require (
+	github.com/elastic/go-elasticsearch v0.0.0
 	github.com/go-ini/ini v1.66.6 // indirect
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
 	github.com/mitchellh/go-homedir v1.1.0 // indirect

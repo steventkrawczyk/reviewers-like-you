@@ -2,15 +2,16 @@ package reviewers
 
 import (
 	"context"
-	
+
 	"github.com/steventkrawczyk/reviewers-like-you/app/generated/go/proto"
-	"github.com/steventkrawczyk/reviewers-like-you/app/common/go/resources"
+	resources "github.com/steventkrawczyk/reviewers-like-you/app/services/datastore_gateway/resources"
 )
 
+// TODO add mutexes to resources to block for admin commands
 type DatastoreAdminServer struct {
 	proto.UnimplementedDatastoreAdminServiceServer
-	DynamodbClient *reviewers.MainDatastore
-	MinioClient *reviewers.Filestore
+	DynamodbClient *resources.MainDatastore
+	MinioClient    *resources.Filestore
 }
 
 func (server *DatastoreAdminServer) CheckHealth(ctx context.Context, request *proto.HealthCheckRequest) (*proto.Payload, error) {
